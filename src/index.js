@@ -7,16 +7,19 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import DashBoard from './routes/dashboard'
 import LogIn from './routes/login'
 import RequireAuth from './components/RequireAuth'
+import Greeting from './components/greeting'
+
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/dashboard" element={ <RequireAuth>
-                <DashBoard />
-              </RequireAuth>} />
+        <Route path="/" element={<RequireAuth><App /></RequireAuth>}>
+          <Route index element={<Greeting />} />
         </Route>
+        <Route path="/dashboard" element={ <RequireAuth><DashBoard /></RequireAuth>}>
+          <Route path='customers' />
+        </Route>
+        <Route path="/login" element={<LogIn />} />
       </Routes>
     </BrowserRouter>
 )
