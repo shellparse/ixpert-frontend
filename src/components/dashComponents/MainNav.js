@@ -4,7 +4,10 @@ export default function MainNav(){
     return(
         <div className="dashMainNav">
             <nav>
-                <NavLink className={style} to={"/dashboard/customers"}>customers</NavLink>
+                <ul>
+                    <li><NavLink className={({isActive}) => isActive?"activeNav":""} to={"customers"}>customers</NavLink></li>
+                    <li><NavLink className={({isActive}) => isActive?"activeNav":""} to={"repairslip"}>repair slip</NavLink></li>
+                </ul>
             </nav>
         </div>
     )

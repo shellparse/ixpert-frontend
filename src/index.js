@@ -8,7 +8,7 @@ import DashBoard from './routes/dashboard'
 import LogIn from './routes/login'
 import RequireAuth from './components/RequireAuth'
 import Greeting from './components/greeting'
-
+import Customers from './components/Customers'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <BrowserRouter>
@@ -17,7 +17,7 @@ root.render(
           <Route index element={<Greeting />} />
         </Route>
         <Route path="/dashboard" element={ <RequireAuth><DashBoard /></RequireAuth>}>
-          <Route path='customers' />
+          <Route path='customers' element={<Customers />}/>
         </Route>
         <Route path="/login" element={<LogIn />} />
       </Routes>

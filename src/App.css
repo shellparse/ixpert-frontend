@@ -32,3 +32,21 @@
 .logout{
   margin-left: auto;
 }
+.activeNav{
+  background-color: rgb(208, 216, 216);
+  color: crimson;
+  text-decoration: none;
+  border-radius: 10%;
+  padding: 2px;
+}
+input{
+  margin: 3px;
+}
+.notify-success{
+  background-color: green;
+  color: aliceblue;
+}
+.notify-fail{
+  background-color: rgb(128, 0, 11);
+  color: aliceblue;
+}
