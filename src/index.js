@@ -9,6 +9,7 @@ import LogIn from './routes/login'
 import RequireAuth from './components/RequireAuth'
 import Greeting from './components/greeting'
 import Customers from './components/Customers'
+import RepairSlip from './components/RepairSlip'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <BrowserRouter>
@@ -18,6 +19,7 @@ root.render(
         </Route>
         <Route path="/dashboard" element={ <RequireAuth><DashBoard /></RequireAuth>}>
           <Route path='customers' element={<Customers />}/>
+          <Route path='repairslip' element={<RepairSlip />} />
         </Route>
         <Route path="/login" element={<LogIn />} />
       </Routes>

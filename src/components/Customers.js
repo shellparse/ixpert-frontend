@@ -1,10 +1,12 @@
 import { useState } from "react"
-export default function Customers () {
+import { useOutletContext } from "react-router-dom"
+export default function Customers (props) {
+    const [activeCustomer, setCustomer] = useOutletContext();
+    const API = process.env.REACT_APP_API_URI
     let [inputs,setInputs] = useState({})
-    let response
     function handleSubmit(e) {
         e.preventDefault()
-        fetch(`http://${process.env.REACT_APP_API_URI}/customer`,{
+        fetch(`${API}/customer`,{
             method:'POST',
             headers:{
                 'Content-Type': 'application/json'
@@ -17,6 +19,8 @@ export default function Customers () {
             if(data.acknowledged){
             resDiv.innerHTML="customer created !!"
             resDiv.setAttribute('class','notify-success')
+            console.log(props)
+            setCustomer({_id:data.insertedId})
         } else {
             resDiv.innerHTML="Error: check entries"
             resDiv.setAttribute('class','notify-fail')

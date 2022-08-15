@@ -1,4 +1,4 @@
-export default function SecondaryNav(){
+export default function SecondaryNav(props){
     return(
         <div className="dashSecondaryNav">
             SecondaryNav
