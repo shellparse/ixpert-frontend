@@ -50,3 +50,12 @@ input{
   background-color: rgb(128, 0, 11);
   color: aliceblue;
 }
+#last10Customers{
+  overflow: hidden;
+}
+.close{
+  color:red;
+  cursor: pointer;
+  padding: 0;
+  margin: 5px;
+}

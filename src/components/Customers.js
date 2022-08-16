@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
+import { useEffect } from "react";
 export default function Customers (props) {
     const [activeCustomer, setCustomer] = useOutletContext();
     const API = process.env.REACT_APP_API_URI
@@ -19,7 +20,6 @@ export default function Customers (props) {
             if(data.acknowledged){
             resDiv.innerHTML="customer created !!"
             resDiv.setAttribute('class','notify-success')
-            console.log(props)
             setCustomer({_id:data.insertedId})
         } else {
             resDiv.innerHTML="Error: check entries"
@@ -36,6 +36,21 @@ export default function Customers (props) {
         let name = e.target.name
         setInputs((values) => ({...values,[name]:value}))
     }
+    function handleCustomerClick(e) {
+        let value = e.target.value
+        setCustomer({_id:value})
+    }
+    useEffect(()=>{
+        fetch(`${API}/customer`).then((res)=>res.json()).then((data)=>{
+            const select = document.getElementById('last10Customers')
+            select.addEventListener("change",handleCustomerClick)
+            data.forEach(customer => {
+                let option = select.appendChild(document.createElement('option'))
+                option.setAttribute('value',customer._id)
+                option.innerHTML=customer.name
+            });
+        })
+    },[])
     return (
         <div>
             create a customer: 
@@ -55,6 +70,14 @@ export default function Customers (props) {
                 <input type={"submit"}/>
             </form>
             <div id="response"></div>
+
+            select a customer:
+            <form>
+                <fieldset>
+                <select size={'5'} id={'last10Customers'}>
+                </select>
+                </fieldset>
+            </form>
         </div>
     )
 }
