@@ -42,6 +42,7 @@ export default function Customers (props) {
     }
     useEffect(()=>{
         fetch(`${API}/customer`).then((res)=>res.json()).then((data)=>{
+            if(data){
             const select = document.getElementById('last10Customers')
             select.addEventListener("change",handleCustomerClick)
             data.forEach(customer => {
@@ -49,6 +50,7 @@ export default function Customers (props) {
                 option.setAttribute('value',customer._id)
                 option.innerHTML=customer.name
             });
+            }
         })
     },[])
     return (

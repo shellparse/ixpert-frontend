@@ -19,8 +19,9 @@ export default function RepairSlip (props) {
             const resDiv = document.getElementById('response')
             resDiv.style='visible'
             if(data.acknowledged){
-            resDiv.innerHTML="customer created !!"
+            resDiv.innerHTML="repair slip created !!"
             resDiv.setAttribute('class','notify-success')
+            fetch(`${API}/slipnumber`,{method:'POST'})
         } else {
             resDiv.innerHTML="Error: check entries"
             resDiv.setAttribute('class','notify-fail')
@@ -29,6 +30,10 @@ export default function RepairSlip (props) {
             document.getElementById('response').style.visibility='hidden'
         },3000)
         e.target.reset()
+        while (document.getElementById("repairListul").firstChild){
+            document.getElementById("repairListul").removeChild(document.getElementById("repairListul").firstChild)
+        }
+
         })
     }
     function handleChange(e) {
@@ -70,11 +75,14 @@ export default function RepairSlip (props) {
             document.getElementById('customerPhone').innerHTML='Phone number: '+data.phoneNumber
             document.getElementById('customerName').innerHTML='Customer name: '+data.name
             document.getElementById('customerName').removeAttribute('class')
-            fetch(`${API}/slipnumber`,{
-                method:'POST',
-            }).then((res)=>res.json()).then((data)=>{
-                document.getElementById('slipNumber').setAttribute('value',data.value.lastSlip)
-                setInputs((current)=>({...current,slipNumber: data.value.lastSlip.toString()}))
+            fetch(`${API}/slipnumber`).then((res)=>res.json()).then((data)=>{
+                if(data){
+                document.getElementById('slipNumber').setAttribute('value',data.lastSlip+1)
+                setInputs((current)=>({...current,slipNumber: data.lastSlip.toString()}))
+                } else {
+                    document.getElementById('slipNumber').setAttribute('value',1)
+                    setInputs((current)=>({...current,slipNumber: "1"}))
+                }
             })
         })
     }
@@ -127,7 +135,7 @@ export default function RepairSlip (props) {
                     <input name={"repairInput"} type={'button'} id='addRepairItem' value={'Add'} onClick={addToList} />
                 </label>
                 <div id={'repairsList'}>
-                    <ul>
+                    <ul id={"repairListul"}>
                     {liFromRepairs(inputs.neededRepairs)}
                     </ul>
                 </div>

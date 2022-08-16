@@ -11,6 +11,7 @@
 .dashboard > div {
   background-color: beige;
   padding: 10px;
+  user-select: none
 }
 .dashMainNav{
   grid-row-start: 1;
@@ -26,7 +27,6 @@
   grid-column-end: 4;
 }
 .greetings{
-  /* background-color: rgb(155, 145, 165); */
   margin: 0;
 }
 .logout{
@@ -58,4 +58,7 @@ input{
   cursor: pointer;
   padding: 0;
   margin: 5px;
+}
+#last10Customers{
+  width: 20%;
 }
