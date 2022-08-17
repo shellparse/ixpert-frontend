@@ -14,26 +14,36 @@ export default function RepairSlip (props) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(inputs)
-        }).then((response)=>response.json())
-        .then(data=>{
+        }).then((response)=>{
+            if(response.headers.has('Content-Type')){
+                return null
+            }else{
+                return response.blob()
+            }
+        })
+        .then(blob=>{
             const resDiv = document.getElementById('response')
+            if(blob){
+            blob = blob.slice(0, blob.size, "application/pdf")
+            let blobURL = URL.createObjectURL(blob);
+            setTimeout(()=>{
+                window.open(blobURL);
+            },1500)
             resDiv.style='visible'
-            if(data.acknowledged){
             resDiv.innerHTML="repair slip created !!"
             resDiv.setAttribute('class','notify-success')
             fetch(`${API}/slipnumber`,{method:'POST'})
-        } else {
-            resDiv.innerHTML="Error: check entries"
-            resDiv.setAttribute('class','notify-fail')
-        }
-        setTimeout(()=>{
-            document.getElementById('response').style.visibility='hidden'
-        },3000)
-        e.target.reset()
-        while (document.getElementById("repairListul").firstChild){
-            document.getElementById("repairListul").removeChild(document.getElementById("repairListul").firstChild)
-        }
-
+            } else {
+                resDiv.innerHTML="Error: check entries"
+                resDiv.setAttribute('class','notify-fail')
+            }
+            setTimeout(()=>{
+                document.getElementById('response').style.visibility='hidden'
+            },3000)
+            e.target.reset()
+            while (document.getElementById("repairListul").firstChild){
+                document.getElementById("repairListul").removeChild(document.getElementById("repairListul").firstChild)
+            }
         })
     }
     function handleChange(e) {
@@ -65,7 +75,8 @@ export default function RepairSlip (props) {
                 "faceId": false
             },
             neededRepairs: [],
-            cashier: Userfront.user.name
+            cashier: Userfront.user.name,
+            returned: false,
         })
         if(activeCustomer._id){
         fetch(`${API}/customer/${activeCustomer._id}`)
@@ -127,6 +138,10 @@ export default function RepairSlip (props) {
                 <label>
                     Model:
                     <input type={"text"} name={'model'} required />
+                </label>
+                <label>
+                    Pass code:
+                    <input type={"text"} name={'passCode'} />
                 </label>
                 <fieldset>
                     <legend>Repairs Needed:</legend>
