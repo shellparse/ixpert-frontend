@@ -1,7 +1,7 @@
 export default function SecondaryNav(props){
     return(
         <div className="dashSecondaryNav">
-            SecondaryNav
+            SecondaryNav2
         </div>
     )
 }
