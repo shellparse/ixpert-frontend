@@ -85,7 +85,9 @@ export default function RepairSlip (props) {
             document.getElementById('_id').setAttribute('value', data._id)
             document.getElementById('customerPhone').innerHTML='Phone number: '+data.phoneNumber
             document.getElementById('customerName').innerHTML='Customer name: '+data.name
+            document.getElementById('customerEmail').innerHTML='Customer email: '+data.email
             document.getElementById('customerName').removeAttribute('class')
+            setInputs((values)=>({...values,customerName:data.name,customerPhone:data.phoneNumber,customerEmail:data.email}))
             fetch(`${API}/slipnumber`).then((res)=>res.json()).then((data)=>{
                 if(data){
                 document.getElementById('slipNumber').setAttribute('value',data.lastSlip+1)
@@ -122,6 +124,7 @@ export default function RepairSlip (props) {
             <form onChange={handleChange} onSubmit={handleSubmit}>
                 <label className="notify-fail" id='customerName'>please select a customer first</label>
                 <label id='customerPhone'></label>
+                <label id={'customerEmail'}></label>
                     <input hidden id={'_id'} required type={"text"} name="customerId" value={props.activeCustomer} disabled />
                 <label>
                     IMEI number: {" "}
