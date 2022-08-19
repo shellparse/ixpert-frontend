@@ -62,3 +62,10 @@ input{
 #last10Customers{
   width: 20%;
 }
+/* #repairSlip{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+} */

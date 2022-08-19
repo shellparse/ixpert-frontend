@@ -72,7 +72,10 @@ export default function RepairSlip (props) {
                 "battery": false,
                 "wirelessCharging": false,
                 "fingerPrint": false,
-                "faceId": false
+                "faceId": false,
+                "speaker": false,
+                "microphone": false,
+                "screws": false
             },
             neededRepairs: [],
             cashier: Userfront.user.name,
@@ -83,15 +86,14 @@ export default function RepairSlip (props) {
         .then((res)=>res.json())
         .then((data)=>{
             document.getElementById('_id').setAttribute('value', data._id)
-            document.getElementById('customerPhone').innerHTML='Phone number: '+data.phoneNumber
-            document.getElementById('customerName').innerHTML='Customer name: '+data.name
-            document.getElementById('customerEmail').innerHTML='Customer email: '+data.email
-            document.getElementById('customerName').removeAttribute('class')
+            document.getElementById('customerPhone').setAttribute('value', data.phoneNumber)
+            document.getElementById('customerName').setAttribute('value', data.name)
+            document.getElementById('customerEmail').setAttribute('value', data.email)
             setInputs((values)=>({...values,customerName:data.name,customerPhone:data.phoneNumber,customerEmail:data.email}))
             fetch(`${API}/slipnumber`).then((res)=>res.json()).then((data)=>{
                 if(data){
                 document.getElementById('slipNumber').setAttribute('value',data.lastSlip+1)
-                setInputs((current)=>({...current,slipNumber: data.lastSlip.toString()}))
+                setInputs((current)=>({...current,slipNumber: (data.lastSlip+1).toString()}))
                 } else {
                     document.getElementById('slipNumber').setAttribute('value',1)
                     setInputs((current)=>({...current,slipNumber: "1"}))
@@ -100,6 +102,7 @@ export default function RepairSlip (props) {
         })
     }
     },[API,activeCustomer])
+
     function liFromRepairs(arr){
         if(arr){
             return arr.map((item,index)=><li key={index}><input type={"button"} value={"X"} onClick={remFromList} className="close" />{item}</li>)
@@ -120,20 +123,31 @@ export default function RepairSlip (props) {
     }
     return (
         <div>
-            create a repair slip: 
-            <form onChange={handleChange} onSubmit={handleSubmit}>
-                <label className="notify-fail" id='customerName'>please select a customer first</label>
-                <label id='customerPhone'></label>
-                <label id={'customerEmail'}></label>
-                    <input hidden id={'_id'} required type={"text"} name="customerId" value={props.activeCustomer} disabled />
+            <div className="notify-fail"></div>     
+            <form id={"repairSlip"} onChange={handleChange} onSubmit={handleSubmit}>
+                <label>create slip:</label>
+            <label>
+                slip number: {" "}
+                <input id={'slipNumber'}  type={'number'} name="slipNumber" disabled required />
+            </label>
+                <label>
+                    Name: 
+                    <input type={"text"} name="customerName" id="customerName" disabled required />
+                </label>
+                <label >
+                    Phone number:
+                    <input type={'text'} name="customerPhone" id="customerPhone" disabled required />
+                </label>
+                <label >
+                    E-mail:
+                    <input type={'text'} name="customerEmail" id="customerEmail" disabled required />
+                </label>
+                <input hidden id={'_id'} required type={"text"} name="customerId" value={props.activeCustomer} disabled />
                 <label>
                     IMEI number: {" "}
                     <input required type={"text"} name="imei" />
                 </label>
-                <label>
-                    slip number: {" "}
-                    <input id={'slipNumber'}  type={'number'} name="slipNumber" disabled required />
-                </label>
+
                 <label>
                     Brand:
                     <input type={"text"}  name={'brand'} required />
@@ -177,6 +191,10 @@ export default function RepairSlip (props) {
                         <input type={"checkbox"} name={'frontGlass'} />
                     </label>
                     <label>
+                        Back Glass:
+                        <input type={"checkbox"} name={'backGlass'}/>
+                    </label>
+                    <label>
                         LCD:
                         <input type={"checkbox"} name={'lcd'} />
                     </label>
@@ -203,6 +221,21 @@ export default function RepairSlip (props) {
                     <label>
                         Face Id:
                         <input type={"checkbox"} name={'faceId'} />
+                    </label>
+                    <label>
+                        Speaker:
+                        <input type={"checkbox"} name={"speaker"} />
+                    </label>
+                    <label>
+                        Microphone:
+                        <input type={"checkbox"} name={"microphone"} />
+                    </label><label>
+                        Screws:
+                        <input type={"checkbox"} name={"screws"} />
+                    </label>
+                    <label>
+                        Notes:
+                        <input type={"text"} name={"notes"} />
                     </label>
                 </fieldset>
                 <input type={"submit"}/>

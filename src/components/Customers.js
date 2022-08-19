@@ -21,8 +21,11 @@ export default function Customers (props) {
             resDiv.innerHTML="customer created !!"
             resDiv.setAttribute('class','notify-success')
             setCustomer({_id:data.insertedId})
+        } else if(data.code===11000) {
+            resDiv.innerHTML="Error: customer already exist"
+            resDiv.setAttribute('class','notify-fail')
         } else {
-            resDiv.innerHTML="Error: check entries"
+            resDiv.innerHTML="Error: customer already exist"
             resDiv.setAttribute('class','notify-fail')
         }
         setTimeout(()=>{
@@ -36,7 +39,7 @@ export default function Customers (props) {
         let name = e.target.name
         setInputs((values) => ({...values,[name]:value}))
     }
-    function handleCustomerClick(e) {
+    function handleCustomerSelect(e) {
         let value = e.target.value
         setCustomer({_id:value})
     }
@@ -44,7 +47,7 @@ export default function Customers (props) {
         fetch(`${API}/customer`).then((res)=>res.json()).then((data)=>{
             if(data){
             const select = document.getElementById('last10Customers')
-            select.addEventListener("change",handleCustomerClick)
+            select.addEventListener("change",handleCustomerSelect)
             data.forEach(customer => {
                 let option = select.appendChild(document.createElement('option'))
                 option.setAttribute('value',customer._id)
