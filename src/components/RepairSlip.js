@@ -123,9 +123,11 @@ export default function RepairSlip (props) {
     }
     return (
         <div>
-            <div className="notify-fail"></div>     
+            {!activeCustomer._id?<div className="notify-fail">please select a customer first</div>:""}   
             <form id={"repairSlip"} onChange={handleChange} onSubmit={handleSubmit}>
                 <label>create slip:</label>
+                <fieldset>
+                    <legend>client details:</legend>
             <label>
                 slip number: {" "}
                 <input id={'slipNumber'}  type={'number'} name="slipNumber" disabled required />
@@ -143,6 +145,9 @@ export default function RepairSlip (props) {
                     <input type={'text'} name="customerEmail" id="customerEmail" disabled required />
                 </label>
                 <input hidden id={'_id'} required type={"text"} name="customerId" value={props.activeCustomer} disabled />
+                </fieldset>
+                <fieldset>
+                    <legend>Phone details:</legend>
                 <label>
                     IMEI number: {" "}
                     <input required type={"text"} name="imei" />
@@ -160,6 +165,7 @@ export default function RepairSlip (props) {
                     Pass code:
                     <input type={"text"} name={'passCode'} />
                 </label>
+                </fieldset>
                 <fieldset>
                     <legend>Repairs Needed:</legend>
                 <label>
@@ -178,58 +184,59 @@ export default function RepairSlip (props) {
                 </label>
                 <fieldset>
                     <legend>Phone Status:</legend>
-                    <label>
+                    <label className="checkboxLabel">
                         Front Camera:
                         <input type={"checkbox"} name={'frontCamera'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Back Camera:
                         <input type={"checkbox"} name={'backCamera'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Front Glass:
                         <input type={"checkbox"} name={'frontGlass'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Back Glass:
                         <input type={"checkbox"} name={'backGlass'}/>
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         LCD:
                         <input type={"checkbox"} name={'lcd'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Network:
                         <input type={"checkbox"} name={'network'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Charging Port:
                         <input type={"checkbox"} name={'chargingPort'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Battery:
                         <input type={"checkbox"} name={'battery'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Wireless Charging:
                         <input type={"checkbox"} name={'wirelessCharging'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Finger Print:
                         <input type={"checkbox"} name={'fingerPrint'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Face Id:
                         <input type={"checkbox"} name={'faceId'} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Speaker:
                         <input type={"checkbox"} name={"speaker"} />
                     </label>
-                    <label>
+                    <label className="checkboxLabel">
                         Microphone:
                         <input type={"checkbox"} name={"microphone"} />
-                    </label><label>
+                    </label>
+                    <label className="checkboxLabel">
                         Screws:
                         <input type={"checkbox"} name={"screws"} />
                     </label>

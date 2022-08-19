@@ -62,10 +62,18 @@ input{
 #last10Customers{
   width: 20%;
 }
-/* #repairSlip{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: end;
-} */
+label{
+  width: 50%;
+  display: inline-block;
+  text-align: right;
+}
+label input{
+  float: right;
+  width: 50%;
+}
+label input[type="checkbox"]{
+  width: auto;
+}
+.checkboxLabel{
+  width: 25%;
+}
