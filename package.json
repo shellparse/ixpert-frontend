@@ -2,7 +2,7 @@
   "name": "ixpert-frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://shellparse.github.io/ixpert-frontend",
+  "homepage": "https://ixpert-front.herokuapp.com/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
