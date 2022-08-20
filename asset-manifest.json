@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ixpert-frontend/static/css/main.949e338f.css",
+    "main.js": "/ixpert-frontend/static/js/main.e9e4dfd1.js",
+    "static/js/787.4cb8643c.chunk.js": "/ixpert-frontend/static/js/787.4cb8643c.chunk.js",
+    "index.html": "/ixpert-frontend/index.html",
+    "main.949e338f.css.map": "/ixpert-frontend/static/css/main.949e338f.css.map",
+    "main.e9e4dfd1.js.map": "/ixpert-frontend/static/js/main.e9e4dfd1.js.map",
+    "787.4cb8643c.chunk.js.map": "/ixpert-frontend/static/js/787.4cb8643c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.949e338f.css",
+    "static/js/main.e9e4dfd1.js"
+  ]
+}
