@@ -77,3 +77,6 @@ label input[type="checkbox"]{
 .checkboxLabel{
   width: 25%;
 }
+img{
+  width: 100px;
+}

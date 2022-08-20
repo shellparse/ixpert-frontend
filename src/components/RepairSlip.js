@@ -32,7 +32,15 @@ export default function RepairSlip (props) {
             resDiv.style='visible'
             resDiv.innerHTML="repair slip created !!"
             resDiv.setAttribute('class','notify-success')
-            fetch(`${API}/slipnumber`,{method:'POST'})
+            fetch(`${API}/slipnumber`,{method:'POST'}).then((res)=>res.json()).then((data)=>{
+                if(data){
+                document.getElementById('slipNumber').setAttribute('value',data.value.lastSlip+1)
+                setInputs((current)=>({...current,slipNumber: (data.value.lastSlip+1).toString()}))
+                } else {
+                    document.getElementById('slipNumber').setAttribute('value',1)
+                    setInputs((current)=>({...current,slipNumber: "1"}))
+                }
+            })
             } else {
                 resDiv.innerHTML="Error: check entries"
                 resDiv.setAttribute('class','notify-fail')
