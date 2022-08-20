@@ -12,7 +12,7 @@ import Customers from './components/Customers'
 import RepairSlip from './components/RepairSlip'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-    <BrowserRouter>
+    <BrowserRouter basename='https://shellparse.github.io/ixpert-frontend'>
       <Routes>
         <Route path="/" element={<RequireAuth><App /></RequireAuth>}>
           <Route index element={<Greeting />} />
