@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, BrowserRouter, Routes, Route } from 'react-router-dom'
 import DashBoard from './routes/dashboard'
 import LogIn from './routes/login'
 import RequireAuth from './components/RequireAuth'
@@ -12,9 +12,9 @@ import Customers from './components/Customers'
 import RepairSlip from './components/RepairSlip'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<RequireAuth><App /></RequireAuth>}>
+        <Route path='/' element={<RequireAuth><App /></RequireAuth>}>
           <Route index element={<Greeting />} />
         </Route>
         <Route path="/dashboard" element={ <RequireAuth><DashBoard /></RequireAuth>}>
