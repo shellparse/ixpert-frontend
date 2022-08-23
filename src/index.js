@@ -10,6 +10,7 @@ import RequireAuth from './components/RequireAuth'
 import Greeting from './components/greeting'
 import Customers from './components/Customers'
 import RepairSlip from './components/RepairSlip'
+import Inventory from './components/Inventory'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <BrowserRouter>
@@ -20,6 +21,7 @@ root.render(
         <Route path="/dashboard" element={ <RequireAuth><DashBoard /></RequireAuth>}>
           <Route path='customers' element={<Customers />}/>
           <Route path='repairslip' element={<RepairSlip />} />
+          <Route path='inventory' element={<Inventory />} />
         </Route>
         <Route path="/login" element={<LogIn />} />
       </Routes>

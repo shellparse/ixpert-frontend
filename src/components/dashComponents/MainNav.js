@@ -7,6 +7,7 @@ export default function MainNav(){
                 <ul>
                     <li><NavLink className={({isActive}) => isActive?"activeNav":""} to={"customers"}>customers</NavLink></li>
                     <li><NavLink className={({isActive}) => isActive?"activeNav":""} to={"repairslip"}>repair slip</NavLink></li>
+                    <li><NavLink className={({isActive}) => isActive?"activeNav":""} to={"inventory"}>inventory</NavLink></li>
                 </ul>
             </nav>
         </div>
