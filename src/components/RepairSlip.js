@@ -62,7 +62,9 @@ export default function RepairSlip (props) {
             return
         }else if (target.type==="checkbox"){
             setInputs((values)=>({...values,checkInStat:{...values.checkInStat,[name]:value==="on"?true:false}}))
-        }else{
+        }else if (name==='notes'){
+            setInputs((values)=>({...values,checkInStat:{...values.checkInStat,[name]:value}}))
+        } else {
         if (name==="total")value=parseFloat(value)
         setInputs((values) => ({...values,[name]:value}))
     }
@@ -169,6 +171,10 @@ export default function RepairSlip (props) {
                     Model:
                     <input type={"text"} name={'model'} required />
                 </label>
+                <label>
+                    Color:
+                    <input type={"text"} name={"color"} />
+                </label> 
                 <label>
                     Pass code:
                     <input type={"text"} name={'passCode'} />
