@@ -12,7 +12,7 @@ export default function DashBoard() {
         <div className='dashboard'>
             <MainNav />
             <Header />
-            <Main activeCustomer={activeCustomer} setCustomer={setActiveCustomer}/>
+            <Main activeCustomer={activeCustomer} setCustomer={setActiveCustomer}/> 
             <SecondaryNav />
             <Footer />
         </div>

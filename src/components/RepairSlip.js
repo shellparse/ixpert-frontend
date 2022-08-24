@@ -194,7 +194,7 @@ export default function RepairSlip (props) {
                 </fieldset>
                 <label>
                     Total:
-                    <input id={"total"} type={'number'} name={'total'} required />
+                    <input id={"total"} type={'number'} step="0.01" name={'total'} required />
                 </label>
                 <fieldset>
                     <legend>Phone Status:</legend>

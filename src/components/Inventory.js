@@ -49,7 +49,7 @@ export default function Inventory () {
                     </label>
                     <label>
                         Price:
-                        <input type={"number"} name={"price"} id={"price"} required />
+                        <input type={"number"} name={"price"} step="0.01" id={"price"} required />
                     </label>
                     <label>
                         Quantity:
