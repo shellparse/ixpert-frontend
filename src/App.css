@@ -52,6 +52,7 @@ input{
 }
 #last10Customers{
   overflow: hidden;
+  width: 20%;
 }
 .close{
   color:red;
@@ -59,8 +60,8 @@ input{
   padding: 0;
   margin: 5px;
 }
-#last10Customers{
-  width: 20%;
+#inventoryNav{
+ overflow: hidden;
 }
 label{
   width: 50%;

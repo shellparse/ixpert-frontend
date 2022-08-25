@@ -11,7 +11,6 @@ import Greeting from './components/greeting'
 import Customers from './components/Customers'
 import RepairSlip from './components/RepairSlip'
 import Inventory from './components/Inventory'
-import InventoryNav from './components/dashComponents/InventoryNav'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <BrowserRouter>
@@ -25,11 +24,6 @@ root.render(
           <Route path='inventory' element={<Inventory />} />
         </Route>
         <Route path="/login" element={<LogIn />} />
-      </Routes>
-      <Routes>
-        <Route path='/' element={<InventoryNav />}>
-          
-        </Route>
       </Routes>
     </BrowserRouter>
 )

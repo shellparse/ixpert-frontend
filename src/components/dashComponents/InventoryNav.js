@@ -1,16 +1,25 @@
 import { useEffect } from "react"
-let inventoryList=[];
-export default function InventoryNav () {
-    useEffect(()=>{
+import React from "react"
+export default function InventoryNav ({inventoryNav, setInventoryNav, activeItem, setActiveItem}) {
+     useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
         .then((data)=>{
-            inventoryList=data.map((item)=><option key={item.sku}>{item.name}</option>)
+            if(data){
+                setInventoryNav(()=>([...data]))
+            }
         })
-    },[])
+     
+    },[setInventoryNav])
+
+    function handleNavSelection (e){
+        let target=e.target
+        let value = target.value
+        setActiveItem(inventoryNav.filter((item)=>item.sku===value)[0])
+    }
     return (
         <div>
-            <select>
-                {inventoryList}
+            <select size={inventoryNav.length} id={"inventoryNav"} onChange={handleNavSelection}>
+                {inventoryNav.map((item)=><option key={item.sku} value={item.sku}>{item.name}</option>)}
             </select>
         </div>
     )

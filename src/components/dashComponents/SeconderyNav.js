@@ -1,9 +1,20 @@
-import { Outlet } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import InventoryNav from './InventoryNav'
+export default function SecondaryNav({inventoryNav, setInventoryNav, activeItem, setActiveItem}){
+    const location = useLocation()
 
-export default function SecondaryNav(props){
+    if (location.pathname==='/dashboard/inventory'){
     return(
         <div className="dashSecondaryNav">
-            sec
+            <InventoryNav inventoryNav={inventoryNav} setInventoryNav={setInventoryNav} activeItem={activeItem} setActiveItem={setActiveItem}  />
         </div>
     )
+    } else {
+        return (
+        <div className="dashSecondaryNav">
+            
+        </div>
+        )
+    }
+
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useOutletContext } from "react-router-dom"
 import Userfront from "@userfront/react"
 export default function RepairSlip (props) {
-    const [activeCustomer,setCustomer]=useOutletContext()
+    const activeCustomer=useOutletContext()[0]
     const API = process.env.REACT_APP_API_URI
     let [inputs,setInputs] = useState({})
 

@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import { useEffect } from "react";
-export default function Customers (props) {
-    const [activeCustomer, setCustomer] = useOutletContext();
+export default function Customers () {
+    const setCustomer = useOutletContext()[1];
     const API = process.env.REACT_APP_API_URI
     let [inputs,setInputs] = useState({})
     function handleSubmit(e) {
@@ -39,11 +39,12 @@ export default function Customers (props) {
         let name = e.target.name
         setInputs((values) => ({...values,[name]:value}))
     }
-    function handleCustomerSelect(e) {
-        let value = e.target.value
-        setCustomer({_id:value})
-    }
+
     useEffect(()=>{
+        function handleCustomerSelect(e) {
+            let value = e.target.value
+            setCustomer({_id:value})
+        }
         fetch(`${API}/customer`).then((res)=>res.json()).then((data)=>{
             if(data){
             const select = document.getElementById('last10Customers')
@@ -55,7 +56,7 @@ export default function Customers (props) {
             });
             }
         })
-    },[])
+    },[API,setCustomer])
     return (
         <div>
             create a customer: 
