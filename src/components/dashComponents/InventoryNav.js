@@ -19,6 +19,7 @@ export default function InventoryNav ({inventoryNav, setInventoryNav, activeItem
     return (
         <div>
             <select size={inventoryNav.length} id={"inventoryNav"} onChange={handleNavSelection}>
+                <option hidden></option>
                 {inventoryNav.map((item)=><option key={item.sku} value={item.sku}>{item.name}</option>)}
             </select>
         </div>

@@ -81,3 +81,31 @@ label input[type="checkbox"]{
 img{
   width: 100px;
 }
+.tabs{
+}
+.tabList{
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.tab{
+  background-color: rgb(255, 247, 236);
+  border: groove 1px;
+  list-style: none;
+  padding: 5px;
+  cursor: pointer;
+}
+.tabPanel{
+
+}
+.selectedTab{
+  background-color: rgb(250, 232, 208);
+  border-style: solid;
+  border-bottom: none;
+  outline-style: none;
+}
+.selectedTabPanel{
+  background-color: rgb(250, 232, 208);
+  padding-top: 15px;
+
+}

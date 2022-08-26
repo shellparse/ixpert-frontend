@@ -10,7 +10,6 @@ export default function DashBoard() {
     const [inventoryNav, setInventoryNav] = useState([]) 
     const [activeCustomer, setActiveCustomer] = useState({})
     const [activeItem, setActiveItem] = useState({})
-    console.log(activeItem)
     return (
         <div className='dashboard'>
             <MainNav />

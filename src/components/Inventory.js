@@ -1,11 +1,18 @@
 import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import { useReactTable } from '@tanstack/react-table'
 
 export default function Inventory () {
     const [inputs,setInputs] = useState({})
+    const inventoryNav = useOutletContext()[2]
     const setInventoryNav = useOutletContext()[3]
     const activeItem = useOutletContext()[4]
-    console.log(useOutletContext())
+    const options={
+
+    }
+    const table = useReactTable({data: inventoryNav, columns:[{header:'SKU',accessorKey:'sku'},{header: 'name',accessorKey:'name'}]})
+    console.log(table.getAllColumns())
     function handleSubmit(e) {
         e.preventDefault()
         fetch(`${process.env.REACT_APP_API_URI}/inventory`,{
@@ -45,10 +52,16 @@ export default function Inventory () {
         setInputs((values)=>({...values,[name]:value}))
     }
     return (
+        
         <div>
-            <form onChange={handleChange} onSubmit={handleSubmit} id="createItem">
-                <fieldset>
-                    <legend>Create stock item</legend>
+              <Tabs className={'tabs'} selectedTabClassName={"selectedTab"} selectedTabPanelClassName={"selectedTabPanel"}>
+    <TabList className={"tabList"}>
+      <Tab className={"tab"}>Create stock item</Tab>
+      <Tab  className={"tab"}>Browse stock items</Tab>
+    </TabList>
+
+    <TabPanel className={"tabPanel"}>
+    <form onChange={handleChange} onSubmit={handleSubmit} id="createItem">
                     <label>
                         SKU:
                         <input type={"text"} name={"sku"} id={"sku"} required />
@@ -98,63 +111,13 @@ export default function Inventory () {
                         <input type={"text"} name={"color"} id={"color"} />
                     </label>
                     <input type={"submit"} name={"submit"} value={"create"} />
-                </fieldset>
-            </form>
-            <form id={'editItem'}>
-                <fieldset>
-                    <legend>Edit stock item:</legend>
-                    <label>
-                        SKU:
-                        <input type={"text"} name={"sku"} disabled value={activeItem.sku} />
-                    </label>
-                    <label>
-                        Name:
-                        <input type={"text"} name={"name"} value={activeItem.name} />
-                    </label>
-                    <label>
-                        Category:
-                        <input type={"text"} name={"category"}  value={activeItem.category} />
-                    </label>
-                    <label>
-                        Description:
-                        <input type={"text"} name={"description"} value={activeItem.description}/>
-                    </label>
-                    <label>
-                        Price:
-                        <input type={"number"} name={"price"} step="0.01" value={activeItem.price} />
-                    </label>
-                    <label>
-                        Quantity:
-                        <input type={"number"} name={"quantity"} value={activeItem.quantity}/>
-                    </label>
-                    <label>
-                        Brand:
-                        <input type={"text"} name={"brand"} value={activeItem.brand} />
-                    </label>
-                    <label>
-                        Model:
-                        <input type={"text"} name={"model"} value={activeItem.model}  />
-                    </label>
-                    <label>
-                        IMEI:
-                        <input type={"text"} name={"imei"} value={activeItem.imei}  />
-                    </label>
-                    <label>
-                        Ram:
-                        <input type={"text"} name={"ram"} value={activeItem.ram} />
-                    </label>
-                    <label>
-                        Storage:
-                        <input type={"text"} name={"storage"} value={activeItem.storage} />
-                    </label>
-                    <label>
-                        Color:
-                        <input type={"text"} name={"color"} value={activeItem.color} />
-                    </label>
-                    <input type={"submit"} name={"submit"} value={"save"} />
-                </fieldset>
+                
             </form>
             <div id="response"></div>
+    </TabPanel>
+    <TabPanel className={"tabPanel"}>
+    </TabPanel>
+  </Tabs>
         </div>
     )
 }
