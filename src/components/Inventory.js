@@ -1,21 +1,22 @@
 import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
-import { useReactTable, flexRender, getCoreRowModel, getSortedRowModel, SortingState } from '@tanstack/react-table'
+import {createColumnHelper,
+flexRender,
+getCoreRowModel,
+useReactTable} from '@tanstack/react-table'
 
+const columnHelper = createColumnHelper()
+const columns = [
+    columnHelper.accessor('sku',{cell:info=>info.getValue()})
+]
 export default function Inventory () {
     const [inputs,setInputs] = useState({})
     const inventoryNav = useOutletContext()[2]
     const setInventoryNav = useOutletContext()[3]
     const activeItem = useOutletContext()[4]
-    const [sorting, setSorting] = useState([])
-    const table = useReactTable({data: inventoryNav, columns:[{header:'SKU',accessorKey:'sku'},{header: 'Name',accessorKey:'name'},{header:'Price',accessorKey:'price', sortingFn:"alphanumeric", enableSorting:true, sortDescFirst:true}],
-                                 getCoreRowModel: getCoreRowModel(),
-                                state: {sorting},
-                                onSortingChange:setSorting,
-                                getSortedRowModel:getSortedRowModel()})
-    console.log(table.getRowModel())
-
+    const table=useReactTable({data:inventoryNav})
+    console.log(table.getCoreRowModel())
     function handleSubmit(e) {
         e.preventDefault()
         fetch(`${process.env.REACT_APP_API_URI}/inventory`,{
@@ -118,49 +119,7 @@ export default function Inventory () {
             <div id="response"></div>
             </TabPanel>
             <TabPanel className={"tabPanel"}>
-                <table>
-                    <thead>
-                        {table.getHeaderGroups().map(headerGroup => (
-                        <tr key={headerGroup.id}>
-                            {headerGroup.headers.map(header => (
-                            <th key={header.id}>
-                                {header.isPlaceholder
-                                ? null
-                                : (
-                                    <div
-                        {...{
-                          className: header.column.getCanSort()
-                            ? 'cursor-pointer select-none'
-                            : '',
-                          onClick: header.column.getToggleSortingHandler(),
-                        }}
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {{
-                          asc: ' 🔼',
-                          desc: ' 🔽',
-                        }[header.column.getIsSorted()] ?? null}
-                      </div>)}
-                            </th>
-                            ))}
-                        </tr>
-                        ))}
-                    </thead>
-                    <tbody>
-                        {table.getRowModel().rows.map(row => (
-                        <tr key={row.id}>
-                        {row.getVisibleCells().map(cell => (
-                            <td key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                            </td>
-                        ))}
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+
             </TabPanel>
             </Tabs>
         </div>

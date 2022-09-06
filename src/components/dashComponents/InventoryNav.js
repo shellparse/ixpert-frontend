@@ -4,7 +4,7 @@ export default function InventoryNav ({inventoryNav, setInventoryNav, activeItem
      useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
         .then((data)=>{
-            if(data){
+            if(data.length>0){
                 setInventoryNav(()=>([...data]))
             }
         })
