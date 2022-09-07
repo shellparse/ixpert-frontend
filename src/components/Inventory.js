@@ -2,21 +2,23 @@ import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import {createColumnHelper,
-flexRender,
-getCoreRowModel,
-useReactTable} from '@tanstack/react-table'
+        flexRender,
+        getCoreRowModel,
+        useReactTable} from '@tanstack/react-table'
 
 const columnHelper = createColumnHelper()
 const columns = [
-    columnHelper.accessor('sku',{cell:info=>info.getValue()})
+    columnHelper.accessor('sku'),
+    columnHelper.accessor('name'),
+    columnHelper.accessor('price')
 ]
 export default function Inventory () {
     const [inputs,setInputs] = useState({})
     const inventoryNav = useOutletContext()[2]
     const setInventoryNav = useOutletContext()[3]
     const activeItem = useOutletContext()[4]
-    const table=useReactTable({data:inventoryNav})
-    console.log(table.getCoreRowModel())
+    const table=useReactTable({data:inventoryNav, columns:columns, getCoreRowModel: getCoreRowModel() })
+    console.log(table.getRowModel())
     function handleSubmit(e) {
         e.preventDefault()
         fetch(`${process.env.REACT_APP_API_URI}/inventory`,{
@@ -119,7 +121,9 @@ export default function Inventory () {
             <div id="response"></div>
             </TabPanel>
             <TabPanel className={"tabPanel"}>
+                <table>
 
+                </table>
             </TabPanel>
             </Tabs>
         </div>

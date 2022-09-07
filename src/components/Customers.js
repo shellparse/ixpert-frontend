@@ -45,8 +45,10 @@ export default function Customers () {
             let value = e.target.value
             setCustomer({_id:value})
         }
-        fetch(`${API}/customer`).then((res)=>res.json()).then((data)=>{
+        fetch(`${API}/customer`).then((res)=>res.json())
+        .then((data)=>{
             if(data){
+            console.log(data)
             const select = document.getElementById('last10Customers')
             select.addEventListener("change",handleCustomerSelect)
             data.forEach(customer => {
