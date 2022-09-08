@@ -109,7 +109,7 @@ img{
   padding-top: 15px;
 
 }
-/* 
+
 thead,
 tfoot {
     background-color: #3f87a6;
@@ -141,7 +141,7 @@ th {
 
 td {
     text-align: center;
-} */
+}
 .cursor-pointer{
   cursor: pointer;
 }

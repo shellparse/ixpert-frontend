@@ -1,10 +1,6 @@
-import { useState } from "react"
-import { useOutletContext } from "react-router-dom"
+import { useState, useEffect } from "react"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
-import {createColumnHelper,
-        flexRender,
-        getCoreRowModel,
-        useReactTable} from '@tanstack/react-table'
+import {createColumnHelper, flexRender, getCoreRowModel, useReactTable} from '@tanstack/react-table'
 
 const columnHelper = createColumnHelper()
 const columns = [
@@ -13,12 +9,21 @@ const columns = [
     columnHelper.accessor('price')
 ]
 export default function Inventory () {
+    const [inventoryNav, setInventoryNav] = useState([]) 
     const [inputs,setInputs] = useState({})
-    const inventoryNav = useOutletContext()[2]
-    const setInventoryNav = useOutletContext()[3]
-    const activeItem = useOutletContext()[4]
+    let invData
     const table=useReactTable({data:inventoryNav, columns:columns, getCoreRowModel: getCoreRowModel() })
-    console.log(table.getRowModel())
+    useEffect(()=>{
+        fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
+        .then((data)=>{
+            if(data.length>0){
+                //setInventoryNav(()=>([...data]))
+                invData=[...data]
+            }
+        })
+    },[])
+    console.log(table.getRowModel().rows[0])
+    console.log(inputs)
     function handleSubmit(e) {
         e.preventDefault()
         fetch(`${process.env.REACT_APP_API_URI}/inventory`,{
@@ -122,7 +127,25 @@ export default function Inventory () {
             </TabPanel>
             <TabPanel className={"tabPanel"}>
                 <table>
-
+                    <thead>
+                        {table.getHeaderGroups().map((headerGroup)=>{
+                            return <tr key={headerGroup.id}>{headerGroup.headers.map((header)=>{
+                                return <th key={header.id}>{header.id}</th>
+                            })}</tr>
+                        })}
+                    </thead>
+                    <tbody>
+                        {table.getRowModel().rows.map((row)=>{
+                            return <tr key={row.id}>{row.getAllCells().map((cell)=>{
+                                return <td key={cell.id}>{cell.getValue()}</td>
+                            })}</tr>
+                        })}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tfoot>
                 </table>
             </TabPanel>
             </Tabs>

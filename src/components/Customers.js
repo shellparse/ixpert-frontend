@@ -48,7 +48,6 @@ export default function Customers () {
         fetch(`${API}/customer`).then((res)=>res.json())
         .then((data)=>{
             if(data){
-            console.log(data)
             const select = document.getElementById('last10Customers')
             select.addEventListener("change",handleCustomerSelect)
             data.forEach(customer => {
