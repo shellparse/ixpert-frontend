@@ -1,29 +1,23 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
-import {createColumnHelper, flexRender, getCoreRowModel, useReactTable} from '@tanstack/react-table'
+import InventoryTable from "./InventoryTable"
 
-const columnHelper = createColumnHelper()
-const columns = [
-    columnHelper.accessor('sku'),
-    columnHelper.accessor('name'),
-    columnHelper.accessor('price')
-]
 export default function Inventory () {
-    const [inventoryNav, setInventoryNav] = useState([]) 
+    const [inventoryNav, setInventoryNav] = useState([])
     const [inputs,setInputs] = useState({})
-    let invData
-    const table=useReactTable({data:inventoryNav, columns:columns, getCoreRowModel: getCoreRowModel() })
+    const tableRef = useRef([])
+    console.log('outside effect')
     useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
         .then((data)=>{
             if(data.length>0){
                 //setInventoryNav(()=>([...data]))
-                invData=[...data]
+                tableRef.current = [...data]
+                console.log(tableRef.current)
             }
         })
     },[])
-    console.log(table.getRowModel().rows[0])
-    console.log(inputs)
+
     function handleSubmit(e) {
         e.preventDefault()
         fetch(`${process.env.REACT_APP_API_URI}/inventory`,{
@@ -55,6 +49,7 @@ export default function Inventory () {
             },3000)
         })
     }
+
     function handleChange(e) {
         let target = e.target
         let name = target.name
@@ -62,15 +57,14 @@ export default function Inventory () {
         if(e.target.type==="number")value=parseFloat(value)
         setInputs((values)=>({...values,[name]:value}))
     }
+
     return (
-        
         <div>
               <Tabs className={'tabs'} selectedTabClassName={"selectedTab"} selectedTabPanelClassName={"selectedTabPanel"}>
                 <TabList className={"tabList"}>
                     <Tab className={"tab"}>Create stock item</Tab>
                     <Tab  className={"tab"}>Browse stock items</Tab>
                 </TabList>
-
                 <TabPanel className={"tabPanel"}>
                     <form onChange={handleChange} onSubmit={handleSubmit} id="createItem">
                         <label>
@@ -126,27 +120,7 @@ export default function Inventory () {
             <div id="response"></div>
             </TabPanel>
             <TabPanel className={"tabPanel"}>
-                <table>
-                    <thead>
-                        {table.getHeaderGroups().map((headerGroup)=>{
-                            return <tr key={headerGroup.id}>{headerGroup.headers.map((header)=>{
-                                return <th key={header.id}>{header.id}</th>
-                            })}</tr>
-                        })}
-                    </thead>
-                    <tbody>
-                        {table.getRowModel().rows.map((row)=>{
-                            return <tr key={row.id}>{row.getAllCells().map((cell)=>{
-                                return <td key={cell.id}>{cell.getValue()}</td>
-                            })}</tr>
-                        })}
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td></td>
-                        </tr>
-                    </tfoot>
-                </table>
+                <InventoryTable data={tableRef.current} />
             </TabPanel>
             </Tabs>
         </div>
