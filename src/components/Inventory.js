@@ -1,19 +1,17 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import InventoryTable from "./InventoryTable"
 
 export default function Inventory () {
     const [inventoryNav, setInventoryNav] = useState([])
     const [inputs,setInputs] = useState({})
-    const tableRef = useRef([])
     console.log('outside effect')
     useEffect(()=>{
+        console.log('inside effect')
         fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
         .then((data)=>{
             if(data.length>0){
-                //setInventoryNav(()=>([...data]))
-                tableRef.current = [...data]
-                console.log(tableRef.current)
+                setInventoryNav(()=>([...data]))
             }
         })
     },[])
@@ -120,7 +118,7 @@ export default function Inventory () {
             <div id="response"></div>
             </TabPanel>
             <TabPanel className={"tabPanel"}>
-                <InventoryTable data={tableRef.current} />
+                <InventoryTable data={inventoryNav} />
             </TabPanel>
             </Tabs>
         </div>

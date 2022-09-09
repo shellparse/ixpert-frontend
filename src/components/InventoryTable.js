@@ -5,7 +5,9 @@ const columns = [
     columnHelper.accessor('name'),
     columnHelper.accessor('price')
 ]
+
 export default function InventoryTable (props) {
+    console.log(props.data)
     const table=useReactTable({data:props.data, columns:columns, getCoreRowModel: getCoreRowModel() })
     return (
         <table>
@@ -24,9 +26,7 @@ export default function InventoryTable (props) {
                 })}
             </tbody>
             <tfoot>
-                <tr>
-                    <td></td>
-                </tr>
+               
             </tfoot>
         </table>
     )
