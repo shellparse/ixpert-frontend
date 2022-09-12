@@ -60,9 +60,9 @@ input{
   padding: 0;
   margin: 5px;
 }
-#inventoryNav{
+/* #inventoryNav{
  overflow: hidden;
-}
+} */
 label{
   width: 50%;
   display: inline-block;
@@ -95,9 +95,10 @@ img{
   padding: 5px;
   cursor: pointer;
 }
-.tabPanel:last-of-type {
+/* .tabPanel:last-of-type {
   overflow-x: auto;
-}
+  overflow-y: auto;
+} */
 .selectedTab{
   background-color: rgb(250, 232, 208);
   border-style: solid;
@@ -109,7 +110,7 @@ img{
   padding-top: 15px;
 
 }
-
+/* 
 thead,
 tfoot {
     background-color: #3f87a6;
@@ -136,12 +137,11 @@ table {
 td,
 th {
     border: 1px solid rgb(190, 190, 190);
-    padding: 5px 5px;
 }
 
 td {
     text-align: center;
-}
+} */
 .cursor-pointer{
   cursor: pointer;
 }
