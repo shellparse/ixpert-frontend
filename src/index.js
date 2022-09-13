@@ -11,8 +11,21 @@ import Greeting from './components/greeting'
 import Customers from './components/Customers'
 import RepairSlip from './components/RepairSlip'
 import Inventory from './components/Inventory'
+import { ThemeProvider,createTheme } from '@mui/material/styles'
 const root = ReactDOM.createRoot(document.getElementById('root'))
+const theme = createTheme({
+  palette: {
+    type: 'light',
+    primary: {
+      main: '#3f51b5',
+    },
+    secondary: {
+      main: '#EC1C24',
+    }
+}})
+
 root.render(
+  <ThemeProvider theme={theme}>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<RequireAuth><App /></RequireAuth>}>
@@ -26,6 +39,7 @@ root.render(
         <Route path="/login" element={<LogIn />} />
       </Routes>
     </BrowserRouter>
+   </ThemeProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function

@@ -10,7 +10,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-
 const columnHelper = createColumnHelper()
 const columns = [
     columnHelper.display({
@@ -58,10 +57,26 @@ const columns = [
 
 export default function InventoryTable (props) {
     const [sorting, setSorting] = useState([])
+
     const table=useReactTable({data:props.data, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting })
     return (
-        <TableContainer component={Paper}>
-            <Table sx={{minWidth:650}} aria-label='simple table'>
+
+        <TableContainer component={Paper} sx={
+            {
+                height:400,
+                "&::-webkit-scrollbar": {
+                    width: 5,
+                    height: 5,
+                    borderRadius:2
+                },
+                "&::-webkit-scrollbar-track": {
+                    backgroundColor: 'contrastText'
+          },
+          "&::-webkit-scrollbar-thumb": {
+            backgroundColor: 'primary.main',
+            borderRadius: 2
+        }}} >
+            <Table sx={{height:'max-content'}}>
                 <TableHead>
                     {table.getHeaderGroups().map((headerGroup)=>{
                         return <TableRow key={headerGroup.id}>{headerGroup.headers.map((header)=>{
@@ -69,10 +84,10 @@ export default function InventoryTable (props) {
                                 flexRender(
                                     header.column.columnDef.header,
                                     header.getContext()
-                                )}{{
-                                    asc: <ArrowUpward />,
-                                    desc: <ArrowDownward />,
-                                }[header.column.getIsSorted()] ?? null}</TableCell>
+                                    )}{{
+                                        asc: <ArrowUpward />,
+                                        desc: <ArrowDownward />,
+                                    }[header.column.getIsSorted()] ?? null}</TableCell>
                         })}</TableRow>
                     })}
                 </TableHead>
