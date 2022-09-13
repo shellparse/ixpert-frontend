@@ -93,6 +93,7 @@ export default function InventoryTable (props) {
                 </TableHead>
                 <TableBody>
                     {table.getRowModel().rows.map((row)=>{
+                        console.log(row)
                         return <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} style={row.id%2===0?{backgroundColor:'#d7edff'}:{backgroundColor:''}} key={row.id}>{row.getVisibleCells().map((cell)=>{
                             return <TableCell key={cell.id}>{
                                 flexRender(cell.column.columnDef.cell,
