@@ -1,11 +1,9 @@
-export default function RowActions ({row}) {
+import IconButton from '@mui/material/IconButton'
+import EditIcon from '@mui/icons-material/Edit';
+export default function RowActions ({onClick}) {
     
-    function handleClick(e){
-        alert('you are now editing row :'+row.id)
-    }
+
     return (
-    <>
-    <button onClick={handleClick} name={row.id}>edit</button>
-    </>
+    <IconButton onClick={onClick}><EditIcon/></IconButton>
     )
 }

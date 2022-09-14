@@ -138,6 +138,3 @@ white-space: nowrap;
 .cursor-pointer{
   cursor: pointer;
 }
-tr:nth-of-type(even){
-  background-color: orange;
-}

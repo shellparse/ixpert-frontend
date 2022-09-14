@@ -15,7 +15,13 @@ const columns = [
     columnHelper.display({
         header:()=>'Actions',
         id: 'actions',
-        cell: props => <RowActions row={props.row} />,
+        cell: ({getValue, row:{index}, column:{id}, table}) => {
+            const clickTest = ()=>{
+                table.options.meta.alertMe(getValue(), index, id)
+            }
+        
+            return (<RowActions onClick={clickTest}/>)
+    },
       }),
     columnHelper.accessor('sku',{
         header:()=>'SKU',
@@ -54,11 +60,15 @@ const columns = [
         header:()=>'Storage'
     })
 ]
-
+function alertMe(value, index, id){
+    console.log('value is :'+value)
+    console.log('index is :'+index)
+    console.log('id is :'+id)
+}
 export default function InventoryTable (props) {
     const [sorting, setSorting] = useState([])
 
-    const table=useReactTable({data:props.data, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting })
+    const table=useReactTable({data:props.data, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{alertMe} })
     return (
 
         <TableContainer component={Paper} sx={
@@ -76,7 +86,7 @@ export default function InventoryTable (props) {
             backgroundColor: 'primary.main',
             borderRadius: 2
         }}} >
-            <Table sx={{height:'max-content'}}>
+            <Table stickyHeader sx={{height:'max-content'}}>
                 <TableHead>
                     {table.getHeaderGroups().map((headerGroup)=>{
                         return <TableRow key={headerGroup.id}>{headerGroup.headers.map((header)=>{
@@ -93,8 +103,7 @@ export default function InventoryTable (props) {
                 </TableHead>
                 <TableBody>
                     {table.getRowModel().rows.map((row)=>{
-                        console.log(row)
-                        return <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }} style={row.id%2===0?{backgroundColor:'#d7edff'}:{backgroundColor:''}} key={row.id}>{row.getVisibleCells().map((cell)=>{
+                        return <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 }, '&:nth-of-type(odd)':{backgroundColor:'primary.lighter'}, ':hover':{backgroundColor:'primary.light'},'transition':'ease 0.2s' }} key={row.id}>{row.getVisibleCells().map((cell)=>{
                             return <TableCell key={cell.id}>{
                                 flexRender(cell.column.columnDef.cell,
                                     cell.getContext()

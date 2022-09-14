@@ -18,10 +18,13 @@ const theme = createTheme({
     type: 'light',
     primary: {
       main: '#3f51b5',
+      light:'#BBC2E5AA',
+      dark:'#1F285A',
+      lighter:'#BBC2E544'
     },
     secondary: {
       main: '#EC1C24',
-    }
+    },
 }})
 
 root.render(
