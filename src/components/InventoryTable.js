@@ -15,12 +15,18 @@ const columns = [
     columnHelper.display({
         header:()=>'Actions',
         id: 'actions',
-        cell: ({getValue, row:{index}, column:{id}, table}) => {
-            const clickTest = ()=>{
-                table.options.meta.alertMe(getValue(), index, id)
+        cell: ({getValue, row:{index,getAllCells}, column:{id}, table, row}) => {
+            const editHandler = (e)=>{
+                table.options.meta.editRow(getValue(), index, id, getAllCells(),e)
+            }
+            const applyHandler = (e) => {
+                table.options.meta.saveRowChanges(e)
+            }
+            const discardHandler = (e) =>{
+                table.options.meta.discardRowChanges(e)
             }
         
-            return (<RowActions onClick={clickTest}/>)
+            return (<RowActions onEdit={editHandler} onApply={applyHandler} onDiscard={discardHandler} />)
     },
       }),
     columnHelper.accessor('sku',{
@@ -60,15 +66,34 @@ const columns = [
         header:()=>'Storage'
     })
 ]
-function alertMe(value, index, id){
-    console.log('value is :'+value)
-    console.log('index is :'+index)
-    console.log('id is :'+id)
+function editRow(value, index, id, row, event){
+    let parent = event.target.closest('tr')
+    let cellsArray = Array.from(parent.children)
+    cellsArray.forEach((tableCell,index)=>{
+        if(index!==0){
+            let input = document.createElement('input')
+            input.value=tableCell.innerHTML
+            tableCell.appendChild(input)
+            if(tableCell.childNodes.length===2)
+                tableCell.firstChild.remove()
+        }
+    })
+}
+function saveRowChanges(){
+
+}
+function discardRowChanges(event){
+    let parent = event.target.closest('tr')
+    let cellsArray = Array.from(parent.children)
+    cellsArray.forEach((tableCell,index) =>{
+        if(index!==0){
+            tableCell.innerHTML=tableCell.firstElementChild.value
+        }
+    }) 
 }
 export default function InventoryTable (props) {
     const [sorting, setSorting] = useState([])
-
-    const table=useReactTable({data:props.data, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{alertMe} })
+    const table=useReactTable({data:props.data, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{editRow, saveRowChanges, discardRowChanges} })
     return (
 
         <TableContainer component={Paper} sx={
