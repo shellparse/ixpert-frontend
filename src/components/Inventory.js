@@ -5,9 +5,7 @@ import InventoryTable from "./InventoryTable"
 export default function Inventory () {
     const [inventoryNav, setInventoryNav] = useState([])
     const [inputs,setInputs] = useState({})
-    console.log('outside effect')
     useEffect(()=>{
-        console.log('inside effect')
         fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
         .then((data)=>{
             if(data.length>0){
@@ -118,7 +116,7 @@ export default function Inventory () {
             <div id="response"></div>
             </TabPanel>
             <TabPanel className={"tabPanel"}>
-                <InventoryTable data={inventoryNav} />
+                <InventoryTable data={inventoryNav} setData={setInventoryNav} />
             </TabPanel>
             </Tabs>
         </div>

@@ -3,6 +3,8 @@
         "imei",
         "Ixpert",
         "slipnumber",
+        "tanstack",
         "Userfront"
-    ]
+    ],
+    "workbench.colorTheme": "Tomorrow Night Blue"
 }

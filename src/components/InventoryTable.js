@@ -10,23 +10,22 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
+import EditableCell from './EditableCell'
+import CircleIcon from '@mui/icons-material/Circle';
 const columnHelper = createColumnHelper()
+const defaultColumn = {
+    cell:(props) => {
+        return (
+            <EditableCell isEdit={props.table.options.meta.isEdit} value={props.cell.getValue()} rowId={props.row.id} rowToUpdate={props.table.options.meta.rowToUpdate} setRowToUpdate={props.table.options.meta.setRowToUpdate} discardedRow={props.table.options.meta.discardedRow} setDiscardedRow={props.table.options.meta.setDiscardedRow} colId={props.column.id} />
+        )
+    }
+}
 const columns = [
     columnHelper.display({
         header:()=>'Actions',
         id: 'actions',
-        cell: ({getValue, row:{index,getAllCells}, column:{id}, table, row}) => {
-            const editHandler = (e)=>{
-                table.options.meta.editRow(getValue(), index, id, getAllCells(),e)
-            }
-            const applyHandler = (e) => {
-                table.options.meta.saveRowChanges(e)
-            }
-            const discardHandler = (e) =>{
-                table.options.meta.discardRowChanges(e)
-            }
-        
-            return (<RowActions onEdit={editHandler} onApply={applyHandler} onDiscard={discardHandler} />)
+        cell: ({row:{id,original}, table,row }) => {
+            return (<RowActions isEdit={table.options.meta.isEdit} setIsEdit={table.options.meta.setIsEdit} rowId={id} rowToUpdate={table.options.meta.rowToUpdate} setRowToUpdate={table.options.meta.setRowToUpdate} discardedRow={table.options.meta.discardedRow} setDiscardedRow={table.options.meta.setDiscardedRow} original={original} table={table} />)
     },
       }),
     columnHelper.accessor('sku',{
@@ -36,7 +35,14 @@ const columns = [
         header:()=>'Name'
     }),
     columnHelper.accessor('color',{
-        header:()=>'Color'
+        header:()=>'Color',
+        cell:(props)=>{
+            if(props.row.id===props.table.options.meta.isEdit)
+            {
+             return <EditableCell isEdit={props.table.options.meta.isEdit} value={props.cell.getValue()} rowId={props.row.id} rowToUpdate={props.table.options.meta.rowToUpdate} setRowToUpdate={props.table.options.meta.setRowToUpdate} discardedRow={props.table.options.meta.discardedRow} setDiscardedRow={props.table.options.meta.setDiscardedRow} colId={props.column.id} /> 
+            }
+            return <CircleIcon sx={{color:props.getValue()}} />
+        }
     }),
     columnHelper.accessor('price',{
         header:()=>'Price'
@@ -66,34 +72,13 @@ const columns = [
         header:()=>'Storage'
     })
 ]
-function editRow(value, index, id, row, event){
-    let parent = event.target.closest('tr')
-    let cellsArray = Array.from(parent.children)
-    cellsArray.forEach((tableCell,index)=>{
-        if(index!==0){
-            let input = document.createElement('input')
-            input.value=tableCell.innerHTML
-            tableCell.appendChild(input)
-            if(tableCell.childNodes.length===2)
-                tableCell.firstChild.remove()
-        }
-    })
-}
-function saveRowChanges(){
 
-}
-function discardRowChanges(event){
-    let parent = event.target.closest('tr')
-    let cellsArray = Array.from(parent.children)
-    cellsArray.forEach((tableCell,index) =>{
-        if(index!==0){
-            tableCell.innerHTML=tableCell.firstElementChild.value
-        }
-    }) 
-}
 export default function InventoryTable (props) {
     const [sorting, setSorting] = useState([])
-    const table=useReactTable({data:props.data, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{editRow, saveRowChanges, discardRowChanges} })
+    const [isEdit, setIsEdit] = useState('')
+    const [rowToUpdate, setRowToUpdate] = useState({})
+    const [discardedRow, setDiscardedRow] = useState('')
+    const table=useReactTable({ data:props.data, defaultColumn:defaultColumn, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{ isEdit, setIsEdit, rowToUpdate, setRowToUpdate,discardedRow , setDiscardedRow, setInventoryNav: props.setData } })
     return (
 
         <TableContainer component={Paper} sx={
@@ -129,7 +114,7 @@ export default function InventoryTable (props) {
                 <TableBody>
                     {table.getRowModel().rows.map((row)=>{
                         return <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 }, '&:nth-of-type(odd)':{backgroundColor:'primary.lighter'}, ':hover':{backgroundColor:'primary.light'},'transition':'ease 0.2s' }} key={row.id}>{row.getVisibleCells().map((cell)=>{
-                            return <TableCell key={cell.id}>{
+                            return <TableCell sx={{padding:isEdit===row.id?1:'auto'}} key={cell.id}>{
                                 flexRender(cell.column.columnDef.cell,
                                     cell.getContext()
                                     )}</TableCell>
