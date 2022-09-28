@@ -48,7 +48,7 @@ export default function RowActions ({isEdit, setIsEdit, rowId, rowToUpdate, setR
         return (
             <>
                 <IconButton onClick={discardHandler}><CloseIcon/></IconButton>
-                <IconButton sx={{position:'absolute'}} onClick={applyHandler}><CheckIcon/></IconButton>
+                <IconButton  onClick={applyHandler}><CheckIcon/></IconButton>
                 <Snackbar onClose={()=>setSnackBarMsg((state)=>{return{...state,show:false}})} autoHideDuration={3500} children={<Alert variant='filled' sx={{ width: '100%' }} severity={snackBarMsg.severity}>{snackBarMsg.message}</Alert>} open={snackBarMsg.show}/>
             </>
         )
