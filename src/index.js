@@ -12,6 +12,7 @@ import Customers from './components/Customers'
 import RepairSlip from './components/RepairSlip'
 import Inventory from './components/Inventory'
 import { ThemeProvider,createTheme } from '@mui/material/styles'
+import SalesInvoice from './components/dashComponents/SalesInvoice'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 const theme = createTheme({
   palette: {
@@ -38,6 +39,7 @@ root.render(
           <Route path='customers' element={<Customers />}/>
           <Route path='repairslip' element={<RepairSlip />} />
           <Route path='inventory' element={<Inventory />} />
+          <Route path='invoice' element={<SalesInvoice />} />
         </Route>
         <Route path="/login" element={<LogIn />} />
       </Routes>
