@@ -14,11 +14,10 @@ export default function CustomerSelector () {
     },[])
     return (
         <Autocomplete id={'select-customer'}
-                    fullWidth={false}
                     options={customers}
                     renderInput={(params) => 
                     {
-                    return <TextField {...params} label={"select customer"}/>
+                    return <TextField {...params} varian={'standard'} label={"select customer"}/>
                     }
                 }
                     getOptionLabel={(option)=>{
