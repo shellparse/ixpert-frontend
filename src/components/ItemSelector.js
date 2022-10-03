@@ -3,29 +3,19 @@ import { useState } from "react";
 const data =  [{sku:'sku1'},{sku:'sku2'}]
 export default function ItemSelector () {
     const [items, setItems] = useState([])
-    const [value, setValue] = useState(null)
+    const [skuEntry, setSkuEntry] = useState('')
     return(
     <Autocomplete
     freeSolo
     selectOnFocus
     clearOnBlur
     handleHomeEndKeys
-    options={data}
-    value={value}
-    onChange={(event, newValue) => {
-        if (typeof newValue === 'string') {
-          setValue({
-            sku: newValue,
-          });
-        } else if (newValue && newValue.inputValue) {
-          // Create a new value from the user input
-          setValue({
-            sku: newValue.inputValue,
-          });
-        } else {
-          setValue(newValue);
-        }
-      }}
+    options={items}
+    inputValue={skuEntry}
+    onInputCapture={(event,newValue)=>{
+      console.log(event.target.value)
+      setSkuEntry(event.target.value)
+    }}
     renderInput={(params) =><TextField {...params} varian={'standard'} label={"add item"}/>}
     getOptionLabel={(option)=>{
         if(option.sku){
