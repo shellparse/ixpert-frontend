@@ -21,7 +21,7 @@ export default function CustomerSelector () {
                     }
                 }
                     getOptionLabel={(option)=>{
-                        return option.phoneNumber}}
+                        return option.name}}
                     />
     )
 }
