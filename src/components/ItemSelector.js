@@ -19,7 +19,7 @@ export default function ItemSelector () {
       {
         field: 'name',
         headerName: 'Item',
-        flex: 1,
+        flex: 2,
         sortable: false
       },
       {
@@ -38,7 +38,8 @@ export default function ItemSelector () {
         field: 'total',
         headerName: 'Total',
         flex: 1,
-        sortable: false
+        sortable: false,
+        valueGetter: (params)=>params.row.amount*params.row.price
       }
 
     ]
@@ -46,7 +47,6 @@ export default function ItemSelector () {
     <>
     <Autocomplete
     size="small"
-    loading
     freeSolo
     selectOnFocus
     clearOnBlur
@@ -54,11 +54,23 @@ export default function ItemSelector () {
     options={items}
     value={itemValue}
     onChange={(event, newValue) => {
+        if (newValue && newValue._id){
         setInvoiceItems((oldVal)=>{
-          return [...oldVal,{...newValue, id: invoiceItems.length+1}]
-        })
+            let existingItem
+            if (oldVal.some((item,index)=>{
+                if (item.sku===newValue.sku){
+                    existingItem=index
+                    return true 
+                }
+                return false
+            })){
+                return [...oldVal.map((val, index)=>index!==existingItem? val: {...val,amount: val.amount++})]
+            }else {
+            return [...oldVal,{...newValue, id: invoiceItems.length+1, amount: 1}]
+            }
+            })
+        }
         setItemValue(newValue)
-      
     }}
     filterOptions={(options, params) => {
       const filtered = filter(options, params)
