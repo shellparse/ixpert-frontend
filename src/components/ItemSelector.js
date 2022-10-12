@@ -1,14 +1,52 @@
-import { TextField } from "@mui/material";
+import { TextField, Box } from "@mui/material";
+import { DataGrid } from '@mui/x-data-grid'
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
+import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
 import { useState } from "react";
 const filter = createFilterOptions()
 export default function ItemSelector () {
     const [items, setItems] = useState([])
     const [itemValue, setItemValue] = useState(null)
     const [lastSearch, setLastSearch] = useState('')
-    return(
+    const [invoiceItems, setInvoiceItems] = useState([])
+    const colDef = [
+      {
+        field:'sku',
+        headerName: 'SKU',
+        flex: 1,
+        sortable: false
+      },
+      {
+        field: 'name',
+        headerName: 'Item',
+        flex: 1,
+        sortable: false
+      },
+      {
+        field: 'amount',
+        headerName: 'Quantity',
+        flex: 1,
+        sortable: false
+      },
+      {
+        field: 'price',
+        headerName: 'Price',
+        flex: 1,
+        sortable: false
+      },
+      {
+        field: 'total',
+        headerName: 'Total',
+        flex: 1,
+        sortable: false
+      }
 
+    ]
+    return(
+    <>
     <Autocomplete
+    size="small"
+    loading
     freeSolo
     selectOnFocus
     clearOnBlur
@@ -16,18 +54,11 @@ export default function ItemSelector () {
     options={items}
     value={itemValue}
     onChange={(event, newValue) => {
-      if (typeof newValue === 'string') {
-        setItemValue({
-          sku: newValue,
-        });
-      } else if (newValue && newValue.inputValue) {
-        // Create a new value from the user input
-        setItemValue({
-          sku: newValue.inputValue,
-        });
-      } else {
-        setItemValue(newValue);
-      }
+        setInvoiceItems((oldVal)=>{
+          return [...oldVal,{...newValue, id: invoiceItems.length+1}]
+        })
+        setItemValue(newValue)
+      
     }}
     filterOptions={(options, params) => {
       const filtered = filter(options, params)
@@ -35,7 +66,7 @@ export default function ItemSelector () {
       // search the database 
       const isExisting = options.some((option) => option.sku.toLowerCase().includes(inputValue.toLowerCase()));
       if (inputValue !== '' && !isExisting && inputValue!==lastSearch) {
-        console.log('all conditions are met so we fetching input not empty string, options does not includ input values and empty search is false')
+        console.log('all conditions are met so we fetching input not empty string, options does not include input values and empty search is false')
         fetch(`${process.env.REACT_APP_API_URI}/inventory?sku=${inputValue}`)
         .then(response=>response.json())
         .then((data)=>{
@@ -63,5 +94,19 @@ export default function ItemSelector () {
     }}
     renderOption={(props, option) => <li {...props}>{option.sku}</li>}
     ></Autocomplete>
+    <DataGrid
+      rows={invoiceItems}
+      columns={colDef}
+      disableColumnMenu
+      checkboxSelection
+      disableSelectionOnClick
+      autoHeight
+      hideFooter
+      rowHeight={30}
+      components={{
+      NoRowsOverlay: ()=><Box alignItems="center" justifyContent="center" display={'flex'} width={'100%'}><InfoTwoToneIcon /><h3>Add Items</h3></Box>,
+      }}
+    />
+    </>
     )
 }

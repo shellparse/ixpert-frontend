@@ -33,11 +33,12 @@ export default function SalesInvoice () {
                 <CustomerSelector />
                 </Grid>
                 <Grid item md={6}>
-                <TextField disabled defaultValue={'1554'} label={'invoice NO: '} />
+                <TextField size="small" disabled defaultValue={'1554'} label={'invoice NO: '} />
                 </Grid>
                 <Grid item xs={12}>
                   <ItemSelector></ItemSelector>
                 </Grid>
+
               </Grid>
             </TabPanel>
             <TabPanel value={val} index={1} >

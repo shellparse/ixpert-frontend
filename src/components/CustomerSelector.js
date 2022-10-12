@@ -14,6 +14,8 @@ export default function CustomerSelector () {
     },[])
     return (
         <Autocomplete id={'select-customer'}
+                    size={'small'}
+                    loading
                     options={customers}
                     renderInput={(params) => 
                     {

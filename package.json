@@ -8,6 +8,7 @@
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.3",
     "@mui/material": "^5.10.5",
+    "@mui/x-data-grid": "^5.17.6",
     "@tanstack/react-table": "^8.5.13",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
