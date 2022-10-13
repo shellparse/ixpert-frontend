@@ -6,9 +6,9 @@ import { useState } from "react";
 const filter = createFilterOptions()
 export default function ItemSelector () {
     const [items, setItems] = useState([])
-    const [itemValue, setItemValue] = useState(null)
     const [lastSearch, setLastSearch] = useState('')
     const [invoiceItems, setInvoiceItems] = useState([])
+    const [inputValue, setInputValue]= useState('')
     const colDef = [
       {
         field:'sku',
@@ -52,26 +52,35 @@ export default function ItemSelector () {
     clearOnBlur
     handleHomeEndKeys
     options={items}
-    value={itemValue}
-    onChange={(event, newValue) => {
-        if (newValue && newValue._id){
-        setInvoiceItems((oldVal)=>{
-            let existingItem
-            if (oldVal.some((item,index)=>{
-                if (item.sku===newValue.sku){
-                    existingItem=index
-                    return true 
-                }
-                return false
-            })){
-                return [...oldVal.map((val, index)=>index!==existingItem? val: {...val,amount: val.amount++})]
-            }else {
-            return [...oldVal,{...newValue, id: invoiceItems.length+1, amount: 1}]
-            }
-            })
-        }
-        setItemValue(newValue)
+    inputValue={inputValue}
+    onInputChange={(event, newValue)=>{
+      setInputValue(newValue)
     }}
+    value={null}
+    onChange={(event, newValue) => {
+      if (newValue && newValue._id){
+        let existingItem
+        let isExistingItem = invoiceItems.some((item,index)=>{
+          if (item.sku===newValue.sku){
+              existingItem=index
+              return true 
+          }
+          return false
+      })
+      if (isExistingItem){
+        setInvoiceItems((oldVal)=>{
+          return [...oldVal.map((val, index)=>index!==existingItem? val: {...val,amount: ++val.amount})]
+        })
+      } else {
+        setInvoiceItems((oldVal)=>{
+          return [...oldVal,{...newValue, id: invoiceItems.length+1, amount: 1}]
+        })
+          
+      }
+    }
+    setInputValue('')
+  }
+}
     filterOptions={(options, params) => {
       const filtered = filter(options, params)
       const { inputValue } = params
@@ -116,7 +125,7 @@ export default function ItemSelector () {
       hideFooter
       rowHeight={30}
       components={{
-      NoRowsOverlay: ()=><Box alignItems="center" justifyContent="center" display={'flex'} width={'100%'}><InfoTwoToneIcon /><h3>Add Items</h3></Box>,
+      NoRowsOverlay: ()=><Box alignItems="center" justifyContent="center" display={'flex'}><InfoTwoToneIcon /><h3>Add Items</h3></Box>,
       }}
     />
     </>
