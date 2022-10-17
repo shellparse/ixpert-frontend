@@ -1,5 +1,6 @@
 import { Tab, Tabs, Grid, TextField } from "@mui/material";
 import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import CustomerSelector from "../CustomerSelector";
 import ItemSelector from "../ItemSelector";
 function TabPanel(props) {
@@ -17,8 +18,9 @@ function TabPanel(props) {
       </div>
     );
   }
-export default function SalesInvoice () {
-
+export default function SalesInvoice (props) {
+    const invoiceFooter = useOutletContext()[6]
+    const setInvoiceFooter = useOutletContext()[7]
     const [val, setVal] = useState(0)
     return (
         <>
@@ -30,13 +32,13 @@ export default function SalesInvoice () {
             <TabPanel value={val} index={0} >
               <Grid container spacing={2}>
                 <Grid item md={6}>
-                <CustomerSelector />
+                <CustomerSelector setInvoiceFooter={setInvoiceFooter} />
                 </Grid>
                 <Grid item md={6}>
                 <TextField size="small" disabled defaultValue={'1554'} label={'invoice NO: '} />
                 </Grid>
                 <Grid item xs={12}>
-                  <ItemSelector></ItemSelector>
+                  <ItemSelector setInvoiceFooter={setInvoiceFooter}></ItemSelector>
                 </Grid>
 
               </Grid>

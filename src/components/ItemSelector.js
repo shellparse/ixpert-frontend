@@ -9,6 +9,7 @@ export default function ItemSelector () {
     const [lastSearch, setLastSearch] = useState('')
     const [invoiceItems, setInvoiceItems] = useState([])
     const [inputValue, setInputValue]= useState('')
+    const [grandTotal, setGrandTotal] = useState(0)
     const colDef = [
       {
         field:'sku',
@@ -39,7 +40,10 @@ export default function ItemSelector () {
         headerName: 'Total',
         flex: 1,
         sortable: false,
-        valueGetter: (params)=>params.row.amount*params.row.price
+        valueGetter: (params)=>{
+          setGrandTotal((ol
+          return params.row.amount*params.row.price
+        }
       }
 
     ]

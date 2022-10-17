@@ -1,4 +1,4 @@
-export default function SecondaryNav({inventoryNav, setInventoryNav, activeItem, setActiveItem}){
+export default function SecondaryNav(){
 
         return (
         <div className="dashSecondaryNav">

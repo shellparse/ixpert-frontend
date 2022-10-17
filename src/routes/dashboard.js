@@ -8,13 +8,14 @@ import { useState } from 'react'
 
 export default function DashBoard() {
     const [activeCustomer, setActiveCustomer] = useState({})
+    const [invoiceFooter, setInvoiceFooter] = useState({})
     return (
         <div className='dashboard'>
             <MainNav />
             <Header />
-            <Main activeCustomer={activeCustomer} setCustomer={setActiveCustomer}  /> 
+            <Main activeCustomer={activeCustomer} setCustomer={setActiveCustomer} invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter}  /> 
             <SecondaryNav/>
-            <Footer  />
+            <Footer invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} />
         </div>
     )
 }

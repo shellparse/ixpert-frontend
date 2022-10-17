@@ -2,8 +2,9 @@ import {Autocomplete, TextField} from "@mui/material"
 import { useEffect, useState } from "react";
 const API = process.env.REACT_APP_API_URI
 
-export default function CustomerSelector () {
+export default function CustomerSelector ({invoiceFooter, setInvoiceFooter}) {
     const [customers, setCustomers] = useState([])
+    const [selectedCustomer, setSelectedCustomer] = useState(null)
     useEffect(()=>{
         fetch(`${API}/customer`).then((res)=>res.json())
         .then((data)=>{
@@ -24,6 +25,15 @@ export default function CustomerSelector () {
                 }
                     getOptionLabel={(option)=>{
                         return option.name}}
+                    value={selectedCustomer}
+                    onChange={
+                        (event,newValue)=>{
+                            setSelectedCustomer(newValue)
+                            setInvoiceFooter((oldVal)=>{
+                                return {...oldVal, name: newValue.name, phoneNumber: newValue.phoneNumber, email: newValue.email}
+                            })
+                        }
+                    }
                     />
     )
 }
