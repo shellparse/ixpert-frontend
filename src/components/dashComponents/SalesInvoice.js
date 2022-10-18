@@ -59,6 +59,11 @@ export default function SalesInvoice (props) {
     const setInvoiceFooter = useOutletContext()[7]
     const [val, setVal] = useState(0)
     const [invoiceItems, setInvoiceItems] = useState([])
+    const [invoiceNumber, setInvoiceNumber] = useState(0)
+    fetch(`${process.env.REACT_APP_API_URI}/invoicenumber`).then(response=>response.json())
+    .then((data)=>{
+      setInvoiceNumber(data.lastInvoiceNumber)
+    })
     return (
         <>
             <h3 style={{padding:0, margin:0}}>Invoice</h3>
@@ -67,9 +72,9 @@ export default function SalesInvoice (props) {
                 <Tab label={'Browse'} id={'tab-1'} aria-controls={`tabpanel-1`} />
             </Tabs>
             <TabPanel value={val} index={0} >
-              <Grid container spacing={2}>
+              <Grid container >
               <Grid item xs={4}>
-                <TextField size="small" disabled defaultValue={'1554'} label={'invoice NO: '} />
+                <TextField sx={{width:'100%', fontStyle:'oblique', fontVariantNumeric:'slashed-zero'}} size="small" disabled defaultValue={invoiceNumber} label={'invoice NO: '} />
                 </Grid>
                 <Grid item xs={4}>
                 <CustomerSelector setInvoiceFooter={setInvoiceFooter} />
@@ -77,7 +82,7 @@ export default function SalesInvoice (props) {
                 <Grid item xs={4}>
                   <ItemSelector setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}></ItemSelector>
                 </Grid>
-                <Grid xs={12}>
+                <Grid item xs={12}>
                 <DataGrid
                   rows={invoiceItems}
                   columns={colDef}

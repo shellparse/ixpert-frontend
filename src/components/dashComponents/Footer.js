@@ -7,17 +7,17 @@ export default function Footer({invoiceFooter, setInvoiceFooter}){
         return(
             <div className="dashFooter">
                 <div className="invoiceName">
-                    <Paper elevation={1}>
+                    <Paper sx={{height:'100%', fontSize: '120%'}} elevation={1}>
                         {invoiceFooter.name}
                     </Paper>
                 </div>
                 <div className="invoiceEmail">
-                    <Paper elevation={1}>
+                    <Paper sx={{height:'100%', fontSize: '120%'}} elevation={1}>
                         {invoiceFooter.email}
                     </Paper>
                 </div>
                 <div className="invoicePhone">
-                    <Paper elevation={1}>
+                    <Paper sx={{height:'100%', fontSize:'120%'}} elevation={1}>
                         {invoiceFooter.phoneNumber}
                     </Paper>
                 </div>
