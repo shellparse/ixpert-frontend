@@ -1,52 +1,22 @@
-import { TextField, Box } from "@mui/material";
-import { DataGrid } from '@mui/x-data-grid'
+import { TextField } from "@mui/material";
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
-import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const filter = createFilterOptions()
-export default function ItemSelector () {
+export default function ItemSelector ({setInvoiceFooter, invoiceItems, setInvoiceItems}) {
+
     const [items, setItems] = useState([])
     const [lastSearch, setLastSearch] = useState('')
-    const [invoiceItems, setInvoiceItems] = useState([])
     const [inputValue, setInputValue]= useState('')
-    const [grandTotal, setGrandTotal] = useState(0)
-    const colDef = [
-      {
-        field:'sku',
-        headerName: 'SKU',
-        flex: 1,
-        sortable: false
-      },
-      {
-        field: 'name',
-        headerName: 'Item',
-        flex: 2,
-        sortable: false
-      },
-      {
-        field: 'amount',
-        headerName: 'Quantity',
-        flex: 1,
-        sortable: false
-      },
-      {
-        field: 'price',
-        headerName: 'Price',
-        flex: 1,
-        sortable: false
-      },
-      {
-        field: 'total',
-        headerName: 'Total',
-        flex: 1,
-        sortable: false,
-        valueGetter: (params)=>{
-          setGrandTotal((ol
-          return params.row.amount*params.row.price
-        }
-      }
-
-    ]
+    
+    useEffect(()=>{
+      setInvoiceFooter((oldVal)=>{
+        let total = 0
+        invoiceItems.forEach((item)=>{
+          total+=item.price*item.amount
+        })
+        return {...oldVal, total}
+      })
+    },[invoiceItems, setInvoiceFooter])
     return(
     <>
     <Autocomplete
@@ -119,19 +89,7 @@ export default function ItemSelector () {
     }}
     renderOption={(props, option) => <li {...props}>{option.sku}</li>}
     ></Autocomplete>
-    <DataGrid
-      rows={invoiceItems}
-      columns={colDef}
-      disableColumnMenu
-      checkboxSelection
-      disableSelectionOnClick
-      autoHeight
-      hideFooter
-      rowHeight={30}
-      components={{
-      NoRowsOverlay: ()=><Box alignItems="center" justifyContent="center" display={'flex'}><InfoTwoToneIcon /><h3>Add Items</h3></Box>,
-      }}
-    />
+
     </>
     )
 }

@@ -3,15 +3,18 @@
   display: grid;
   grid-template-columns: 15% 65% 20%;
   grid-template-rows: 15% 70% 15%;
-  background-color: darkgray;
-  
   height: 100vh;
   width: 100vw;
 }
 .dashboard > div {
   background-color: beige;
-  padding: 10px;
   user-select: none
+}
+.dashSecondaryNav{
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 3;
+  grid-column-end: 4;
 }
 .dashMainNav{
   grid-row-start: 1;
@@ -25,6 +28,8 @@
 .dashFooter{
   grid-column-start:2 ;
   grid-column-end: 4;
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
 }
 .greetings{
   margin: 0;
@@ -60,29 +65,14 @@ input{
   padding: 0;
   margin: 5px;
 }
-/* #inventoryNav{
- overflow: hidden;
-} */
-/* label{
-  width: 50%;
-  display: inline-block;
-  text-align: right;
-}
-label input{
-  float: right;
-  width: 50%;
-}
-label input[type="checkbox"]{
-  width: auto;
-} */
+
 .checkboxLabel{
   width: 25%;
 }
 img{
   width: 100px;
 }
-.tabs{
-}
+
 .tabList{
   display: flex;
   margin: 0;
@@ -106,39 +96,40 @@ img{
   background-color: rgb(250, 232, 208);
   padding-top: 15px;
 }
-/* 
-thead,
-tfoot {
-    background-color: #3f87a6;
-    color: #fff;
-}
 
-tbody {
-    background-color: #e4f0f5;
-}
-
-caption {
-    padding: 10px;
-    caption-side: bottom;
-}
-
-
-
-td,
-th {
-    border: 1px solid rgb(190, 190, 190);
-}
-
-td {
-    text-align: center;
-} */
 table {
 white-space: nowrap;
 }
 .cursor-pointer{
   cursor: pointer;
 }
-
 .rowEdit {
   padding: 0px;
+}
+.invoiceName {
+grid-column-start: 1;
+grid-column-end: 2;
+}
+.invoiceEmail{
+  grid-column-start: 1;
+grid-column-end: 2;
+}
+.invoicePhone{
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.invoiceTotal{
+  grid-column-start: 2;
+grid-column-end: 3;
+grid-row-start: 1;
+grid-row-end: 4;
+height: auto;
+font-size: 60px;
+text-align: center;
+}
+.invoiceGenerate{
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+grid-row-end: 4;
 }
