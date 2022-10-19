@@ -1,8 +1,29 @@
 import { useLocation } from "react-router-dom"
 import Paper from '@mui/material/Paper'
 import { Typography, Button } from "@mui/material"
-export default function Footer({invoiceFooter, setInvoiceFooter}){
+import Userfront from "@userfront/react"
+
+export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems}){
     const currentPath = useLocation()
+    function submitInvoice () {
+        let invoice = {
+            number:invoiceFooter.invoiceNumber,
+            customerId: invoiceFooter._id,
+            cashier: Userfront.name,
+            items:invoiceItems
+        }
+        console.log(invoice)
+        fetch(`${process.env.REACT_APP_API_URI}/salesinvoice`,{
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(invoice)
+        }).then(response=>response.json())
+        .then((data)=>{
+            console.log(data)
+        })
+    }
     if(currentPath.pathname==='/dashboard/invoice'){
         return(
             <div className="dashFooter">
@@ -22,7 +43,7 @@ export default function Footer({invoiceFooter, setInvoiceFooter}){
                     </Paper>
                 </div>
                 <div className="invoiceGenerate">
-                <Button sx={{height:'100%', width:'100%'}} variant="contained">Generate</Button>
+                <Button onClick={submitInvoice} sx={{height:'100%', width:'100%'}} variant="contained">Generate</Button>
                 </div>
                 <div className="invoiceTotal">
                     <Typography sx={{fontSize:'100%', color:'secondary.main'}}>

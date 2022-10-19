@@ -1,5 +1,5 @@
 import { Tab, Tabs, Grid, TextField, Box } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import CustomerSelector from "../CustomerSelector"
 import ItemSelector from "../ItemSelector"
@@ -57,13 +57,26 @@ function TabPanel(props) {
   }
 export default function SalesInvoice (props) {
     const setInvoiceFooter = useOutletContext()[7]
+    const invoiceItems = useOutletContext()[8]
+    const setInvoiceItems = useOutletContext()[9]
     const [val, setVal] = useState(0)
-    const [invoiceItems, setInvoiceItems] = useState([])
-    const [invoiceNumber, setInvoiceNumber] = useState(0)
-    fetch(`${process.env.REACT_APP_API_URI}/invoicenumber`).then(response=>response.json())
-    .then((data)=>{
-      setInvoiceNumber(data.lastInvoiceNumber)
+    const [invoiceNumber, setInvoiceNumber] = useState('')
+    useEffect(()=>{
+      fetch(`${process.env.REACT_APP_API_URI}/invoicenumber`).then((res)=>res.json()).then((data)=>{
+        if(data){
+          setInvoiceNumber(data.lastInvoice+1)
+          setInvoiceFooter((oldValue)=>{
+            return {...oldValue,invoiceNumber:data.lastInvoice+1}
+          })
+        } else {
+          setInvoiceNumber(1)
+          setInvoiceFooter((oldValue)=>{
+            return {...oldValue,invoiceNumber:1}
+          })
+        }
     })
+    },[setInvoiceFooter])
+
     return (
         <>
             <h3 style={{padding:0, margin:0}}>Invoice</h3>
@@ -74,7 +87,7 @@ export default function SalesInvoice (props) {
             <TabPanel value={val} index={0} >
               <Grid container >
               <Grid item xs={4}>
-                <TextField sx={{width:'100%', fontStyle:'oblique', fontVariantNumeric:'slashed-zero'}} size="small" disabled defaultValue={invoiceNumber} label={'invoice NO: '} />
+                <TextField sx={{width:'100%', fontStyle:'oblique', fontVariantNumeric:'slashed-zero'}} size="small" disabled value={invoiceNumber} label={'invoice NO: '} />
                 </Grid>
                 <Grid item xs={4}>
                 <CustomerSelector setInvoiceFooter={setInvoiceFooter} />
