@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 export default function DashBoard() {
     const [activeCustomer, setActiveCustomer] = useState({})
-    const [invoiceFooter, setInvoiceFooter] = useState({})
+    const [invoiceFooter, setInvoiceFooter] = useState({name: ''})
     const [invoiceItems, setInvoiceItems] = useState([])
     const [invoiceNumber, setInvoiceNumber] = useState('')
     const [snackBarMsg, setSnackBarMsg] = useState({show:false, message:'', severity:'info'})

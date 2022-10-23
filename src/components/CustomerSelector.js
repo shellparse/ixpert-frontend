@@ -4,7 +4,6 @@ const API = process.env.REACT_APP_API_URI
 
 export default function CustomerSelector ({invoiceFooter, setInvoiceFooter}) {
     const [customers, setCustomers] = useState([])
-    const [selectedCustomer, setSelectedCustomer] = useState(null)
     useEffect(()=>{
         fetch(`${API}/customer`).then((res)=>res.json())
         .then((data)=>{
@@ -17,6 +16,7 @@ export default function CustomerSelector ({invoiceFooter, setInvoiceFooter}) {
         <Autocomplete id={'select-customer'}
                     size={'small'}
                     loading
+                    isOptionEqualToValue={(option, value) => option.value === value.value}
                     options={customers}
                     renderInput={(params) => 
                     {
@@ -25,17 +25,17 @@ export default function CustomerSelector ({invoiceFooter, setInvoiceFooter}) {
                 }
                     getOptionLabel={(option)=>{
                         return option.name}}
-                    value={selectedCustomer}
+                    value={invoiceFooter}
                     onChange={
                         (event,newValue)=>{
                             if(newValue){
-                                setSelectedCustomer(newValue)
                                 setInvoiceFooter((oldVal)=>{
                                     return {...oldVal, name: newValue.name, phoneNumber: newValue.phoneNumber, email: newValue.email, _id: newValue._id}
                                 })
                             }
                         }
                     }
+                    
                     />
     )
 }

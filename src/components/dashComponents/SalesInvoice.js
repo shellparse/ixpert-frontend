@@ -56,6 +56,7 @@ function TabPanel(props) {
     );
   }
 export default function SalesInvoice () {
+    const invoiceFooter = useOutletContext()[6]
     const setInvoiceFooter = useOutletContext()[7]
     const invoiceItems = useOutletContext()[8]
     const setInvoiceItems = useOutletContext()[9]
@@ -91,7 +92,7 @@ export default function SalesInvoice () {
                 <TextField sx={{width:'100%', fontStyle:'oblique', fontVariantNumeric:'slashed-zero'}} size="small" disabled value={invoiceNumber} label={'invoice NO: '} />
                 </Grid>
                 <Grid item xs={4}>
-                <CustomerSelector setInvoiceFooter={setInvoiceFooter} />
+                <CustomerSelector invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} />
                 </Grid>
                 <Grid item xs={4}>
                   <ItemSelector setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}></ItemSelector>

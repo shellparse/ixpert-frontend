@@ -4,7 +4,6 @@ import { Typography, Button, Snackbar, Alert } from "@mui/material"
 import Userfront from "@userfront/react"
 export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, setInvoiceItems, setInvoiceNumber, snackBarMsg, setSnackBarMsg}){
     const currentPath = useLocation()
-    console.log(invoiceItems)
     function submitInvoice () {
         let invoice = {
             number:invoiceFooter.invoiceNumber,
@@ -13,7 +12,7 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
             items: invoiceItems,
             total: invoiceFooter.total
         }
-        if(invoice.number&&invoice.customerId)
+        if(invoice.number&&invoice.customerId){
         fetch(`${process.env.REACT_APP_API_URI}/salesinvoice`,{
             method: 'POST',
             headers:{
@@ -24,7 +23,7 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
         .then((data)=>{
             if(data.acknowledged){
                 setInvoiceFooter((oldValue)=>{
-                    return {...oldValue, total: 0}
+                    return {...oldValue, _id: null, name:'', email: '', phoneNumber: '', total: 0}
                 })
                 setInvoiceItems([])
                 setInvoiceNumber((prevNo)=>{
@@ -35,7 +34,10 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
                 })
             }
         })
+    } else if (!invoice.customerId){
+        setSnackBarMsg({show: true, severity: 'error', message: 'customer not selected'})
     }
+}
     if(currentPath.pathname==='/dashboard/invoice'){
         return(
             <div className="dashFooter">
@@ -55,7 +57,7 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
                     </Paper>
                 </div>
                 <div className="invoiceGenerate">
-                <Button onClick={submitInvoice} sx={{height:'100%', width:'100%'}} variant="contained">Generate</Button>
+                <Button onClick={submitInvoice} sx={{height:'100%', width:'100%'}} disabled={invoiceItems.length>0?false:true} variant="contained">Generate</Button>
                 </div>
                 <div className="invoiceTotal">
                     <Typography sx={{fontSize:'100%', color:'secondary.main'}}>
