@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react"
+import { useOutletContext } from "react-router-dom"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import InventoryTable from "./InventoryTable"
 
 export default function Inventory () {
     const [inventoryNav, setInventoryNav] = useState([])
     const [inputs,setInputs] = useState({})
+    const snackBarMsg = useOutletContext()[12]
+    const setSnackBarMsg = useOutletContext()[13]    
     useEffect(()=>{
         fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
         .then((data)=>{
@@ -116,7 +119,7 @@ export default function Inventory () {
             <div id="response"></div>
             </TabPanel>
             <TabPanel className={"tabPanel"}>
-                <InventoryTable data={inventoryNav} setData={setInventoryNav} />
+                <InventoryTable data={inventoryNav} setData={setInventoryNav} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
             </TabPanel>
             </Tabs>
         </div>

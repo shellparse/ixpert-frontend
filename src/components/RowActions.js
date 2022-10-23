@@ -3,9 +3,7 @@ import EditIcon from '@mui/icons-material/Edit'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert, Snackbar } from '@mui/material';
-import { useState } from 'react';
-export default function RowActions ({isEdit, setIsEdit, rowId, rowToUpdate, setRowToUpdate, discardedRow, setDiscardedRow, original, table}) {
-    const [snackBarMsg, setSnackBarMsg] = useState({show:false, message:'', severity:'info'})
+export default function RowActions ({isEdit, setIsEdit, rowId, rowToUpdate, setRowToUpdate, discardedRow, setDiscardedRow, original, table, snackBarMsg, setSnackBarMsg}) {
     function editHandler(e){
         setIsEdit(rowId)
     }

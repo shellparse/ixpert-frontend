@@ -55,12 +55,13 @@ function TabPanel(props) {
       </div>
     );
   }
-export default function SalesInvoice (props) {
+export default function SalesInvoice () {
     const setInvoiceFooter = useOutletContext()[7]
     const invoiceItems = useOutletContext()[8]
     const setInvoiceItems = useOutletContext()[9]
+    const invoiceNumber = useOutletContext()[10]
+    const setInvoiceNumber = useOutletContext()[11]
     const [val, setVal] = useState(0)
-    const [invoiceNumber, setInvoiceNumber] = useState('')
     useEffect(()=>{
       fetch(`${process.env.REACT_APP_API_URI}/invoicenumber`).then((res)=>res.json()).then((data)=>{
         if(data){
@@ -75,7 +76,7 @@ export default function SalesInvoice (props) {
           })
         }
     })
-    },[setInvoiceFooter])
+    },[setInvoiceNumber, setInvoiceFooter])
 
     return (
         <>

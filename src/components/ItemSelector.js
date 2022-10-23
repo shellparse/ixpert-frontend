@@ -47,7 +47,7 @@ export default function ItemSelector ({setInvoiceFooter, invoiceItems, setInvoic
         })
       } else {
         setInvoiceItems((oldVal)=>{
-          return [...oldVal,{...newValue, id: invoiceItems.length+1, amount: 1}]
+          return [...oldVal,{_id:newValue._id, sku: newValue.sku, name: newValue.name, price:newValue.price, id: invoiceItems.length+1, amount: 1}]
         })
           
       }

@@ -28,10 +28,12 @@ export default function CustomerSelector ({invoiceFooter, setInvoiceFooter}) {
                     value={selectedCustomer}
                     onChange={
                         (event,newValue)=>{
-                            setSelectedCustomer(newValue)
-                            setInvoiceFooter((oldVal)=>{
-                                return {...oldVal, name: newValue.name, phoneNumber: newValue.phoneNumber, email: newValue.email, _id: newValue._id}
-                            })
+                            if(newValue){
+                                setSelectedCustomer(newValue)
+                                setInvoiceFooter((oldVal)=>{
+                                    return {...oldVal, name: newValue.name, phoneNumber: newValue.phoneNumber, email: newValue.email, _id: newValue._id}
+                                })
+                            }
                         }
                     }
                     />

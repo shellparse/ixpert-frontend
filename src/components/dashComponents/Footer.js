@@ -1,17 +1,19 @@
 import { useLocation } from "react-router-dom"
 import Paper from '@mui/material/Paper'
-import { Typography, Button } from "@mui/material"
+import { Typography, Button, Snackbar, Alert } from "@mui/material"
 import Userfront from "@userfront/react"
-export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems}){
+export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, setInvoiceItems, setInvoiceNumber, snackBarMsg, setSnackBarMsg}){
     const currentPath = useLocation()
+    console.log(invoiceItems)
     function submitInvoice () {
         let invoice = {
             number:invoiceFooter.invoiceNumber,
             customerId: invoiceFooter._id,
             cashier: Userfront.user.name,
-            items:invoiceItems
+            items: invoiceItems,
+            total: invoiceFooter.total
         }
-        console.log(invoice)
+        if(invoice.number&&invoice.customerId)
         fetch(`${process.env.REACT_APP_API_URI}/salesinvoice`,{
             method: 'POST',
             headers:{
@@ -20,8 +22,18 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems}){
             body: JSON.stringify(invoice)
         }).then(response=>response.json())
         .then((data)=>{
-            console.log('reply from server')
-            console.log(data)
+            if(data.acknowledged){
+                setInvoiceFooter((oldValue)=>{
+                    return {...oldValue, total: 0}
+                })
+                setInvoiceItems([])
+                setInvoiceNumber((prevNo)=>{
+                    return prevNo+=1
+                })
+                setSnackBarMsg((oldVal)=>{
+                    return {show: true, message: 'Invoice Created', severity: 'success'}
+                })
+            }
         })
     }
     if(currentPath.pathname==='/dashboard/invoice'){
@@ -50,6 +62,7 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems}){
                         {`R${invoiceFooter.total}`}
                     </Typography>
                 </div>
+                <Snackbar onClose={()=>setSnackBarMsg((state)=>{return{...state,show:false}})} autoHideDuration={3500} children={<Alert variant='filled' sx={{ width: '100%' }} severity={snackBarMsg.severity}>{snackBarMsg.message}</Alert>} open={snackBarMsg.show}/>
             </div>
         )
     }

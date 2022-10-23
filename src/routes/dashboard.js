@@ -10,13 +10,16 @@ export default function DashBoard() {
     const [activeCustomer, setActiveCustomer] = useState({})
     const [invoiceFooter, setInvoiceFooter] = useState({})
     const [invoiceItems, setInvoiceItems] = useState([])
+    const [invoiceNumber, setInvoiceNumber] = useState('')
+    const [snackBarMsg, setSnackBarMsg] = useState({show:false, message:'', severity:'info'})
+
     return (
         <div className='dashboard'>
             <MainNav />
             <Header />
-            <Main activeCustomer={activeCustomer} setCustomer={setActiveCustomer} invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}  /> 
+            <Main activeCustomer={activeCustomer} setCustomer={setActiveCustomer} invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} invoiceNumber={invoiceNumber} setInvoiceNumber={setInvoiceNumber} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} /> 
             <SecondaryNav/>
-            <Footer invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} />
+            <Footer invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} setInvoiceNumber={setInvoiceNumber} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
         </div>
     )
 }

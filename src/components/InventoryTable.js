@@ -25,7 +25,7 @@ const columns = [
         header:()=>'Actions',
         id: 'actions',
         cell: ({row:{id,original}, table,row }) => {
-            return (<RowActions isEdit={table.options.meta.isEdit} setIsEdit={table.options.meta.setIsEdit} rowId={id} rowToUpdate={table.options.meta.rowToUpdate} setRowToUpdate={table.options.meta.setRowToUpdate} discardedRow={table.options.meta.discardedRow} setDiscardedRow={table.options.meta.setDiscardedRow} original={original} table={table} />)
+            return (<RowActions isEdit={table.options.meta.isEdit} setIsEdit={table.options.meta.setIsEdit} rowId={id} rowToUpdate={table.options.meta.rowToUpdate} setRowToUpdate={table.options.meta.setRowToUpdate} discardedRow={table.options.meta.discardedRow} setDiscardedRow={table.options.meta.setDiscardedRow} original={original} table={table} snackBarMsg={table.options.meta.snackBarMsg} setSnackBarMsg={table.options.meta.setSnackBarMsg} />)
     },
       }),
     columnHelper.accessor('sku',{
@@ -78,7 +78,7 @@ export default function InventoryTable (props) {
     const [isEdit, setIsEdit] = useState('')
     const [rowToUpdate, setRowToUpdate] = useState({})
     const [discardedRow, setDiscardedRow] = useState('')
-    const table=useReactTable({ data:props.data, defaultColumn:defaultColumn, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{ isEdit, setIsEdit, rowToUpdate, setRowToUpdate,discardedRow , setDiscardedRow, setInventoryNav: props.setData } })
+    const table=useReactTable({ data:props.data, defaultColumn:defaultColumn, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{ snackBarMsg: props.snackBarMsg, setSnackBarMsg: props.setSnackBarMsg, isEdit, setIsEdit, rowToUpdate, setRowToUpdate,discardedRow , setDiscardedRow, setInventoryNav: props.setData } })
     return (
 
         <TableContainer component={Paper} sx={
