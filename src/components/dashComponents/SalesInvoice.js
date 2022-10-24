@@ -4,7 +4,8 @@ import { useOutletContext } from "react-router-dom"
 import CustomerSelector from "../CustomerSelector"
 import ItemSelector from "../ItemSelector"
 import { DataGrid } from '@mui/x-data-grid'
-import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
+import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone'
+import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone'
 const colDef = [
   {
     field:'sku',
@@ -62,6 +63,7 @@ export default function SalesInvoice () {
     const setInvoiceItems = useOutletContext()[9]
     const invoiceNumber = useOutletContext()[10]
     const setInvoiceNumber = useOutletContext()[11]
+    const [selection, setSelection] = useState([])
     const [val, setVal] = useState(0)
     useEffect(()=>{
       fetch(`${process.env.REACT_APP_API_URI}/invoicenumber`).then((res)=>res.json()).then((data)=>{
@@ -103,13 +105,24 @@ export default function SalesInvoice () {
                   columns={colDef}
                   disableColumnMenu
                   checkboxSelection
+                  selectionModel={selection}
+                  onSelectionModelChange={(gridSelection, details)=>{
+                    setSelection([...gridSelection])
+
+                  }}
                   disableSelectionOnClick
                   autoHeight
                   hideFooter
                   rowHeight={30}
                   components={{
                     NoRowsOverlay: ()=><Box alignItems="center" justifyContent="center" display={'flex'}><InfoTwoToneIcon /><h3>Add Items</h3></Box>,
+                    Toolbar: ()=><Box alignItems="right" justifyContent="right" display={'flex'}><DeleteForeverTwoToneIcon sx={{cursor: 'pointer', visibility:selection.length===0?'hidden':'visible'}} onClick={()=>{
+                      setInvoiceItems((oldVal)=>{
+                        return oldVal.filter((item)=>!selection.includes(item.id))
+                      })
+                    }} /></Box>
                   }}
+
                 />
                 </Grid>
               </Grid>
