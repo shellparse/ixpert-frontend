@@ -19,9 +19,20 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(invoice)
-        }).then(response=>response.json())
-        .then((data)=>{
-            if(data.acknowledged){
+        }).then((response)=>{
+            if(response.headers.has('Content-Type')){
+                return null
+            }else{
+                return response.blob()
+            }
+        })
+        .then((blob)=>{
+            if(blob){
+                blob = blob.slice(0, blob.size, "application/pdf")
+                let blobURL = URL.createObjectURL(blob);
+                setTimeout(()=>{
+                    window.open(blobURL);
+                },1500)
                 setInvoiceFooter((oldValue)=>{
                     return {...oldValue, _id: null, name:'', email: '', phoneNumber: '', total: 0}
                 })
