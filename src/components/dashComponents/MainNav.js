@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom"
 export default function MainNav(){
     return(
         <div className={'dashMainNav'} >
-            <Drawer sx={{width: "100%", [`& .MuiDrawer-paper`]: { width: "100%", boxSizing: 'border-box' }}} variant="permanent" elevation={7}  >
+            <Drawer variant="permanent" >
                 <ul style={{listStyle:'none'}}>
                     <li><NavLink className={({isActive}) => isActive?"activeNav":""} to={"customers"}>customers</NavLink></li>
                     <li><NavLink className={({isActive}) => isActive?"activeNav":""} to={"repairslip"}>repair slip</NavLink></li>
