@@ -6,10 +6,7 @@
   height: 100vh;
   width: 100vw;
 }
-.dashboard > div {
-  background-color: beige;
-  user-select: none
-}
+
 .dashSecondaryNav{
   grid-row-start: 2;
   grid-row-end: 3;
@@ -17,13 +14,18 @@
   grid-column-end: 4;
 }
 .dashMainNav{
-  grid-row-start: 1;
+  grid-row-start: 2;
   grid-row-end: 4;
 }
+.dashMainNav > ul {
+  padding-left: 0;
+  list-style:none;
+}
 .dashHeader{
-  grid-column-start: 2;
+  grid-column-start: 1;
   grid-column-end: 4;
   display: flex;
+  border-bottom: 2px;
 }
 .dashFooter{
   grid-column-start:2 ;
@@ -38,15 +40,15 @@
   margin-left: auto;
 }
 .activeNav{
-  background-color: rgb(208, 216, 216);
-  color: crimson;
+  color:blue;
   text-decoration: none;
-  border-radius: 10%;
   padding: 2px;
 }
-input{
-  margin: 3px;
+
+.notActiveNav {
+  text-decoration: none;
 }
+
 .notify-success{
   background-color: green;
   color: aliceblue;
