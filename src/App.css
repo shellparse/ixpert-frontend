@@ -1,12 +1,14 @@
 
 .dashboard{
   display: grid;
-  grid-template-columns: 15% 65% 20%;
-  grid-template-rows: 15% 70% 15%;
+  grid-template-columns: 10% 70% 20%;
+  grid-template-rows: 10% 75% 15%;
   height: 100vh;
   width: 100vw;
 }
-
+.dashMain {
+  padding: 20px;
+}
 .dashSecondaryNav{
   grid-row-start: 2;
   grid-row-end: 3;
