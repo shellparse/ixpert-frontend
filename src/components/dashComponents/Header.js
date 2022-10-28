@@ -1,13 +1,18 @@
 import Greeting from "../greeting"
 import LogOut from "../../routes/logout"
-import { Box } from "@mui/material"
+import { AppBar, Toolbar, Box } from "@mui/material"
 export default function Header(){
     return(
-        // <div className="dashHeader">
-            <Box className="dashHeader" sx={{padding:3, backgroundColor: 'primary.main'}}>
+        <AppBar position={'static'}>
+            <Toolbar sx={{ justifyContent: 'space-between'}}>
+            <Box sx={{width:100}}>
+                <a href="/dashboard">
+                <img src="/siteLogo.svg" alt="site logo"/>
+            </a>
+            </Box>
                 <Greeting className="greetings"/>
-                <div className="logout"><LogOut /></div>
-                </Box>
-        // </div>
+                    <div className="logout"><LogOut /></div>
+            </Toolbar>
+        </AppBar>
     )
 }

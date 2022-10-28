@@ -1,46 +1,48 @@
-
+/* 
 .dashboard{
   display: grid;
   grid-template-columns: 10% 70% 20%;
   grid-template-rows: 10% 75% 15%;
   height: 100vh;
   width: 100vw;
-}
+} */
 .dashMain {
-  padding: 20px;
+  display: flex;
+  /* width: 100%; */
+  flex-direction: column;
 }
-.dashSecondaryNav{
+/* .dashSecondaryNav{
   grid-row-start: 2;
   grid-row-end: 3;
   grid-column-start: 3;
   grid-column-end: 4;
-}
-.dashMainNav{
+} */
+/* .dashMainNav{
   grid-row-start: 2;
   grid-row-end: 4;
-}
-.dashMainNav > ul {
+} */
+/* .dashMainNav > ul {
   padding-left: 0;
   list-style:none;
-}
-.dashHeader{
+} */
+/* .dashHeader{
   grid-column-start: 1;
   grid-column-end: 4;
   display: flex;
   border-bottom: 2px;
-}
+} */
 .dashFooter{
-  grid-column-start:2 ;
-  grid-column-end: 4;
+  /* grid-column-start:2 ;
+  grid-column-end: 4; */
   display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
 }
-.greetings{
+/* .greetings{
   margin: 0;
-}
-.logout{
+} */
+/* .logout{
   margin-left: auto;
-}
+} */
 .activeNav{
   color:blue;
   text-decoration: none;
@@ -73,9 +75,7 @@
 .checkboxLabel{
   width: 25%;
 }
-img{
-  width: 100px;
-}
+
 
 .tabList{
   display: flex;

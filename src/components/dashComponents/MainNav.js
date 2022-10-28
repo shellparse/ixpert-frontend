@@ -3,43 +3,48 @@ import EngineeringTwoToneIcon from '@mui/icons-material/EngineeringTwoTone'
 import Inventory2TwoToneIcon from '@mui/icons-material/Inventory2TwoTone'
 import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
 import { NavLink } from "react-router-dom"
-import { IconButton, Paper } from '@mui/material';
+import { IconButton, Drawer, Toolbar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Typography } from '@mui/material';
 export default function MainNav(){
+    const navItems = [{
+        label: 'Customers',
+        link: 'customers',
+        icon: PeopleAltTwoToneIcon
+    },{
+        label: 'Repair slip',
+        link: 'repairslip',
+        icon: EngineeringTwoToneIcon
+    },{
+        label: 'Inventory',
+        link: 'inventory',
+        icon: Inventory2TwoToneIcon
+    },{
+        label: 'Invoice',
+        link: 'invoice',
+        icon: DescriptionTwoToneIcon
+    }]
+
     return(
-            <Paper variant='outlined' className={'dashMainNav'}>
-                <ul>
-                    {[{
-                        label: 'Customers',
-                        link: 'customers',
-                        icon: PeopleAltTwoToneIcon
-                    },{
-                        label: 'Repair slip',
-                        link: 'repairslip',
-                        icon: EngineeringTwoToneIcon
-                    },{
-                        label: 'Inventory',
-                        link: 'inventory',
-                        icon: Inventory2TwoToneIcon
-                    },{
-                        label: 'Invoice',
-                        link: 'invoice',
-                        icon: DescriptionTwoToneIcon
-                    }].map((element, index) => {
-                        return (<li key={index+1}>
-                                    <NavLink children={({isActive})=>isActive?<IconButton  sx={{borderRadius:0, width:'100%', justifyContent:'left', color:'secondary.main'}}>
-                                            <element.icon/>
-                                            {element.label}
-                                        </IconButton>:<IconButton  sx={{borderRadius:0, width:'100%', justifyContent:'left', color:'primary.main'}}>
-                                            <element.icon/>
-                                            {element.label}
-                                        </IconButton>} className={({isActive})=> isActive?'activeNav':'notActiveNav'} to={element.link}>
-                                    </NavLink>
-                                </li>)
-                            }
-                        )}
-                </ul>
-                </Paper>
- 
-            
+        <Drawer variant='permanent'>
+            <Toolbar/>
+            <Divider/>
+            <List>
+                    {navItems.map((element, index) => {
+                        return (<ListItem disablePadding key={index+1}>
+                                        <NavLink style={{color: 'inherit', textDecoration:'none', width:'100%'}} children={({isActive})=>{
+                                            return (
+                                                    <ListItemButton sx={{color: isActive?'secondary.main':'primary.main'}}>
+                                                        <ListItemIcon sx={{color: 'inherit'}}>
+                                                            <element.icon />
+                                                        </ListItemIcon>
+                                                        <ListItemText primary={element.label}/>
+                                                    </ListItemButton>
+                                            )
+                                        }} to={element.link} />
+                                </ListItem>
+                            )
+                        }
+                    )}
+            </List>
+        </Drawer>     
     )
 }
