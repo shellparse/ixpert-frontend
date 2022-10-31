@@ -1,9 +1,9 @@
 import PeopleAltTwoToneIcon from '@mui/icons-material/PeopleAltTwoTone'
 import EngineeringTwoToneIcon from '@mui/icons-material/EngineeringTwoTone'
 import Inventory2TwoToneIcon from '@mui/icons-material/Inventory2TwoTone'
-import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone';
+import DescriptionTwoToneIcon from '@mui/icons-material/DescriptionTwoTone'
 import { NavLink } from "react-router-dom"
-import { IconButton, Drawer, Toolbar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Typography } from '@mui/material';
+import { Drawer, Toolbar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider } from '@mui/material'
 export default function MainNav(){
     const navItems = [{
         label: 'Customers',
@@ -27,7 +27,7 @@ export default function MainNav(){
         <Drawer variant='permanent'>
             <Toolbar/>
             <Divider/>
-            <List>
+            <List sx={{width:'240px'}}>
                     {navItems.map((element, index) => {
                         return (<ListItem disablePadding key={index+1}>
                                         <NavLink style={{color: 'inherit', textDecoration:'none', width:'100%'}} children={({isActive})=>{
