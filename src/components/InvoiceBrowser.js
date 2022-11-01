@@ -44,15 +44,20 @@ export default function InvoiceBrowser () {
         }
     ]
     return (
-            <DataGrid
-            columns={colDef}
-            rows={rows}
-            getRowId={(row)=>row._id}
-            disableColumnMenu
-            disableSelectionOnClick
-            autoHeight
-            hideFooter
->
-            </DataGrid>        
+        
+            // <DataGrid
+            // columns={colDef}
+            // rows={rows}
+            // getRowId={(row)=>row._id}
+            // disableColumnMenu
+            // disableSelectionOnClick
+            // autoHeight
+            // hideFooter
+            // components={{
+
+            //     Row: (props)=> <TableRow {...props}/>
+            // }}
+            // >
+            // </DataGrid>        
     )
 }

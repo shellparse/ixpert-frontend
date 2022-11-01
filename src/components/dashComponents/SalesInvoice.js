@@ -135,7 +135,7 @@ export default function SalesInvoice () {
               </Grid>
             </TabPanel>
             <TabPanel value={val} index={1}>
-                  <InvoiceBrowser/>
+                  {val===1?<InvoiceBrowser/>:''}
             </TabPanel>
         </Box>
     )
