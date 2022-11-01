@@ -6,6 +6,8 @@ import ItemSelector from "../ItemSelector"
 import { DataGrid } from '@mui/x-data-grid'
 import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone'
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone'
+import InvoiceBrowser from "../InvoiceBrowser"
+
 const colDef = [
   {
     field:'sku',
@@ -82,9 +84,14 @@ export default function SalesInvoice () {
     },[setInvoiceNumber, setInvoiceFooter])
 
     return (
-        <>
+        <Box>
             <h3 style={{padding:0, margin:0}}>Invoice</h3>
-            <Tabs value={val} onChange={(e,value)=>setVal(value)} sx={{marginBottom:3}}>
+            <Tabs value={val} onChange={(e,value)=>{
+              setInvoiceFooter((oldVal)=>{
+                return {...oldVal, visibleTab: value}
+              })
+              setVal(value)
+            }} sx={{marginBottom:3}}>
                 <Tab label={'Create'} id={'tab-0'} aria-controls={`tabpanel-0`} />
                 <Tab label={'Browse'} id={'tab-1'} aria-controls={`tabpanel-1`} />
             </Tabs>
@@ -127,8 +134,9 @@ export default function SalesInvoice () {
                 </Grid>
               </Grid>
             </TabPanel>
-            <TabPanel value={val} index={1} >
+            <TabPanel value={val} index={1}>
+                  <InvoiceBrowser/>
             </TabPanel>
-        </>
+        </Box>
     )
 }

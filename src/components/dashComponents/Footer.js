@@ -49,7 +49,7 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
         setSnackBarMsg({show: true, severity: 'error', message: 'customer not selected'})
     }
 }
-    if(currentPath.pathname==='/dashboard/invoice'){
+    if(currentPath.pathname==='/dashboard/invoice' && (invoiceFooter.visibleTab === 0 || !invoiceFooter.visibleTab )) {
         return(
             <div className="dashFooter">
                 <div className="invoiceName">
