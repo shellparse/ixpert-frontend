@@ -8,14 +8,11 @@ function ExpandableRow (props) {
     const [open, setOpen] = useState(false)
 
     return (
-        <div style={{backgroundColor: 'yellow', cursor: 'pointer'}} onClick={()=>setOpen(oldVal=>oldVal?false:true)}>
-            <h4>show items</h4>
+        <div style={{backgroundColor: 'lightBlue', cursor: 'pointer', height: '100%'}} onClick={()=>setOpen(oldVal=>oldVal?false:true)}>
+            <GridRow {...props}></GridRow>
             <Collapse in={open}>
-                <ul>
-                    {props.items.map(item=><li>{item.name}</li>)}
-                </ul>
+                {props.row.items.map(item=><div key={item.id}>{item.name}</div>)}
             </Collapse>
-            {/* <GridRow {...props}></GridRow> */}
         </div>
     )
 }
@@ -42,7 +39,7 @@ export default function InvoiceBrowser () {
         {
             field: 'items',
             flex: 2,
-            renderCell: ({row})=><ExpandableRow items={row.items} />
+            renderCell: ()=><Button variant='outlined'>show items</Button>
         },
         {
             field: 'cashier',
@@ -63,17 +60,14 @@ export default function InvoiceBrowser () {
     ]
     return (
 
-            <DataGrid sx={{height:'100%'}}
+            <DataGrid sx={{backgroundColor:'primary.light'}}
             columns={colDef}
             rows={rows}
             getRowId={(row)=>row._id}
             disableColumnMenu
             disableSelectionOnClick
-            autoHeight
-            hideFooter
-            getRowHeight={() => 'auto' }
             components={{
-                
+                Row: props=><ExpandableRow {...props} />
             }}
             >
             </DataGrid>        

@@ -47,7 +47,7 @@ function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
     return (
-      <div
+      <div style={{height:'80%'}}
         role="tabpanel"
         hidden={value !== index}
         id={`tabpanel-${index}`}
@@ -84,7 +84,7 @@ export default function SalesInvoice () {
     },[setInvoiceNumber, setInvoiceFooter])
 
     return (
-        <Box>
+        <Box sx={{height:'100%',backgroundColor:'lightcoral'}}>
             <h3 style={{padding:0, margin:0}}>Invoice</h3>
             <Tabs value={val} onChange={(e,value)=>{
               setInvoiceFooter((oldVal)=>{

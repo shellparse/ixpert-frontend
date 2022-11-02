@@ -6,7 +6,7 @@ body{
 height: 100%;
 }
 .dashMain {
-height: 100%;
+flex-grow: 10;
 }
 #root{
   height: 100%;
@@ -36,6 +36,7 @@ height: 100%;
   grid-column-end: 4; */
   display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
+  flex-grow: 1;
 }
 /* .greetings{
   margin: 0;
