@@ -1,7 +1,24 @@
-import { DataGrid } from '@mui/x-data-grid'
+import { Button, Collapse } from '@mui/material'
+import { DataGrid, GridRow } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
-import { TableRow, TableCell } from '@mui/material'
 
+
+
+function ExpandableRow (props) {
+    const [open, setOpen] = useState(false)
+
+    return (
+        <div style={{backgroundColor: 'yellow', cursor: 'pointer'}} onClick={()=>setOpen(oldVal=>oldVal?false:true)}>
+            <h4>show items</h4>
+            <Collapse in={open}>
+                <ul>
+                    {props.items.map(item=><li>{item.name}</li>)}
+                </ul>
+            </Collapse>
+            {/* <GridRow {...props}></GridRow> */}
+        </div>
+    )
+}
 export default function InvoiceBrowser () {
     const [rows, setRows] = useState([])
     useEffect(()=>{
@@ -16,7 +33,7 @@ export default function InvoiceBrowser () {
     const colDef = [
         {
             field: 'number',
-            flex: 1
+            flex: 1, 
         },
         {
             field: 'customerId',
@@ -24,7 +41,8 @@ export default function InvoiceBrowser () {
         },
         {
             field: 'items',
-            flex: 2
+            flex: 2,
+            renderCell: ({row})=><ExpandableRow items={row.items} />
         },
         {
             field: 'cashier',
@@ -44,20 +62,20 @@ export default function InvoiceBrowser () {
         }
     ]
     return (
-        
-            // <DataGrid
-            // columns={colDef}
-            // rows={rows}
-            // getRowId={(row)=>row._id}
-            // disableColumnMenu
-            // disableSelectionOnClick
-            // autoHeight
-            // hideFooter
-            // components={{
 
-            //     Row: (props)=> <TableRow {...props}/>
-            // }}
-            // >
-            // </DataGrid>        
+            <DataGrid sx={{height:'100%'}}
+            columns={colDef}
+            rows={rows}
+            getRowId={(row)=>row._id}
+            disableColumnMenu
+            disableSelectionOnClick
+            autoHeight
+            hideFooter
+            getRowHeight={() => 'auto' }
+            components={{
+                
+            }}
+            >
+            </DataGrid>        
     )
 }
