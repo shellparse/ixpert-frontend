@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
 import { useEffect, useState } from "react";
 const filter = createFilterOptions()
-export default function ItemSelector ({setInvoiceFooter, invoiceItems, setInvoiceItems}) {
+export default function ItemSelector ({setInvoiceFooter, invoiceItems, setInvoiceItems, setSnackBarMsg}) {
 
     const [items, setItems] = useState([])
     const [lastSearch, setLastSearch] = useState('')
@@ -43,11 +43,26 @@ export default function ItemSelector ({setInvoiceFooter, invoiceItems, setInvoic
       })
       if (isExistingItem){
         setInvoiceItems((oldVal)=>{
-          return [...oldVal.map((val, index)=>index!==existingItem? val: {...val,amount: ++val.amount})]
+          return (
+            [...oldVal.map((val, index)=>{
+              if (index!==existingItem) {
+                return val
+              } else if(val.amount+1>newValue.quantity) {
+                setSnackBarMsg({show: true, severity: 'warning', message: 'not enough items in stock'})
+                return val
+              } else {
+                return {...val,amount: ++val.amount}
+              }
+            })]
+          )
         })
       } else {
         setInvoiceItems((oldVal)=>{
-          return [...oldVal,{_id:newValue._id, sku: newValue.sku, name: newValue.name, price:newValue.price, id: invoiceItems.length+1, amount: 1}]
+          if (newValue.quantity>0){
+            return [...oldVal,{_id:newValue._id, sku: newValue.sku, name: newValue.name, price:newValue.price, id: invoiceItems.length+1, amount: 1}]
+          }
+          setSnackBarMsg({show: true, severity: 'warning', message: 'out of stock'})
+          return oldVal
         })
           
       }

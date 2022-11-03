@@ -65,6 +65,8 @@ export default function SalesInvoice () {
     const setInvoiceItems = useOutletContext()[9]
     const invoiceNumber = useOutletContext()[10]
     const setInvoiceNumber = useOutletContext()[11]
+    const snackBarMsg = useOutletContext()[12]
+    const setSnackBarMsg = useOutletContext()[13]
     const [selection, setSelection] = useState([])
     const [val, setVal] = useState(0)
     useEffect(()=>{
@@ -104,7 +106,7 @@ export default function SalesInvoice () {
                 <CustomerSelector invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} />
                 </Grid>
                 <Grid item xs={4}>
-                  <ItemSelector setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems}></ItemSelector>
+                  <ItemSelector setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} setSnackBarMsg={setSnackBarMsg}></ItemSelector>
                 </Grid>
                 <Grid item xs={12}>
                 <DataGrid
