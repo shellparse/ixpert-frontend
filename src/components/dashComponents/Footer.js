@@ -10,7 +10,8 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
             customerId: invoiceFooter._id,
             cashier: Userfront.user.name,
             items: invoiceItems,
-            total: invoiceFooter.total
+            total: invoiceFooter.total,
+            customerDetails: {name: invoiceFooter.name, phoneNumber: invoiceFooter.phoneNumber, email: invoiceFooter.email}
         }
         if(invoice.number&&invoice.customerId){
         fetch(`${process.env.REACT_APP_API_URI}/salesinvoice`,{
@@ -40,13 +41,14 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
                 setInvoiceNumber((prevNo)=>{
                     return prevNo+=1
                 })
-                setSnackBarMsg((oldVal)=>{
-                    return {show: true, message: 'Invoice Created', severity: 'success'}
-                })
+                setInvoiceFooter((oldVal)=> {return {...oldVal, invoiceNumber:++oldVal.invoiceNumber }})
+                setSnackBarMsg({show: true, message: 'Invoice Created', severity: 'success'})
             }
         })
     } else if (!invoice.customerId){
         setSnackBarMsg({show: true, severity: 'error', message: 'customer not selected'})
+    } else {
+        setSnackBarMsg({show: true, severity:'error', message: 'database error'})
     }
 }
     if(currentPath.pathname==='/dashboard/invoice' && (invoiceFooter.visibleTab === 0 || !invoiceFooter.visibleTab )) {
