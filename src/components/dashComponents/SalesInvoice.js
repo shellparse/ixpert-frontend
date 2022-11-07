@@ -100,7 +100,7 @@ export default function SalesInvoice () {
             <TabPanel value={val} index={0} >
               <Grid container >
               <Grid item xs={4}>
-                <TextField sx={{width:'100%', fontStyle:'oblique', fontVariantNumeric:'slashed-zero'}} size="small" disabled value={invoiceNumber} label={'invoice NO: '} />
+                <TextField sx={{width:'100%', fontStyle:'oblique', fontVariantNumeric:'slashed-zero'}} size="small" inputProps={{readOnly: true}} value={invoiceNumber} label={'invoice NO: '} />
                 </Grid>
                 <Grid item xs={4}>
                 <CustomerSelector invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} />

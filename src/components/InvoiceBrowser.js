@@ -50,7 +50,6 @@ export default function InvoiceBrowser () {
     .then(response=>response.json())
     .then((data)=>{
         setRows(data)
-        console.log(data)
     })
     },[])
     

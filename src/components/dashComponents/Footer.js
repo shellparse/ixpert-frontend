@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom"
 import Paper from '@mui/material/Paper'
-import { Typography, Button, Snackbar, Alert } from "@mui/material"
+import { Typography, Button } from "@mui/material"
 import Userfront from "@userfront/react"
 export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, setInvoiceItems, setInvoiceNumber, snackBarMsg, setSnackBarMsg}){
     const currentPath = useLocation()
@@ -77,7 +77,6 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
                         {`R${invoiceFooter.total}`}
                     </Typography>
                 </div>
-                <Snackbar onClose={()=>setSnackBarMsg((state)=>{return{...state,show:false}})} autoHideDuration={3500} children={<Alert variant='filled' sx={{ width: '100%' }} severity={snackBarMsg.severity}>{snackBarMsg.message}</Alert>} open={snackBarMsg.show}/>
             </div>
         )
     }
