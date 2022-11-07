@@ -37,7 +37,7 @@ export default function CreateCustomer ({setSnackBarMsg}) {
 
     return (
         <Box component={'form'} onSubmit={handleSubmit}>
-            <Typography variant={'h4'} >Create customer:</Typography>
+            <Typography variant={'h4'} >Create customer</Typography>
             <Divider/>
             <FormGroup sx={{borderRadius: 2, border: '1px solid', borderColor: 'primary.main'}}>
                 <TextField sx={{margin:3}} required type={'text'} name={'name'} onChange={handleChange} value={inputs.name} variant='outlined' label={'Name'} />

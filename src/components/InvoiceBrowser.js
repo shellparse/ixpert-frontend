@@ -9,10 +9,8 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 
-
 function ExpandableRow (props) {
     const [open, setOpen] = useState(false)
-
     return (
         <div style={{backgroundColor: 'lightBlue', cursor: 'pointer', height: '100%'}} onClick={()=>setOpen(oldVal=>oldVal?false:true)}>
             <GridRow {...props}></GridRow>
@@ -46,7 +44,7 @@ function ExpandableRow (props) {
 export default function InvoiceBrowser () {
     const [rows, setRows] = useState([])
     useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URI}/salesinvoice`)
+    fetch(`${process.env.REACT_APP_API_URI}/salesinvoice`)
     .then(response=>response.json())
     .then((data)=>{
         setRows(data)

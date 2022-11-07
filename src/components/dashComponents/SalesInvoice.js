@@ -1,4 +1,4 @@
-import { Tab, Tabs, Grid, TextField, Box } from "@mui/material"
+import { Tab, Tabs, Grid, TextField, Box, Toolbar } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import CustomerSelector from "../CustomerSelector"
@@ -86,7 +86,7 @@ export default function SalesInvoice () {
     },[setInvoiceNumber, setInvoiceFooter])
 
     return (
-        <Box sx={{height:'100%',backgroundColor:'lightcoral'}}>
+        <Box sx={{height:'100%',backgroundColor:'lightcoral', padding: 2, boxSizing: 'border-box'}}>
             <h3 style={{padding:0, margin:0}}>Invoice</h3>
             <Tabs value={val} onChange={(e,value)=>{
               setInvoiceFooter((oldVal)=>{
@@ -98,7 +98,7 @@ export default function SalesInvoice () {
                 <Tab label={'Browse'} id={'tab-1'} aria-controls={`tabpanel-1`} />
             </Tabs>
             <TabPanel value={val} index={0} >
-              <Grid container >
+              <Grid container columnSpacing={4}>
               <Grid item xs={4}>
                 <TextField sx={{width:'100%', fontStyle:'oblique', fontVariantNumeric:'slashed-zero'}} size="small" inputProps={{readOnly: true}} value={invoiceNumber} label={'invoice NO: '} />
                 </Grid>
@@ -108,7 +108,7 @@ export default function SalesInvoice () {
                 <Grid item xs={4}>
                   <ItemSelector setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} setSnackBarMsg={setSnackBarMsg}></ItemSelector>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid sx={{marginTop: 2}} item xs={12}>
                 <DataGrid
                   rows={invoiceItems}
                   columns={colDef}
