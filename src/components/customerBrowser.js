@@ -27,7 +27,7 @@ export default function CustomerBrowser (props) {
     },[API,setCustomersList])
 
     return (
-        <Box sx={{height: '100%'}}>
+        <Box sx={{backgroundColor: 'hotpink', boxSizing: 'border-box'}}>
             <Typography variant='h4'>Manage customers</Typography>
             <DataGrid columns={colDef}
             rows={customersList}

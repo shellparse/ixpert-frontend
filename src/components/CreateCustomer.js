@@ -36,7 +36,7 @@ export default function CreateCustomer ({setSnackBarMsg}) {
     }
 
     return (
-        <Box component={'form'} onSubmit={handleSubmit}>
+        <Box sx={{backgroundColor: 'hotpink', boxSizing: 'border-box'}} component={'form'} onSubmit={handleSubmit}>
             <Typography variant={'h4'} >Create customer</Typography>
             <Divider/>
             <FormGroup sx={{borderRadius: 2, border: '1px solid', borderColor: 'primary.main'}}>
