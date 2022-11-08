@@ -7,13 +7,16 @@ export default function CustomerBrowser (props) {
     const colDef = [
         {
             field: 'name',
-            header: 'Name'
+            headerName: 'Name',
+            flex: 1
         }, {
             field: 'email',
-            header: 'E-mail'
+            headerName: 'E-mail',
+            flex: 1
         }, {
             field: 'phoneNumber',
-            heading: 'Mobile'
+            headerName: 'Mobile',
+            flex: 1
         }
     ]
     const API = process.env.REACT_APP_API_URI
@@ -27,11 +30,12 @@ export default function CustomerBrowser (props) {
     },[API,setCustomersList])
 
     return (
-        <Box sx={{backgroundColor: 'hotpink', boxSizing: 'border-box'}}>
-            <Typography variant='h4'>Manage customers</Typography>
+        <Box sx={{backgroundColor: 'hotpink', height: '100%', display: 'flex', flexDirection: 'column', padding: 2, boxSizing: 'border-box'}}>
+            <Typography sx={{margin: 2}} variant='h4'>Manage customers</Typography>
             <DataGrid columns={colDef}
             rows={customersList}
-            getRowId= {(row)=>row._id} />
+            getRowId= {(row)=>row._id}
+            disableSelectionOnClick />
         </Box>
     )
 }

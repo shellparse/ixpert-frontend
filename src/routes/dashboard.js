@@ -4,7 +4,6 @@ import Header from '../components/dashComponents/Header'
 import Main from '../components/dashComponents/Main'
 import MainNav from '../components/dashComponents/MainNav'
 import { useState } from 'react'
-import { Container } from '@mui/system'
 import { Snackbar, Alert} from '@mui/material'
 
 export default function DashBoard() {
@@ -18,11 +17,9 @@ export default function DashBoard() {
         <div className='dashboard'>
             <Header />
             <MainNav />
-            <Container sx={{backgroundColor: 'chartreuse', width: `calc(100% - 240px)`, marginLeft: '240px', height: '50%', boxSizing: 'border-box'}} maxWidth={false}>
-                <Main activeCustomer={activeCustomer} setCustomer={setActiveCustomer} invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} invoiceNumber={invoiceNumber} setInvoiceNumber={setInvoiceNumber} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} /> 
-                <Footer invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} setInvoiceNumber={setInvoiceNumber} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
-                <Snackbar onClose={()=>setSnackBarMsg((state)=>{return{...state,show:false}})} autoHideDuration={3500} children={<Alert variant='filled' sx={{ width: '100%' }} severity={snackBarMsg.severity}>{snackBarMsg.message}</Alert>} open={snackBarMsg.show}/>
-            </Container>
+            <Main activeCustomer={activeCustomer} setCustomer={setActiveCustomer} invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} invoiceNumber={invoiceNumber} setInvoiceNumber={setInvoiceNumber} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} /> 
+            <Footer invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} setInvoiceNumber={setInvoiceNumber} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
+            <Snackbar onClose={()=>setSnackBarMsg((state)=>{return{...state,show:false}})} autoHideDuration={3500} children={<Alert variant='filled' sx={{ width: '100%' }} severity={snackBarMsg.severity}>{snackBarMsg.message}</Alert>} open={snackBarMsg.show}/>
         </div>
     )
 }

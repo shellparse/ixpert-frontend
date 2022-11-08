@@ -1,4 +1,7 @@
 
+:root {
+  --footerHeight: 140px
+}
 body{
   height: 100vh;
 }
@@ -6,45 +9,26 @@ body{
 height: 100%;
 }
 .dashMain {
-flex-grow: 10;
 background-color: aquamarine;
+width: calc(100% - 240px);
+height: calc(100% - var(--footerHeight) - 64px);
+margin-left: 240px;
 }
 #root{
   height: 100%;
 }
-/* .dashSecondaryNav{
-  grid-row-start: 2;
-  grid-row-end: 3;
-  grid-column-start: 3;
-  grid-column-end: 4;
-} */
-/* .dashMainNav{
-  grid-row-start: 2;
-  grid-row-end: 4;
-} */
-/* .dashMainNav > ul {
-  padding-left: 0;
-  list-style:none;
-} */
-/* .dashHeader{
-  grid-column-start: 1;
-  grid-column-end: 4;
-  display: flex;
-  border-bottom: 2px;
-} */
+.tabPanel {
+  height: calc(100% - 49px);
+  background-color: blanchedalmond;
+}
 .dashFooter{
-  /* grid-column-start:2 ;
-  grid-column-end: 4; */
   display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
-  flex-grow: 2;
+  background-color: darkgrey;
+  height: var(--footerHeight);
+  width: calc(100% - 240px);
+  margin-left: 240px;
 }
-/* .greetings{
-  margin: 0;
-} */
-/* .logout{
-  margin-left: auto;
-} */
 .activeNav{
   color:blue;
   text-decoration: none;

@@ -36,13 +36,13 @@ export default function CreateCustomer ({setSnackBarMsg}) {
     }
 
     return (
-        <Box sx={{backgroundColor: 'hotpink', boxSizing: 'border-box'}} component={'form'} onSubmit={handleSubmit}>
+        <Box sx={{padding: 2}} component={'form'} onSubmit={handleSubmit}>
             <Typography variant={'h4'} >Create customer</Typography>
             <Divider/>
             <FormGroup sx={{borderRadius: 2, border: '1px solid', borderColor: 'primary.main'}}>
-                <TextField sx={{margin:3}} required type={'text'} name={'name'} onChange={handleChange} value={inputs.name} variant='outlined' label={'Name'} />
-                <TextField sx={{margin:3}} required type={'email'} name={'email'} onChange={handleChange} value={inputs.email} variant='outlined' label={'E-mail'} />
-                <TextField sx={{margin:3}} required type={'tel'} name={'phoneNumber'} onChange={handleChange} value={inputs.phoneNumber} variant='outlined' label={'Phone number'} />
+                <TextField sx={{margin: 2}} required type={'text'} name={'name'} onChange={handleChange} value={inputs.name} variant='outlined' label={'Name'} />
+                <TextField sx={{margin: 2}} required type={'email'} name={'email'} onChange={handleChange} value={inputs.email} variant='outlined' label={'E-mail'} />
+                <TextField sx={{margin: 2}} required type={'tel'} name={'phoneNumber'} onChange={handleChange} value={inputs.phoneNumber} variant='outlined' label={'Phone number'} />
                 <Button variant='contained' type={'submit'}>Create</Button>
             </FormGroup>
         </Box>

@@ -14,6 +14,7 @@ export default function Customers () {
         const { children, value, index, ...other } = props;
         return (
           <div
+            className='tabPanel'
             role="tabpanel"
             hidden={value !== index}
             {...other}
@@ -29,7 +30,7 @@ export default function Customers () {
     }
 
     return (
-        <Box>
+        <Box sx={{height: '100%'}}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={visibleTab} onChange={handleTabChange}>
                     <Tab label={'create'} id={0}></Tab>
