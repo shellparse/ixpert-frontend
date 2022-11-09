@@ -48,12 +48,19 @@ export default function CreateRepairSlip ({setSnackBarMsg}) {
         <Box sx={{padding: 2}} component={'form'} onSubmit={handleSubmit} onChange={handleChange}>
             <Typography variant={'h4'} >Create repair slip</Typography>
             <Divider sx={{margin: 2}}/>
-            <Grid container>
+            <Grid container spacing={2} >
                 <Grid xs={6} item>
-                <TextField fullWidth size='small' type={'text'} inputProps={{readOnly: true}} value={inputs.slipNumber} label={'Slip No'}></TextField>
+                <TextField name='slipNumber' fullWidth size='small' type={'text'} inputProps={{readOnly: true}} value={inputs.slipNumber} label={'Slip No'} />
                 </Grid>
                 <Grid xs={6} item>
                     <CustomerSelector/>
+                </Grid>
+                <Grid item xs={6}>
+                <FormLabel>Phone details:</FormLabel>
+                <TextField sx={{marginTop: 1}} name='imei' fullWidth size='small' type={'text'} value={inputs.imei} label={'IMEI number'} />
+                </Grid>
+                <Grid item>
+
                 </Grid>
             </Grid>
 
