@@ -60,7 +60,7 @@ export default function CreateRepairSlip ({setSnackBarMsg}) {
                 <TextField sx={{marginTop: 1}} name='imei' fullWidth size='small' type={'text'} value={inputs.imei} label={'IMEI number'} />
                 </Grid>
                 <Grid item>
-
+                <TextField
                 </Grid>
             </Grid>
 
