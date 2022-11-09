@@ -1,30 +1,16 @@
-import { useState } from "react"
-import { useOutletContext } from "react-router-dom"
+import { useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import CreateCustomer from "./CreateCustomer"
-import CustomerBrowser from "./customerBrowser"
+import CreateCustomer from './CreateCustomer'
+import CustomerBrowser from './customerBrowser'
+import TabPanel from './TabPanel'
 export default function Customers () {
     const setSnackBarMsg = useOutletContext()[13];
 
     let [visibleTab,setVisibleTab] = useState(0)
 
-    function TabPanel(props) {
-        const { children, value, index, ...other } = props;
-        return (
-          <div
-            className='tabPanel'
-            role="tabpanel"
-            hidden={value !== index}
-            {...other}
-          >
-            {value === index && (
-              children
-            )}
-          </div>
-        )
-      }
     function handleTabChange (event, newVal) {
         setVisibleTab(newVal)
     }

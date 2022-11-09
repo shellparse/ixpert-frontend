@@ -1,12 +1,13 @@
-import { Tab, Tabs, Grid, TextField, Box, Toolbar } from "@mui/material"
-import { useEffect, useState } from "react"
-import { useOutletContext } from "react-router-dom"
-import CustomerSelector from "../CustomerSelector"
-import ItemSelector from "../ItemSelector"
+import { Tab, Tabs, Grid, TextField, Box } from '@mui/material'
+import { useEffect, useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
+import CustomerSelector from '../CustomerSelector'
+import ItemSelector from '../ItemSelector'
 import { DataGrid } from '@mui/x-data-grid'
 import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone'
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone'
-import InvoiceBrowser from "../InvoiceBrowser"
+import InvoiceBrowser from '../InvoiceBrowser'
+import TabPanel from '../TabPanel'
 
 const colDef = [
   {
@@ -43,21 +44,7 @@ const colDef = [
     }
   }
 ]
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-  
-    return (
-      <div style={{height:'80%'}}
-        role="tabpanel"
-        hidden={value !== index}
-        id={`tabpanel-${index}`}
-        aria-labelledby={` tab-${index}`}
-        {...other}
-      >
-        {children}
-      </div>
-    );
-  }
+
 export default function SalesInvoice () {
     const invoiceFooter = useOutletContext()[6]
     const setInvoiceFooter = useOutletContext()[7]
@@ -65,7 +52,6 @@ export default function SalesInvoice () {
     const setInvoiceItems = useOutletContext()[9]
     const invoiceNumber = useOutletContext()[10]
     const setInvoiceNumber = useOutletContext()[11]
-    const snackBarMsg = useOutletContext()[12]
     const setSnackBarMsg = useOutletContext()[13]
     const [selection, setSelection] = useState([])
     const [val, setVal] = useState(0)
@@ -100,7 +86,7 @@ export default function SalesInvoice () {
             <TabPanel value={val} index={0} >
               <Grid container columnSpacing={4}>
               <Grid item xs={4}>
-                <TextField sx={{width:'100%', fontStyle:'oblique', fontVariantNumeric:'slashed-zero'}} size="small" inputProps={{readOnly: true}} value={invoiceNumber} label={'invoice NO: '} />
+                <TextField sx={{width:'100%', fontStyle:'oblique', fontVariantNumeric:'slashed-zero'}} size='small' inputProps={{readOnly: true}} value={invoiceNumber} label={'invoice NO: '} />
                 </Grid>
                 <Grid item xs={4}>
                 <CustomerSelector invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} />
@@ -124,8 +110,8 @@ export default function SalesInvoice () {
                   hideFooter
                   rowHeight={30}
                   components={{
-                    NoRowsOverlay: ()=><Box alignItems="center" justifyContent="center" display={'flex'}><InfoTwoToneIcon /><h3>Add Items</h3></Box>,
-                    Toolbar: ()=><Box alignItems="right" justifyContent="right" display={'flex'}><DeleteForeverTwoToneIcon sx={{cursor: 'pointer', visibility:selection.length===0?'hidden':'visible'}} onClick={()=>{
+                    NoRowsOverlay: ()=><Box alignItems='center' justifyContent='center' display={'flex'}><InfoTwoToneIcon /><h3>Add Items</h3></Box>,
+                    Toolbar: ()=><Box alignItems='right' justifyContent='right' display={'flex'}><DeleteForeverTwoToneIcon sx={{cursor: 'pointer', visibility:selection.length===0?'hidden':'visible'}} onClick={()=>{
                       setInvoiceItems((oldVal)=>{
                         return oldVal.filter((item)=>!selection.includes(item.id))
                       })

@@ -1,141 +1,126 @@
-import { useState, useEffect } from "react"
-import { useOutletContext } from "react-router-dom"
-import Userfront from "@userfront/react"
+import { useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
+import TabPanel from './TabPanel'
+import { Tabs, Tab, Box } from '@mui/material'
+import CreateRepairSlip from './CreateRepairSlip'
+
 export default function RepairSlip (props) {
-    const activeCustomer=useOutletContext()[0]
-    const API = process.env.REACT_APP_API_URI
-    let [inputs,setInputs] = useState({})
+    const [visibleTab, setVisibleTab] = useState(0)
+    const setSnackBarMsg = useOutletContext()[13]
 
-    function handleSubmit(e) {
-        e.preventDefault()
-        fetch(`${API}/slip`,{
-            method:'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(inputs)
-        }).then((response)=>{
-            if(response.headers.has('Content-Type')){
-                return null
-            }else{
-                return response.blob()
-            }
-        })
-        .then(blob=>{
-            const resDiv = document.getElementById('response')
-            if(blob){
-            blob = blob.slice(0, blob.size, "application/pdf")
-            let blobURL = URL.createObjectURL(blob);
-            setTimeout(()=>{
-                window.open(blobURL);
-            },1500)
-            resDiv.style='visible'
-            resDiv.innerHTML="repair slip created !!"
-            resDiv.setAttribute('class','notify-success')
-            fetch(`${API}/slipnumber`,{method:'POST'}).then((res)=>res.json()).then((data)=>{
-                if(data){
-                document.getElementById('slipNumber').setAttribute('value',data.value.lastSlip+1)
-                setInputs((current)=>({...current,slipNumber: (data.value.lastSlip+1).toString()}))
-                } else {
-                    document.getElementById('slipNumber').setAttribute('value',1)
-                    setInputs((current)=>({...current,slipNumber: "1"}))
-                }
-            })
-            } else {
-                resDiv.innerHTML="Error: check entries"
-                resDiv.setAttribute('class','notify-fail')
-            }
-            setTimeout(()=>{
-                document.getElementById('response').style.visibility='hidden'
-            },3000)
-            e.target.reset()
-            while (document.getElementById("repairListul").firstChild){
-                document.getElementById("repairListul").removeChild(document.getElementById("repairListul").firstChild)
-            }
-        })
+    function handleTabChange (e, newVal) {
+        setVisibleTab(newVal)
     }
-    function handleChange(e) {
-        let target = e.target
-        let value = target.value
-        let name = target.name
-        if (name==="repairItem") {
-            return
-        }else if (target.type==="checkbox"){
-            setInputs((values)=>({...values,checkInStat:{...values.checkInStat,[name]:value==="on"?true:false}}))
-        }else if (name==='notes'){
-            setInputs((values)=>({...values,checkInStat:{...values.checkInStat,[name]:value}}))
-        } else {
-        if (name==="total")value=parseFloat(value)
-        setInputs((values) => ({...values,[name]:value}))
-    }
-    }
-    useEffect(()=>{
-        setInputs({
-            checkInStat:{
-                "frontCamera": false,
-                "backCamera": false,
-                "backGlass": false,
-                "frontGlass": false,
-                "lcd": false,
-                "network": false,
-                "chargingPort": false,
-                "battery": false,
-                "wirelessCharging": false,
-                "fingerPrint": false,
-                "faceId": false,
-                "speaker": false,
-                "microphone": false,
-                "screws": false
-            },
-            neededRepairs: [],
-            cashier: Userfront.user.name,
-            returned: false,
-        })
-        if(activeCustomer._id){
-        fetch(`${API}/customer/${activeCustomer._id}`)
-        .then((res)=>res.json())
-        .then((data)=>{
-            document.getElementById('_id').setAttribute('value', data._id)
-            document.getElementById('customerPhone').setAttribute('value', data.phoneNumber)
-            document.getElementById('customerName').setAttribute('value', data.name)
-            document.getElementById('customerEmail').setAttribute('value', data.email)
-            setInputs((values)=>({...values,customerName:data.name,customerPhone:data.phoneNumber,customerEmail:data.email}))
-            fetch(`${API}/slipnumber`).then((res)=>res.json()).then((data)=>{
-                if(data){
-                document.getElementById('slipNumber').setAttribute('value',data.lastSlip+1)
-                setInputs((current)=>({...current,slipNumber: (data.lastSlip+1).toString()}))
-                } else {
-                    document.getElementById('slipNumber').setAttribute('value',1)
-                    setInputs((current)=>({...current,slipNumber: "1"}))
-                }
-            })
-        })
-    }
-    },[API,activeCustomer])
+    // function handleSubmit(e) {
+    //     e.preventDefault()
+    //     fetch(`${API}/slip`,{
+    //         method:'POST',
+    //         headers:{
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(inputs)
+    //     }).then((response)=>{
+    //         if(response.headers.has('Content-Type')){
+    //             return null
+    //         }else{
+    //             return response.blob()
+    //         }
+    //     })
+    //     .then(blob=>{
+    //         if(blob){
+    //         blob = blob.slice(0, blob.size, "application/pdf")
+    //         let blobURL = URL.createObjectURL(blob);
+    //         setTimeout(()=>{
+    //             window.open(blobURL);
+    //         },1500)
+    //         setSnackBarMsg({show: true, message: 'repair slip created!'})
+    //         fetch(`${API}/slipnumber`,{method:'POST'}).then((res)=>res.json()).then((data)=>{
+    //             // if(data){
+    //             // document.getElementById('slipNumber').setAttribute('value',data.value.lastSlip+1)
+    //             // setInputs((current)=>({...current,slipNumber: (data.value.lastSlip+1).toString()}))
+    //             // } else {
+    //             //     document.getElementById('slipNumber').setAttribute('value',1)
+    //             //     setInputs((current)=>({...current,slipNumber: "1"}))
+    //             // }
+    //         })
+    //         } else {
 
-    function liFromRepairs(arr){
-        if(arr){
-            return arr.map((item,index)=><li key={index}><input type={"button"} value={"X"} onClick={remFromList} className="close" />{item}</li>)
-        }
-    }
+    //         }
+
+    //         e.target.reset()
+
+    //     })
+    // }
+    // function handleChange(e) {
+    //     let target = e.target
+    //     let value = target.value
+    //     let name = target.name
+    //     if (name==="repairItem") {
+    //         return
+    //     }else if (target.type==="checkbox"){
+    //         setInputs((values)=>({...values,checkInStat:{...values.checkInStat,[name]:value==="on"?true:false}}))
+    //     }else if (name==='notes'){
+    //         setInputs((values)=>({...values,checkInStat:{...values.checkInStat,[name]:value}}))
+    //     } else {
+    //     if (name==="total")value=parseFloat(value)
+    //     setInputs((values) => ({...values,[name]:value}))
+    // }
+    // }
     
-    function remFromList(e){
-        let li = e.target.parentNode
-        console.log(li.textContent)
-        setInputs((values)=>({...values,neededRepairs:values.neededRepairs.filter((elm)=>elm!==li.textContent)}))
-    }
-    function addToList(e){
-        let field = document.getElementById('repairItem')
-        let value = field.value
-        if(value==="")return
-        setInputs((values)=>({...values,neededRepairs:[...values.neededRepairs,value]}))
-        field.value=""
-    }
+    //     if(activeCustomer._id){
+    //     fetch(`${API}/customer/${activeCustomer._id}`)
+    //     .then((res)=>res.json())
+    //     .then((data)=>{
+    //         document.getElementById('_id').setAttribute('value', data._id)
+    //         document.getElementById('customerPhone').setAttribute('value', data.phoneNumber)
+    //         document.getElementById('customerName').setAttribute('value', data.name)
+    //         document.getElementById('customerEmail').setAttribute('value', data.email)
+    //         setInputs((values)=>({...values,customerName:data.name,customerPhone:data.phoneNumber,customerEmail:data.email}))
+    //         fetch(`${API}/slipnumber`).then((res)=>res.json()).then((data)=>{
+    //             if(data){
+    //             document.getElementById('slipNumber').setAttribute('value',data.lastSlip+1)
+    //             setInputs((current)=>({...current,slipNumber: (data.lastSlip+1).toString()}))
+    //             } else {
+    //                 document.getElementById('slipNumber').setAttribute('value',1)
+    //                 setInputs((current)=>({...current,slipNumber: "1"}))
+    //             }
+    //         })
+    //     })
+    // }
+
+    // function liFromRepairs(arr){
+    //     if(arr){
+    //         return arr.map((item,index)=><li key={index}><input type={"button"} value={"X"} onClick={remFromList} className="close" />{item}</li>)
+    //     }
+    // }
+    
+    // function remFromList(e){
+    //     let li = e.target.parentNode
+    //     console.log(li.textContent)
+    //     setInputs((values)=>({...values,neededRepairs:values.neededRepairs.filter((elm)=>elm!==li.textContent)}))
+    // }
+    // function addToList(e){
+    //     let field = document.getElementById('repairItem')
+    //     let value = field.value
+    //     if(value==="")return
+    //     setInputs((values)=>({...values,neededRepairs:[...values.neededRepairs,value]}))
+    //     field.value=""
+    // }
     return (
-        <div>
-            {!activeCustomer._id?<div className="notify-fail">please select a customer first</div>:""}   
-            <form id={"repairSlip"} onChange={handleChange} onSubmit={handleSubmit}>
-                <label>create slip:</label>
+        <Box sx={{height: '100%'}}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={visibleTab} onChange={handleTabChange}>
+                    <Tab label={'create'} id={0}></Tab>
+                    <Tab label={'browse'} id={1}></Tab>
+                </Tabs>
+            </Box>
+            <TabPanel value={visibleTab} index={0}>
+                <CreateRepairSlip setSnackBarMsg={setSnackBarMsg} />
+            </TabPanel>
+            <TabPanel value={visibleTab} index={1}>
+            </TabPanel>
+        </Box>
+            /* <form id={"repairSlip"} onChange={handleChange} onSubmit={handleSubmit}>
                 <fieldset>
                     <legend>client details:</legend>
             <label>
@@ -261,7 +246,6 @@ export default function RepairSlip (props) {
                 </fieldset>
                 <input type={"submit"}/>
             </form>
-            <div id="response"></div>
-        </div>
+            <div id="response"></div> */
     )
 }

@@ -15,6 +15,8 @@ export default function CustomerSelector ({invoiceFooter, setInvoiceFooter}) {
     return (
         <Autocomplete id={'select-customer'}
                     size={'small'}
+                    sx={{minWidth: '210px', display: 'inline-block'}}
+                    fullWidth
                     loading
                     isOptionEqualToValue={(option, value) => option.value === value.value}
                     options={customers}

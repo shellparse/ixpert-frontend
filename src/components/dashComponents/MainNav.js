@@ -27,7 +27,7 @@ export default function MainNav(){
         <Drawer variant='permanent'>
             <Toolbar/>
             <Divider/>
-            <List sx={{width:'240px'}}>
+            <List sx={{width:'200px'}}>
                     {navItems.map((element, index) => {
                         return (<ListItem disablePadding key={index+1}>
                                         <NavLink style={{color: 'inherit', textDecoration:'none', width:'100%'}} children={({isActive})=>{
