@@ -6,7 +6,6 @@ export default function CreateCustomer ({setSnackBarMsg}) {
     const API = process.env.REACT_APP_API_URI
     let [inputs,setInputs] = useState({name: '', email: '', phoneNumber: ''})
     function handleChange(e) {
-        console.log('fired')
         let newVal = e.target.value
         let name = e.target.name
         setInputs((values) => ({...values,[name]:newVal}))

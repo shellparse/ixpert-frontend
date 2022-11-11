@@ -1,24 +1,13 @@
 import Userfront from '@userfront/react'
 import { useState, useEffect } from 'react'
-import { Grid, Box, Typography, Divider, FormGroup, TextField, Button, FormControl, Input, InputLabel, FormHelperText, FormLabel, Toolbar } from '@mui/material'
+import { Grid, Box, Typography, Divider, FormGroup, TextField, Button, FormControl, FormControlLabel, Checkbox, Input, InputLabel, FormHelperText, FormLabel, Toolbar } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import CustomerSelector from './CustomerSelector'
-
-function RepairsToolbar(props) {
-    const [value, setValue] = useState('')
-    return (
-        <Toolbar>
-            <TextField onChange={(e) => setValue(e.target.value)} value={value} label={'Add Repairs'}></TextField>
-            <Button onClick={() => { props.setInputs((oldVal)=>{return {...oldVal, neededRepairs: [...oldVal.neededRepairs, value]}}) }}>
-                Add
-            </Button>
-        </Toolbar>
-    )
-}
-
+import RepairsToolbar from './RepairsToolbar'
+import { ImageNotSupportedSharp } from '@mui/icons-material'
 
 export default function CreateRepairSlip({ setSnackBarMsg }) {
-    let [inputs, setInputs] = useState({
+    const [inputs, setInputs] = useState({
         slipNumber: '',
         imei: '',
         brand: '',
@@ -51,6 +40,7 @@ export default function CreateRepairSlip({ setSnackBarMsg }) {
         {
             headerName: 'Needed Repairs',
             field: 'repair',
+            flex: 1
         }
     ]
 
@@ -89,13 +79,13 @@ export default function CreateRepairSlip({ setSnackBarMsg }) {
             <Typography variant={'h4'} >Create repair slip</Typography>
             <Divider sx={{ margin: 2 }} />
             <Grid container spacing={2} >
-                <Grid xs={6} item>
+                <Grid xs={4} item>
                     <TextField name='slipNumber' fullWidth size='small' type={'text'} inputProps={{ readOnly: true }} value={inputs.slipNumber} label={'Slip No'} />
                 </Grid>
-                <Grid xs={6} item>
+                <Grid xs={4} item>
                     <CustomerSelector />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                     <FormLabel>Phone details:</FormLabel>
                     <TextField sx={{ marginTop: 1 }} name='imei' fullWidth size='small' type={'text'} value={inputs.imei} label={'IMEI number'} />
                     <TextField sx={{ marginTop: 1 }} name='brand' fullWidth size='small' type={'text'} value={inputs.brand} label={'Brand'} />
@@ -103,22 +93,89 @@ export default function CreateRepairSlip({ setSnackBarMsg }) {
                     <TextField sx={{ marginTop: 1, backgroundColor: `${inputs.color}` }} name='color' fullWidth size='small' type={'text'} value={inputs.color} label={'Color'} />
                     <TextField sx={{ marginTop: 1 }} name='passcode' fullWidth size='small' type={'text'} value={inputs.passcode} label={'Pass code'} />
                 </Grid>
-                <Grid xs={6} item>
-                    <DataGrid
-                        rows={inputs.neededRepairs.map(repair => { return { repair: repair } })}
-                        columns={colDef}
-                        checkboxSelection
-                        getRowId={row => row.repair}
-                        density={'compact'}
-                        hideFooter
-                        disableColumnMenu
-                        autoHeight
-                        components={{ Toolbar: RepairsToolbar(setInputs)}}
-                    />
+                <Grid item xs={4}>
+                    <Box sx={{ display: 'flex' }}>
+                        <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
+                            <FormLabel component="legend">Phone Status</FormLabel>
+                            <FormGroup>
+                                {Object.keys(inputs.checkInStat).map((state) => {
+                                    console.log(inputs.checkInStat)
+                                    return (
+                                        <FormControlLabel
+                                            key={state}
+                                            control={
+                                                <Checkbox checked={inputs.checkInStat.state} name={state} />
+                                            }
+                                            label={state}
+                                        />
+                                    )
+                                })}
+                                {/* {() => {
+                                    const formControls = []
+                                    for (const state in inputs.checkInStat) {
+                                        formControls.push(
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox checked={inputs.checkInStat[state]} name={state} />
+                                                }
+                                                label={state}
+                                            />
+                                        )
+                                    }
+                                    return formControls
+                                }} */}
+                            </FormGroup>
+                            {/* <FormHelperText>Be careful</FormHelperText>
+                        </FormControl>
+                        <FormControl
+                            required
+                            error={error}
+                            component="fieldset"
+                            sx={{ m: 3 }}
+                            variant="standard"
+                        >
+                            <FormLabel component="legend">Pick two</FormLabel>
+                            <FormGroup>
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox checked={gilad} onChange={handleChange} name="gilad" />
+                                    }
+                                    label="Gilad Gray"
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox checked={jason} onChange={handleChange} name="jason" />
+                                    }
+                                    label="Jason Killian"
+                                />
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox checked={antoine} onChange={handleChange} name="antoine" />
+                                    }
+                                    label="Antoine Llorca"
+                                />
+                            </FormGroup>
+                            <FormHelperText>You can display an error</FormHelperText> */}
+                        </FormControl>
+                    </Box>
+                </Grid>
+                <Grid xs={4} item>
+                    <Box sx={{ height: '100%' }}>
+                        <RepairsToolbar setInputs={setInputs} />
+                        <DataGrid
+                            rows={inputs.neededRepairs.map(repair => { return { repair: repair } })}
+                            columns={colDef}
+                            checkboxSelection
+                            getRowId={row => row.repair}
+                            density={'compact'}
+                            hideFooter
+                            disableColumnMenu
+                        />
+                    </Box>
                 </Grid>
             </Grid>
 
-            {/* <Button variant='contained' type={'submit'}>Create</Button> */}
+            <Button variant='contained' type={'submit'}>Create</Button>
         </Box>
     )
 }
