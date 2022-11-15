@@ -53,9 +53,12 @@ export default function SalesInvoice () {
     const invoiceNumber = useOutletContext()[10]
     const setInvoiceNumber = useOutletContext()[11]
     const setSnackBarMsg = useOutletContext()[13]
+    const setRepairItems = useOutletContext()[15]
     const [selection, setSelection] = useState([])
     const [val, setVal] = useState(0)
     useEffect(()=>{
+    setInvoiceFooter({name: '', total: 0})
+    setRepairItems([])
       fetch(`${process.env.REACT_APP_API_URI}/invoicenumber`).then((res)=>res.json()).then((data)=>{
         if(data){
           setInvoiceNumber(data.lastInvoice+1)
@@ -69,7 +72,7 @@ export default function SalesInvoice () {
           })
         }
     })
-    },[setInvoiceNumber, setInvoiceFooter])
+    },[setInvoiceNumber, setInvoiceFooter, setRepairItems])
 
     return (
         <Box sx={{height:'100%',backgroundColor:'lightcoral', padding: 2, boxSizing: 'border-box'}}>

@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom"
 import Paper from '@mui/material/Paper'
 import { Typography, Button } from "@mui/material"
 import Userfront from "@userfront/react"
-export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, setInvoiceItems, setInvoiceNumber, snackBarMsg, setSnackBarMsg}){
+export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, setInvoiceItems, setInvoiceNumber, setSnackBarMsg, repairItems}){
     const currentPath = useLocation()
     function submitInvoice () {
         let invoice = {
@@ -51,7 +51,15 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
         setSnackBarMsg({show: true, severity:'error', message: 'database error'})
     }
 }
-    if(currentPath.pathname==='/dashboard/invoice' && (invoiceFooter.visibleTab === 0 || !invoiceFooter.visibleTab )) {
+
+function submitRepairSlip(){
+    
+}
+
+
+
+
+    if((currentPath.pathname==='/dashboard/invoice' && (invoiceFooter.visibleTab === 0 || !invoiceFooter.visibleTab )) || (currentPath.pathname==='/dashboard/repairslip' && (invoiceFooter.visibleTab === 0 || !invoiceFooter.visibleTab )) ) {
         return(
             <div className="dashFooter">
                 <div className="invoiceName">
@@ -70,7 +78,7 @@ export default function Footer({invoiceFooter, setInvoiceFooter, invoiceItems, s
                     </Paper>
                 </div>
                 <div className="invoiceGenerate">
-                <Button onClick={submitInvoice} sx={{height:'100%', width:'100%'}} disabled={invoiceItems.length>0?false:true} variant="contained">Generate</Button>
+                <Button onClick={currentPath.pathname==='/dashboard/invoice'?submitInvoice:submitRepairSlip} sx={{height:'100%', width:'100%'}} disabled={invoiceItems.length>0||repairItems.length>0?false:true} variant="contained">Generate</Button>
                 </div>
                 <div className="invoiceTotal">
                     <Typography sx={{fontSize:'100%', color:'secondary.main'}}>
