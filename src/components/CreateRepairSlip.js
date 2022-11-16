@@ -1,15 +1,16 @@
-import Userfront from '@userfront/react'
 import { useState, useEffect } from 'react'
 import { Grid, Box, Typography, Divider, TextField, FormControlLabel, Checkbox, FormLabel } from '@mui/material'
 import { DataGrid } from '@mui/x-data-grid'
 import CustomerSelector from './CustomerSelector'
 import RepairsToolbar from './RepairsToolbar'
 import { useOutletContext } from 'react-router-dom'
-export default function CreateRepairSlip({ setSnackBarMsg }) {
+import Footer from './dashComponents/Footer'
+import Userfront from '@userfront/react'
+export default function CreateRepairSlip() {
+    const API = process.env.REACT_APP_API_URI
     const [repairsSelection, setRepairsSelection] = useState([])
-    const invoiceFooter = useOutletContext()[6]
-    const setInvoiceFooter = useOutletContext()[7]
-    const [inputs, setInputs] = useState({
+    const { setSnackBarMsg } = useOutletContext()
+    const [repairSlip, setRepairSlip] = useState({
         slipNumber: '',
         imei: '',
         brand: '',
@@ -37,20 +38,28 @@ export default function CreateRepairSlip({ setSnackBarMsg }) {
         returned: false,
         notes: ''
     })
-
-
+    useEffect(() => {
+        fetch(`${API}/slipnumber`).then(response => response.json())
+            .then((data) => {
+                if (data && data.lastSlip) {
+                    setRepairSlip((oldVal) => { return { ...oldVal, slipNumber: data.lastSlip + 1 } })
+                } else {
+                    setRepairSlip((oldVal) => { return { ...oldVal, slipNumber: 1 } })
+                }
+            })
+    }, [API, setRepairSlip])
+    
     const colDef = [
         {
             headerName: 'Needed Repairs',
             field: 'repair',
             flex: 2
         }, {
-            headerName: 'Price', 
+            headerName: 'Price',
             field: 'price',
             flex: 1
         }
     ]
-    const API = process.env.REACT_APP_API_URI
     function handleSubmit(e) {
 
     }
@@ -61,24 +70,14 @@ export default function CreateRepairSlip({ setSnackBarMsg }) {
         if (name === "repairItem") {
             return
         } else if (target.type === "checkbox" && name !== '') {
-            setInputs((values) => ({ ...values, checkInStat: { ...values.checkInStat, [name]: value === "on" ? true : false } }))
+            setRepairSlip((values) => ({ ...values, checkInStat: { ...values.checkInStat, [name]: value === "on" ? true : false } }))
         } else if (name === 'notes') {
-            setInputs((values) => ({ ...values, [name]: value }))
+            setRepairSlip((values) => ({ ...values, [name]: value }))
         } else {
             if (name === "total") value = parseFloat(value)
-            setInputs((values) => ({ ...values, [name]: value }))
+            setRepairSlip((values) => ({ ...values, [name]: value }))
         }
     }
-    useEffect(() => {
-        fetch(`${API}/slipnumber`).then(response => response.json())
-            .then((data) => {
-                if (data && data.lastSlip) {
-                    setInputs((oldVal) => { return { ...oldVal, slipNumber: data.lastSlip + 1 } })
-                } else {
-                    setInputs((oldVal) => { return { ...oldVal, slipNumber: 1 } })
-                }
-            })
-    }, [API])
 
     return (
         <Box sx={{ padding: 2 }} component={'form'} onSubmit={handleSubmit} onChange={handleChange}>
@@ -86,26 +85,26 @@ export default function CreateRepairSlip({ setSnackBarMsg }) {
             <Divider sx={{ margin: 2 }} />
             <Grid container spacing={2}  >
                 <Grid xs={2} item>
-                    <TextField sx={{ marginBottom: 2 }} name='slipNumber' fullWidth size='small' type={'text'} inputProps={{ readOnly: true }} value={inputs.slipNumber} label={'Slip No'} />
+                    <TextField sx={{ marginBottom: 2 }} name='slipNumber' fullWidth size='small' type={'text'} inputProps={{ readOnly: true }} value={repairSlip.slipNumber} label={'Slip No'} />
                     <FormLabel component="legend" >Phone details:</FormLabel>
-                    <TextField sx={{ marginTop: 1 }} name='imei' fullWidth size='small' type={'text'} value={inputs.imei} label={'IMEI number'} />
-                    <TextField sx={{ marginTop: 1 }} name='brand' fullWidth size='small' type={'text'} value={inputs.brand} label={'Brand'} />
-                    <TextField sx={{ marginTop: 1 }} name='model' fullWidth size='small' type={'text'} value={inputs.model} label={'Model'} />
-                    <TextField sx={{ marginTop: 1, backgroundColor: `${inputs.color}` }} name='color' fullWidth size='small' type={'text'} value={inputs.color} label={'Color'} />
-                    <TextField sx={{ marginTop: 1 }} name='passcode' fullWidth size='small' type={'text'} value={inputs.passcode} label={'Pass code'} />
+                    <TextField sx={{ marginTop: 1 }} name='imei' fullWidth size='small' type={'text'} value={repairSlip.imei} label={'IMEI number'} />
+                    <TextField sx={{ marginTop: 1 }} name='brand' fullWidth size='small' type={'text'} value={repairSlip.brand} label={'Brand'} />
+                    <TextField sx={{ marginTop: 1 }} name='model' fullWidth size='small' type={'text'} value={repairSlip.model} label={'Model'} />
+                    <TextField sx={{ marginTop: 1, backgroundColor: `${repairSlip.color}` }} name='color' fullWidth size='small' type={'text'} value={repairSlip.color} label={'Color'} />
+                    <TextField sx={{ marginTop: 1 }} name='passcode' fullWidth size='small' type={'text'} value={repairSlip.passcode} label={'Pass code'} />
                 </Grid>
                 <Grid xs={5} item>
                     <CustomerSelector invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} />
                     <Box sx={{ marginTop: 2 }}>
                         <FormLabel component="legend">Phone status:</FormLabel>
                         <Grid container spacing={0}>
-                            {Object.keys(inputs.checkInStat).map((state) => {
+                            {Object.keys(repairSlip.checkInStat).map((state) => {
                                 return (
                                     <Grid key={state} item xs={4}>
                                         <FormControlLabel
                                             key={state}
                                             control={
-                                                <Checkbox checked={inputs.checkInStat.state} name={state} />
+                                                <Checkbox checked={repairSlip.checkInStat.state} name={state} />
                                             }
 
                                             label={state.split(/(?=[A-Z])/).join(' ').toLowerCase()}
@@ -113,14 +112,14 @@ export default function CreateRepairSlip({ setSnackBarMsg }) {
                                     </Grid>
                                 )
                             })}
-                            <TextField name='notes' label='notes' value={inputs.notes} fullWidth size='small' type='text' />
+                            <TextField name='notes' label='notes' value={repairSlip.notes} fullWidth size='small' type='text' />
                         </Grid>
                     </Box>
                 </Grid>
                 <Grid sx={{ display: 'flex', flexDirection: 'column' }} item xs={5}>
-                    <RepairsToolbar setInputs={setInputs} inputs={inputs} setSnackBarMsg={setSnackBarMsg} repairsSelection={repairsSelection} setRepairsSelection={setRepairsSelection} />
+                    <RepairsToolbar setRepairSlip={setRepairSlip} repairSlip={repairSlip} setSnackBarMsg={setSnackBarMsg} repairsSelection={repairsSelection} setRepairsSelection={setRepairsSelection} />
                     <DataGrid
-                        rows={inputs.neededRepairs}
+                        rows={repairSlip.neededRepairs}
                         columns={colDef}
                         checkboxSelection
                         getRowId={row => row.repair}
@@ -134,6 +133,7 @@ export default function CreateRepairSlip({ setSnackBarMsg }) {
                     />
                 </Grid>
             </Grid>
+            <Footer setSnackBarMsg={setSnackBarMsg} repairSlip={repairSlip} setRepairSlip={setRepairSlip} total={total} customerDetails={customerDetails} />
         </Box>
     )
 }

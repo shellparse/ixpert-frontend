@@ -5,7 +5,8 @@ import { useOutletContext } from 'react-router-dom'
 import { useState } from 'react'
 export default function RepairsToolbar(props) {
     const [repairValue, setRepairValue] = useState({repair: '', price: ''})
-    const setRepairItems = useOutletContext()[15]
+    const setRepairSlip = useOutletContext()[15]
+    const repairSlip = useOutletContext()[14]
     function handleChange(e) {
         const name = e.target.name
         const value = e.target.value
@@ -13,13 +14,10 @@ export default function RepairsToolbar(props) {
     }
 
     function handleSubmit() {
-        if (props.inputs.neededRepairs.some(e=>e.repair === repairValue.repair)){
+        if (repairSlip.neededRepairs.some(e=>e.repair === repairValue.repair)){
             props.setSnackBarMsg({show: true, message: 'duplicate repair item', severity: 'warning'})
         } else if (repairValue.repair.length>0){
-            props.setInputs((oldVal) => { 
-                setRepairItems([...oldVal.neededRepairs, {...repairValue}])
-                return { ...oldVal, neededRepairs: [...oldVal.neededRepairs, {...repairValue}] } })
-
+            setRepairSlip((oldVal)=>({...oldVal, neededRepairs: [...oldVal.neededRepairs, {...repairValue}]}))
             setRepairValue({repair: '', price: 0})
         }
 
@@ -34,8 +32,7 @@ export default function RepairsToolbar(props) {
             </Button>
             {
                 (props.repairsSelection.length>0 && <IconButton sx={{float: 'right'}} onClick={()=>{
-                    console.log(props.repairsSelection)
-                    props.setInputs((oldVal)=>({...oldVal, neededRepairs: props.inputs.neededRepairs.filter((repairItem)=>{
+                    setRepairSlip((oldVal)=>({...oldVal, neededRepairs: repairSlip.neededRepairs.filter((repairItem)=>{
                         if (props.repairsSelection.includes(repairItem.repair)){
                             return false
                         }
