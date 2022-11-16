@@ -36,7 +36,8 @@ export default function CreateRepairSlip() {
         neededRepairs: [],
         cashier: Userfront.user.name,
         returned: false,
-        notes: ''
+        notes: '',
+        customerDetails: {name: '', phoneNumber: '', email: ''}
     })
     useEffect(() => {
         fetch(`${API}/slipnumber`).then(response => response.json())
@@ -94,7 +95,7 @@ export default function CreateRepairSlip() {
                     <TextField sx={{ marginTop: 1 }} name='passcode' fullWidth size='small' type={'text'} value={repairSlip.passcode} label={'Pass code'} />
                 </Grid>
                 <Grid xs={5} item>
-                    <CustomerSelector invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} />
+                    <CustomerSelector />
                     <Box sx={{ marginTop: 2 }}>
                         <FormLabel component="legend">Phone status:</FormLabel>
                         <Grid container spacing={0}>
@@ -133,7 +134,7 @@ export default function CreateRepairSlip() {
                     />
                 </Grid>
             </Grid>
-            <Footer setSnackBarMsg={setSnackBarMsg} repairSlip={repairSlip} setRepairSlip={setRepairSlip} total={total} customerDetails={customerDetails} />
+            <Footer setSnackBarMsg={setSnackBarMsg} repairSlip={repairSlip} setRepairSlip={setRepairSlip} />
         </Box>
     )
 }

@@ -1,45 +1,54 @@
 
 import { Box, TextField, Button, IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { useOutletContext } from 'react-router-dom'
 import { useState } from 'react'
-export default function RepairsToolbar(props) {
-    const [repairValue, setRepairValue] = useState({repair: '', price: ''})
-    const setRepairSlip = useOutletContext()[15]
-    const repairSlip = useOutletContext()[14]
+export default function RepairsToolbar({repairSlip, setRepairSlip, setSnackBarMsg, repairsSelection}) {
+    const [repairValue, setRepairValue] = useState({ repair: '', price: '' })
     function handleChange(e) {
         const name = e.target.name
         const value = e.target.value
-        setRepairValue(oldVal=>({...oldVal, [name]: value}))
+        setRepairValue(oldVal => ({ ...oldVal, [name]: value }))
     }
 
     function handleSubmit() {
-        if (repairSlip.neededRepairs.some(e=>e.repair === repairValue.repair)){
-            props.setSnackBarMsg({show: true, message: 'duplicate repair item', severity: 'warning'})
-        } else if (repairValue.repair.length>0){
-            setRepairSlip((oldVal)=>({...oldVal, neededRepairs: [...oldVal.neededRepairs, {...repairValue}]}))
-            setRepairValue({repair: '', price: 0})
+        if (repairSlip.neededRepairs.some(e => e.repair === repairValue.repair)) {
+            setSnackBarMsg({ show: true, message: 'duplicate repair item', severity: 'warning' })
+        } else if (repairValue.repair.length > 0) {
+            setRepairSlip((oldVal) => {
+                const newRepairs = [...oldVal.neededRepairs, { ...repairValue }]
+                let total = 0
+                newRepairs.forEach((repair) => total += repair.price)
+                return { ...oldVal, neededRepairs: newRepairs, total: total }
+            })
+            setRepairValue({ repair: '', price: 0 })
         }
 
 
     }
     return (
-        <Box sx={{marginBottom: 1, display: 'flex'}} >
-            <TextField sx={{flex: 2}} size={'small'} type={'text'} name={'repair'} onChange={handleChange} value={repairValue.repair} label={'Add Repairs'} />
-            <TextField sx={{flex: 1}} size={'small'} type={'number'} name={'price'} onChange={handleChange} value={repairValue.price} label={'price'} />
-            <Button sx={{flex: 1}} onClick={handleSubmit}>
+        <Box sx={{ marginBottom: 1, display: 'flex' }} >
+            <TextField sx={{ flex: 2 }} size={'small'} type={'text'} name={'repair'} onChange={handleChange} value={repairValue.repair} label={'Add Repairs'} />
+            <TextField sx={{ flex: 1 }} size={'small'} type={'number'} name={'price'} onChange={handleChange} value={repairValue.price} label={'price'} />
+            <Button sx={{ flex: 1 }} onClick={handleSubmit}>
                 Add
             </Button>
             {
-                (props.repairsSelection.length>0 && <IconButton sx={{float: 'right'}} onClick={()=>{
-                    setRepairSlip((oldVal)=>({...oldVal, neededRepairs: repairSlip.neededRepairs.filter((repairItem)=>{
-                        if (props.repairsSelection.includes(repairItem.repair)){
-                            return false
+                (repairsSelection.length > 0 && <IconButton sx={{ float: 'right' }} onClick={() => {
+                    setRepairSlip((oldVal) => {
+                        const newRepairs = repairSlip.neededRepairs.filter((repairItem) => {
+                            if (repairsSelection.includes(repairItem.repair)) {
+                                return false
+                            }
+                            return true
+                        })
+                        let total = 0
+                        newRepairs.forEach((repair)=>total+=repair.price)
+                        return {
+                            ...oldVal, neededRepairs: newRepairs, total: total
                         }
-                        return true
-                    })}))
+                    })
                 }}><DeleteIcon></DeleteIcon></IconButton>)
             }
-            </Box>
+        </Box>
     )
 }

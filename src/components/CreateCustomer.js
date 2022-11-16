@@ -21,14 +21,10 @@ export default function CreateCustomer ({setSnackBarMsg}) {
         }).then((response)=>response.json())
         .then(data=>{
             if(data.acknowledged){
-                console.log('user created')
                 setSnackBarMsg({show: true, message: 'customer created successfully!', severity: 'success'})
         } else if(data.code===11000) {
-            console.log('user exists')
-
             setSnackBarMsg({show: true, message: 'customer already exists!', severity: 'warning'})
         } else {
-            console.log('error')
             setSnackBarMsg({show: true, message: 'something went wrong!', severity: 'error'})
         }
         e.target.reset()

@@ -1,8 +1,7 @@
-import { useLocation } from 'react-router-dom'
 import Paper from '@mui/material/Paper'
 import { Typography, Button } from '@mui/material'
-export default function Footer({setSnackBarMsg, invoice, repairSlip, setInvoice, setRepairSlip, total, customerDetails}){
-    const currentPath = useLocation()
+export default function Footer({setSnackBarMsg, invoice, repairSlip, setInvoice, setRepairSlip}){
+    const {customerDetails, total} = invoice || repairSlip
     function submit () {
 
         if((invoice.number&&invoice.customerId)||(repairSlip.slipNumber&&repairSlip.customerId)){
@@ -57,7 +56,7 @@ export default function Footer({setSnackBarMsg, invoice, repairSlip, setInvoice,
                     </Paper>
                 </div>
                 <div className="invoiceGenerate">
-                <Button onClick={submit} sx={{height:'100%', width:'100%'}} disabled={invoice.invoiceItems.length>0||repairSlip.neededRepairs.length>0?false:true} variant="contained">Generate</Button>
+                <Button onClick={submit} sx={{height:'100%', width:'100%'}} disabled={(invoice&&invoice.invoiceItems.length>0)||repairSlip.neededRepairs.length>0?false:true} variant="contained">Generate</Button>
                 </div>
                 <div className="invoiceTotal">
                     <Typography sx={{fontSize:'100%', color:'secondary.main'}}>

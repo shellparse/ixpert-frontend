@@ -7,7 +7,7 @@ import CreateCustomer from './CreateCustomer'
 import CustomerBrowser from './customerBrowser'
 import TabPanel from './TabPanel'
 export default function Customers () {
-    const setSnackBarMsg = useOutletContext()[13];
+    const {setSnackBarMsg} = useOutletContext();
 
     let [visibleTab,setVisibleTab] = useState(0)
 
