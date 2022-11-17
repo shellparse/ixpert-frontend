@@ -6,15 +6,7 @@ import { useState } from 'react'
 import { Snackbar, Alert} from '@mui/material'
 
 export default function DashBoard() {
-    // const [activeCustomer, setActiveCustomer] = useState({})
-    // const [invoiceFooter, setInvoiceFooter] = useState({name: ''})
-    // const [invoiceItems, setInvoiceItems] = useState([])
-    // const [repairSlip, setRepairSlip] = useState({
-
-    // })
-    // const [invoiceNumber, setInvoiceNumber] = useState('')
     const [snackBarMsg, setSnackBarMsg] = useState({show:false, message:'', severity:'info'})
-
     return (
         <div className='dashboard'>
             <Header />

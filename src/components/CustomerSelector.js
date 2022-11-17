@@ -2,9 +2,8 @@ import { Autocomplete, TextField } from "@mui/material"
 import { useEffect, useState } from "react";
 const API = process.env.REACT_APP_API_URI
 
-export default function CustomerSelector() {
+export default function CustomerSelector({setInputs}) {
     const [customers, setCustomers] = useState([])
-    const [temp, setTemp] = useState({name: 'opt'})
     useEffect(() => {
         fetch(`${API}/customer`).then((res) => res.json())
             .then((data) => {
@@ -27,13 +26,11 @@ export default function CustomerSelector() {
             getOptionLabel={(option) => {
                 return option.name
             }}
-            value={temp}
+            value={null}
             onChange={
                 (event, newValue) => {
                     if (newValue) {
-                        setTemp((oldVal) => {
-                            return { ...oldVal, name: newValue.name, phoneNumber: newValue.phoneNumber, email: newValue.email, _id: newValue._id }
-                        })
+                        setInputs((oldVal)=>({...oldVal, customerId: newValue._id, customerDetails: {name: newValue.name, phoneNumber: newValue.phoneNumber, email: newValue.email, _id: newValue._id} }))
                     }
                 }
             }

@@ -11,7 +11,7 @@ height: 100%;
 .dashMain {
 background-color: aquamarine;
 width: calc(100% - 200px);
-height: calc(100% - var(--footerHeight) - 64px);
+height: calc(100% - 64px);
 margin-left: 200px;
 }
 #root{
@@ -26,8 +26,6 @@ margin-left: 200px;
   grid-template-columns: 33.3% 33.3% 33.3%;
   background-color: darkgrey;
   height: var(--footerHeight);
-  width: calc(100% - 200px);
-  margin-left: 200px;
 }
 .activeNav{
   color:blue;

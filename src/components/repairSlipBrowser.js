@@ -19,16 +19,16 @@ function ExpandableRow(props) {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                {['SKU', 'Item', 'Price', 'Quantity', 'total'].map((heading, index) => <TableCell key={index}>{heading}</TableCell>)}
+                                {['Repair', 'Price'].map((heading, index) => <TableCell key={index}>{heading}</TableCell>)}
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {
-                                props.row.items.map((item, index) => {
+                                props.row.neededRepairs.map((item, index) => {
                                     return (
                                         <TableRow key={index}>
                                             {
-                                                ['sku', 'name', 'price', 'amount', 'total'].map((key, index) => <TableCell key={index}>{key === 'total' ? item['price'] * item['amount'] : item[key]}</TableCell>)
+                                                ['repair', 'price'].map((key, index) => <TableCell key={index}>{item[key]}</TableCell>)
                                             }
                                         </TableRow>
                                     )
@@ -41,10 +41,10 @@ function ExpandableRow(props) {
         </div>
     )
 }
-export default function InvoiceBrowser() {
+export default function RepairSlipBrowser() {
     const [rows, setRows] = useState([])
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URI}/salesinvoice`)
+        fetch(`${process.env.REACT_APP_API_URI}/slip`)
             .then(response => response.json())
             .then((data) => {
                 setRows(data)
@@ -54,7 +54,7 @@ export default function InvoiceBrowser() {
 
     const colDef = [
         {
-            field: 'number',
+            field: 'slipNumber',
             flex: 1,
         },
         {
@@ -63,9 +63,9 @@ export default function InvoiceBrowser() {
             valueGetter: row => row.value[0].name
         },
         {
-            field: 'items',
+            field: 'neededRepairs',
             flex: 2,
-            renderCell: () => <Button variant='outlined'>show items</Button>
+            renderCell: () => <Button variant='outlined'>show needed repairs</Button>
         },
         {
             field: 'cashier',
@@ -76,7 +76,7 @@ export default function InvoiceBrowser() {
             flex: 2
         },
         {
-            field: 'paid',
+            field: 'returned',
             flex: 1
         },
         {

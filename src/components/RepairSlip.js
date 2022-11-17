@@ -2,7 +2,7 @@ import { useState } from 'react'
 import TabPanel from './TabPanel'
 import { Tabs, Tab, Box } from '@mui/material'
 import CreateRepairSlip from './CreateRepairSlip'
-
+import RepairSlipBrowser from './repairSlipBrowser'
 export default function RepairSlip () {
     const [visibleTab, setVisibleTab] = useState(0)
 
@@ -22,6 +22,7 @@ export default function RepairSlip () {
                 <CreateRepairSlip />
             </TabPanel>
             <TabPanel value={visibleTab} index={1}>
+                <RepairSlipBrowser />
             </TabPanel>
         </Box>
     )
