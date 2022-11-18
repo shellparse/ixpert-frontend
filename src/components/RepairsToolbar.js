@@ -7,7 +7,7 @@ export default function RepairsToolbar({repairSlip, setRepairSlip, setSnackBarMs
     function handleChange(e) {
         const name = e.target.name
         const value = e.target.value
-        setRepairValue(oldVal => ({ ...oldVal, [name]: name==='price'?parseFloat(value):value }))
+        setRepairValue(oldVal => ({ ...oldVal, [name]: name==='price'?parseFloat(Math.abs(value)):value }))
     }
 
     function handleSubmit() {
@@ -22,13 +22,11 @@ export default function RepairsToolbar({repairSlip, setRepairSlip, setSnackBarMs
             })
             setRepairValue({ repair: '', price: 0 })
         }
-
-
     }
     return (
         <Box sx={{ marginBottom: 1, display: 'flex' }} >
             <TextField sx={{ flex: 2 }} size={'small'} type={'text'} name={'repair'} onChange={handleChange} value={repairValue.repair} label={'Add Repairs'} />
-            <TextField sx={{ flex: 1 }} size={'small'} type={'number'} name={'price'} onChange={handleChange} value={repairValue.price} label={'price'} />
+            <TextField sx={{ flex: 1 }} size={'small'} type={'number'} min={0} name={'price'} onChange={handleChange} value={repairValue.price} label={'price'} />
             <Button sx={{ flex: 1 }} onClick={handleSubmit}>
                 Add
             </Button>

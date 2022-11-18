@@ -54,32 +54,39 @@ export default function RepairSlipBrowser() {
 
     const colDef = [
         {
+            headerName: 'No.',
             field: 'slipNumber',
             flex: 1,
         },
         {
+            headerName: 'Customer',
             field: 'customerDetails',
             flex: 2,
             valueGetter: row => row.value[0].name
         },
         {
+            headerName: 'Details',
             field: 'neededRepairs',
             flex: 2,
             renderCell: () => <Button variant='outlined'>show needed repairs</Button>
         },
         {
+            headerName: 'Prepared by',
             field: 'cashier',
             flex: 2
         },
         {
+            headerName: 'Notes',
             field: 'notes',
             flex: 2
         },
         {
+            headerName: 'Returned',
             field: 'returned',
             flex: 1
         },
         {
+            headerName: 'Total',
             field: 'total',
             flex: 1
         }

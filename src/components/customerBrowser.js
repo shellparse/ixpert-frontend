@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Divider, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
@@ -31,7 +31,8 @@ export default function CustomerBrowser (props) {
 
     return (
         <Box sx={{backgroundColor: 'hotpink', height: '100%', display: 'flex', flexDirection: 'column', padding: 2, boxSizing: 'border-box'}}>
-            <Typography sx={{margin: 2}} variant='h4'>Manage customers</Typography>
+            <Typography variant='h4'>Manage customers</Typography>
+            <Divider />
             <DataGrid columns={colDef}
             rows={customersList}
             getRowId= {(row)=>row._id}

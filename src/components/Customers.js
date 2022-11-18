@@ -27,7 +27,7 @@ export default function Customers () {
                 <CreateCustomer setSnackBarMsg={setSnackBarMsg} />
             </TabPanel>
             <TabPanel value={visibleTab} index={1}>
-                <CustomerBrowser></CustomerBrowser>
+                <CustomerBrowser />
             </TabPanel>
         </Box>
     )

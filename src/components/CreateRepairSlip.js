@@ -85,6 +85,7 @@ export default function CreateRepairSlip() {
                 setTimeout(()=>{
                     window.open(blobURL)
                 },1500)
+                console.log(e)
                 e.target.reset()
                 setSnackBarMsg({show: true, message: 'Invoice Created', severity: 'success'})
             }
