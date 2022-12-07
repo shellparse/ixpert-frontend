@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import InventoryTable from "./InventoryTable"
 import { Box, Divider, Typography, FormGroup, TextField, Button } from '@mui/material'
@@ -6,7 +6,7 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import TabPanel from './TabPanel'
 export default function Inventory() {
-    const [inventoryNav, setInventoryNav] = useState(0)
+    const [visibleTab, setVisibleTab] = useState(0)
     const defaultValues = {
         sku: '',
         name: '',
@@ -24,7 +24,7 @@ export default function Inventory() {
     const [inputs, setInputs] = useState(defaultValues)
     const { snackBarMsg, setSnackBarMsg } = useOutletContext()
     function handleTabChange(event, newVal) {
-        setInventoryNav(newVal)
+        setVisibleTab(newVal)
     }
     function handleSubmit(e) {
         e.preventDefault()
@@ -37,7 +37,6 @@ export default function Inventory() {
         }).then((response) => response.json())
             .then((data) => {
                 if (data.acknowledged) {
-                    setInventoryNav((values) => ([...values, inputs]))
                     setSnackBarMsg((oldVal) => ({ ...oldVal, severity: 'success', message: 'Item added', show: true }))
                     setInputs(defaultValues)
                 } else if (data.code === 11000) {
@@ -59,12 +58,12 @@ export default function Inventory() {
     return (
         <Box sx={{ height: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={inventoryNav} onChange={handleTabChange}>
+                <Tabs value={visibleTab} onChange={handleTabChange}>
                     <Tab label={'Create stock item'} id={0}></Tab>
                     <Tab label={'Browse stock items'} id={1}></Tab>
                 </Tabs>
             </Box>
-            <TabPanel value={inventoryNav} index={0}>
+            <TabPanel value={visibleTab} index={0}>
                 <Box sx={{ padding: 2 }} component={'form'} onSubmit={handleSubmit} onChange={handleChange}>
                     <Typography variant={'h4'} >Create stock Item</Typography>
                     <Divider />
@@ -89,8 +88,12 @@ export default function Inventory() {
                     </FormGroup>
                 </Box>
             </TabPanel>
-            <TabPanel value={inventoryNav} index={1}>
-                <InventoryTable data={inventoryNav} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
+            <TabPanel value={visibleTab} index={1}>
+                <Box sx={{padding: 2, backgroundColor:'green'}}>
+                <Typography variant={'h4'} >Browse Stock</Typography>
+                    <Divider />
+                <InventoryTable data={visibleTab} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
+                </Box>
             </TabPanel>
         </Box>
     )
