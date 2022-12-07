@@ -1,127 +1,97 @@
 import { useState, useEffect } from "react"
 import { useOutletContext } from "react-router-dom"
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import InventoryTable from "./InventoryTable"
-
-export default function Inventory () {
-    const [inventoryNav, setInventoryNav] = useState([])
-    const [inputs,setInputs] = useState({})
-    const snackBarMsg = useOutletContext()[12]
-    const setSnackBarMsg = useOutletContext()[13]    
-    useEffect(()=>{
-        fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
-        .then((data)=>{
-            if(data.length>0){
-                setInventoryNav(()=>([...data]))
-            }
-        })
-    },[])
-
+import { Box, Divider, Typography, FormGroup, TextField, Button } from '@mui/material'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import TabPanel from './TabPanel'
+export default function Inventory() {
+    const [inventoryNav, setInventoryNav] = useState(0)
+    const defaultValues = {
+        sku: '',
+        name: '',
+        price: 0,
+        quantity: 0,
+        color: '',
+        description: '',
+        brand: '',
+        model: '',
+        imei: '',
+        ram: '',
+        storage: '',
+        category: ''
+    }
+    const [inputs, setInputs] = useState(defaultValues)
+    const { snackBarMsg, setSnackBarMsg } = useOutletContext()
+    function handleTabChange(event, newVal) {
+        setInventoryNav(newVal)
+    }
     function handleSubmit(e) {
         e.preventDefault()
-        fetch(`${process.env.REACT_APP_API_URI}/inventory`,{
-            method:"POST",
-            headers:{
+        fetch(`${process.env.REACT_APP_API_URI}/inventory`, {
+            method: "POST",
+            headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(inputs)
-        }).then((response)=>response.json())
-        .then((data)=>{
-            const resDiv = document.getElementById('response')
-            if (data.acknowledged){
-                setInventoryNav((values)=>([...values,inputs]))
-                resDiv.style='visible'
-                resDiv.innerHTML="item created !!"
-                resDiv.setAttribute('class','notify-success')
-                document.getElementById('createItem').reset()
-            }else if (data.code===11000) {
-                resDiv.style='visible'
-                resDiv.innerHTML="error: duplicate item"
-                resDiv.setAttribute('class','notify-fail')
-            }else {
-                resDiv.style='visible'
-                resDiv.innerHTML="error: something went wrong"
-                resDiv.setAttribute('class','notify-fail')
-            }
-            setTimeout(()=>{
-                resDiv.style.visibility='hidden'
-            },3000)
-        })
+        }).then((response) => response.json())
+            .then((data) => {
+                if (data.acknowledged) {
+                    setInventoryNav((values) => ([...values, inputs]))
+                    setSnackBarMsg((oldVal) => ({ ...oldVal, severity: 'success', message: 'Item added', show: true }))
+                    setInputs(defaultValues)
+                } else if (data.code === 11000) {
+                    setSnackBarMsg(oldVal => ({ ...oldVal, show: true, severity: 'warning', message: 'Duplicate item' }))
+                } else {
+                    setSnackBarMsg(oldVal => ({ ...oldVal, show: true, severity: 'error', message: 'Something went wrong' }))
+                }
+            })
     }
 
     function handleChange(e) {
         let target = e.target
         let name = target.name
         let value = target.value
-        if(e.target.type==="number")value=parseFloat(value)
-        setInputs((values)=>({...values,[name]:value}))
+        if (e.target.type === "number") value = parseFloat(Math.abs(value))
+        setInputs((values) => ({ ...values, [name]: value }))
     }
 
     return (
-        <div>
-              <Tabs className={'tabs'} selectedTabClassName={"selectedTab"} selectedTabPanelClassName={"selectedTabPanel"}>
-                <TabList className={"tabList"}>
-                    <Tab className={"tab"}>Create stock item</Tab>
-                    <Tab  className={"tab"}>Browse stock items</Tab>
-                </TabList>
-                <TabPanel className={"tabPanel"}>
-                    <form onChange={handleChange} onSubmit={handleSubmit} id="createItem">
-                        <label>
-                            SKU:
-                            <input type={"text"} name={"sku"} id={"sku"} required />
-                        </label>
-                        <label>
-                            Name:
-                            <input type={"text"} name={"name"} id={"name"} required />
-                        </label>
-                        <label>
-                            Category:
-                            <input type={"text"} name={"category"} id={"category"} />
-                        </label>
-                        <label>
-                            Description:
-                            <input type={"text"} name={"description"} id={"description"} />
-                        </label>
-                        <label>
-                            Price:
-                            <input type={"number"} name={"price"} step="0.01" id={"price"} required />
-                        </label>
-                        <label>
-                            Quantity:
-                            <input type={"number"} name={"quantity"} id={"quantity"} required />
-                        </label>
-                        <label>
-                            Brand:
-                            <input type={"text"} name={"brand"} id={"brand"} />
-                        </label>
-                        <label>
-                            Model:
-                            <input type={"text"} name={"model"} id={"model"} />
-                        </label>
-                        <label>
-                            IMEI:
-                            <input type={"text"} name={"imei"} id={"imei"} />
-                        </label>
-                        <label>
-                            Ram:
-                            <input type={"text"} name={"ram"} id={"ram"} />
-                        </label>
-                        <label>
-                            Storage:
-                            <input type={"text"} name={"storage"} id={"storage"} />
-                        </label>
-                        <label>
-                            Color:
-                            <input type={"text"} name={"color"} id={"color"} />
-                        </label>
-                        <input type={"submit"} name={"submit"} value={"create"} />
-            </form>
-            <div id="response"></div>
+        <Box sx={{ height: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={inventoryNav} onChange={handleTabChange}>
+                    <Tab label={'Create stock item'} id={0}></Tab>
+                    <Tab label={'Browse stock items'} id={1}></Tab>
+                </Tabs>
+            </Box>
+            <TabPanel value={inventoryNav} index={0}>
+                <Box sx={{ padding: 2 }} component={'form'} onSubmit={handleSubmit} onChange={handleChange}>
+                    <Typography variant={'h4'} >Create stock Item</Typography>
+                    <Divider />
+                    <FormGroup sx={{ borderRadius: 2, border: '1px solid', borderColor: 'primary.main' }}>
+                        <Box>
+                            <TextField sx={{ margin: 2 }} size='small' required type={'text'} name={'sku'} value={inputs.sku} variant='outlined' label={'SKU'} />
+                            <TextField sx={{ margin: 2 }} size='small' required type={'text'} name={'name'} value={inputs.name} variant='outlined' label={'Name'} />
+                            <TextField sx={{ margin: 2 }} size='small' required type={'number'} step='1' name={'price'} value={inputs.price} variant='outlined' label={'Price'} />
+                            <TextField sx={{ margin: 2 }} size='small' required type={'number'} step='1' name={'quantity'} value={inputs.quantity} variant='outlined' label={'Quantity'} />
+                            <TextField sx={{ margin: 2, backgroundColor: inputs.color }} size='small' required type={'text'} name={'color'} value={inputs.color} variant='outlined' label={'Color'} />
+                            <TextField sx={{ margin: 2 }} size='small' type={'text'} name={'description'} value={inputs.description} variant='outlined' label={'Description'} />
+                        </Box>
+                        <Box>
+                            <TextField sx={{ margin: 2 }} size='small' type={'text'} name={'brand'} value={inputs.brand} variant='outlined' label={'Brand'} />
+                            <TextField sx={{ margin: 2 }} size='small' type={'text'} name={'model'} value={inputs.model} variant='outlined' label={'Model'} />
+                            <TextField sx={{ margin: 2 }} size='small' type={'text'} name={'imei'} value={inputs.imei} variant='outlined' label={'IMEI'} />
+                            <TextField sx={{ margin: 2 }} size='small' type={'text'} name={'ram'} value={inputs.ram} variant='outlined' label={'Ram'} />
+                            <TextField sx={{ margin: 2 }} size='small' type={'text'} name={'storage'} value={inputs.storage} variant='outlined' label={'Storage'} />
+                            <TextField sx={{ margin: 2 }} size='small' type={'text'} name={'category'} value={inputs.category} variant='outlined' label={'Category'} />
+                        </Box>
+                        <Button variant='contained' type={'submit'}>Add</Button>
+                    </FormGroup>
+                </Box>
             </TabPanel>
-            <TabPanel className={"tabPanel"}>
-                <InventoryTable data={inventoryNav} setData={setInventoryNav} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
+            <TabPanel value={inventoryNav} index={1}>
+                <InventoryTable data={inventoryNav} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
             </TabPanel>
-            </Tabs>
-        </div>
+        </Box>
     )
 }

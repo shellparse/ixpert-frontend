@@ -1,5 +1,5 @@
 import {createColumnHelper, flexRender, getCoreRowModel, getSortedRowModel, useReactTable} from '@tanstack/react-table'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import RowActions from '../components/RowActions'
 import ArrowDownward from '@mui/icons-material/ArrowDownward'
 import ArrowUpward  from '@mui/icons-material/ArrowUpward'
@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper'
 import EditableCell from './EditableCell'
 import CircleIcon from '@mui/icons-material/Circle';
 const columnHelper = createColumnHelper()
+
 const defaultColumn = {
     cell:(props) => {
         return (
@@ -24,7 +25,7 @@ const columns = [
     columnHelper.display({
         header:()=>'Actions',
         id: 'actions',
-        cell: ({row:{id,original}, table,row }) => {
+        cell: ({row:{id,original}, table }) => {
             return (<RowActions isEdit={table.options.meta.isEdit} setIsEdit={table.options.meta.setIsEdit} rowId={id} rowToUpdate={table.options.meta.rowToUpdate} setRowToUpdate={table.options.meta.setRowToUpdate} discardedRow={table.options.meta.discardedRow} setDiscardedRow={table.options.meta.setDiscardedRow} original={original} table={table} snackBarMsg={table.options.meta.snackBarMsg} setSnackBarMsg={table.options.meta.setSnackBarMsg} />)
     },
       }),
@@ -79,6 +80,14 @@ export default function InventoryTable (props) {
     const [rowToUpdate, setRowToUpdate] = useState({})
     const [discardedRow, setDiscardedRow] = useState('')
     const table=useReactTable({ data:props.data, defaultColumn:defaultColumn, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{ snackBarMsg: props.snackBarMsg, setSnackBarMsg: props.setSnackBarMsg, isEdit, setIsEdit, rowToUpdate, setRowToUpdate,discardedRow , setDiscardedRow, setInventoryNav: props.setData } })
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response) => response.json())
+            .then((data) => {
+                if (data.length > 0) {
+                    setInventoryNav(() => ([...data]))
+                }
+            })
+    }, [])
     return (
 
         <TableContainer component={Paper} sx={
