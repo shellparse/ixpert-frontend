@@ -93,7 +93,9 @@ export default function InventoryTable (props) {
 
         <TableContainer component={Paper} sx={
             {
-                height: '100%',
+                height: 'calc(100%)',
+                display: 'flex',
+                flexDirection: 'column',
                 "&::-webkit-scrollbar": {
                     width: 5,
                     height: 5,
@@ -106,7 +108,7 @@ export default function InventoryTable (props) {
             backgroundColor: 'primary.main',
             borderRadius: 2
         }}} >
-            <Table stickyHeader sx={{height:'max-content'}}>
+            <Table stickyHeader>
                 <TableHead>
                     {table.getHeaderGroups().map((headerGroup)=>{
                         return <TableRow key={headerGroup.id}>{headerGroup.headers.map((header)=>{
