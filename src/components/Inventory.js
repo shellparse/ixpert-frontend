@@ -64,7 +64,7 @@ export default function Inventory() {
                 </Tabs>
             </Box>
             <TabPanel value={visibleTab} index={0}>
-                <Box sx={{ padding: 2 }} component={'form'} onSubmit={handleSubmit} onChange={handleChange}>
+                <Box component={'form'} onSubmit={handleSubmit} onChange={handleChange}>
                     <Typography variant={'h4'} >Create stock Item</Typography>
                     <Divider />
                     <FormGroup sx={{ borderRadius: 2, border: '1px solid', borderColor: 'primary.main' }}>
@@ -89,7 +89,7 @@ export default function Inventory() {
                 </Box>
             </TabPanel>
             <TabPanel value={visibleTab} index={1}>
-                <Box sx={{padding: 2, backgroundColor:'green', height: 'calc(100% - 75px)', display: 'flex', flexDirection: 'column'}}>
+                <Box sx={{ backgroundColor:'green', height: 'calc(100% - 75px)', display: 'flex', flexDirection: 'column'}}>
                 <Typography variant={'h4'} >Browse Stock</Typography>
                     <Divider />
                 <InventoryTable data={visibleTab} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />

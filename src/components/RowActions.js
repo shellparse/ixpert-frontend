@@ -23,6 +23,7 @@ export default function RowActions ({isEdit, setIsEdit, rowId, rowToUpdate, setR
                     message:'Inventory Item Updated',
                     severity:'success'
                 })
+                
                 fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
         .then((data)=>{
             if(data.length>0){

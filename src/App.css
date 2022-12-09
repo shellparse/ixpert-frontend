@@ -20,6 +20,7 @@ margin-left: 200px;
 .tabPanel {
   height: calc(100% - 49px);
   background-color: blanchedalmond;
+  box-sizing: border-box;
 }
 .dashFooter{
   display: grid;

@@ -114,7 +114,7 @@ export default function CreateRepairSlip() {
 
     return (
         <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: 'yellowgreen' }}>
-            <Box sx={{ height: '100%', padding: 2, backgroundColor: 'pink', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignSelf: 'flex-start' }} component={'form'} onSubmit={handleSubmit} >
+            <Box sx={{ height: '100%', backgroundColor: 'pink', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignSelf: 'flex-start' }} component={'form'} onSubmit={handleSubmit} >
                     <Typography variant={'h4'} >Create repair slip
                     <Divider sx={{ marginBottom: 2 }} />
                     </Typography>

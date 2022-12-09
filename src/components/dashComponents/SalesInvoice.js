@@ -1,4 +1,4 @@
-import { Tab, Tabs, Grid, TextField, Box } from '@mui/material'
+import { Tab, Tabs, Grid, TextField, Box, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useOutletContext } from 'react-router-dom'
 import CustomerSelector from '../CustomerSelector'
@@ -46,53 +46,50 @@ const colDef = [
 ]
 
 export default function SalesInvoice() {
-  const { invoiceFooter, setInvoiceFooter, invoiceItems, setInvoiceItems, invoiceNumber, setInvoiceNumber, setSnackBarMsg, setRepairSlip } = useOutletContext()
+  const { setSnackBarMsg } = useOutletContext()
   const [selection, setSelection] = useState([])
-  const [val, setVal] = useState(0)
+  const defInvoice = {
+    number: '',
+    customerId: '',
+    total: 0,
+    cashier: '',
+    items: [],
+    notes: '',
+    paid: true,
+    customerDetails: { name: '', phoneNumber: '', email: '' }
+  }
+  const [invoice, setInvoice] = useState(defInvoice)
+  const [visibleTab, setVisibleTab] = useState(0)
+  function handleTabChange(event, newVal) {
+    setVisibleTab(newVal)
+  }
   useEffect(() => {
-    setInvoiceFooter({ name: '', total: 0 })
-    setRepairSlip((oldVal) => ({ ...oldVal, neededRepairs: [] }))
     fetch(`${process.env.REACT_APP_API_URI}/invoicenumber`).then((res) => res.json()).then((data) => {
-      if (data) {
-        setInvoiceNumber(data.lastInvoice + 1)
-        setInvoiceFooter((oldValue) => {
-          return { ...oldValue, invoiceNumber: data.lastInvoice + 1 }
-        })
-      } else {
-        setInvoiceNumber(1)
-        setInvoiceFooter((oldValue) => {
-          return { ...oldValue, invoiceNumber: 1 }
-        })
-      }
+        setInvoice(prevInvoice=>({...prevInvoice, number: data?data.lastInvoice + 1:1}))
     })
-  }, [setInvoiceNumber, setInvoiceFooter, setRepairSlip])
+  }, [setInvoice])
 
   return (
-    <Box sx={{ height: '100%', backgroundColor: 'lightcoral', padding: 2, boxSizing: 'border-box' }}>
-      <h3 style={{ padding: 0, margin: 0 }}>Invoice</h3>
-      <Tabs value={val} onChange={(e, value) => {
-        setInvoiceFooter((oldVal) => {
-          return { ...oldVal, visibleTab: value }
-        })
-        setVal(value)
-      }} sx={{ marginBottom: 3 }}>
-        <Tab label={'Create'} id={'tab-0'} aria-controls={`tabpanel-0`} />
-        <Tab label={'Browse'} id={'tab-1'} aria-controls={`tabpanel-1`} />
+    <Box sx={{ height: '100%', backgroundColor: 'lightcoral', boxSizing: 'border-box' }}>
+      <Tabs value={visibleTab} onChange={handleTabChange} >
+        <Tab label={'Create Invoice'} id={'tab-0'} aria-controls={`tabpanel-0`} />
+        <Tab label={'Browse Invoices'} id={'tab-1'} aria-controls={`tabpanel-1`} />
       </Tabs>
-      <TabPanel value={val} index={0} >
-        <Grid container columnSpacing={4}>
+      <TabPanel value={visibleTab} index={0} >
+        <Typography variant={'h4'} >Create Invoice</Typography>
+        <Grid container columnSpacing={4} sx={{padding: 2}}>
           <Grid item xs={4}>
-            <TextField sx={{ width: '100%', fontStyle: 'oblique', fontVariantNumeric: 'slashed-zero' }} size='small' inputProps={{ readOnly: true }} value={invoiceNumber} label={'invoice NO: '} />
+            <TextField sx={{ width: '100%', fontStyle: 'oblique', fontVariantNumeric: 'slashed-zero' }} size='small' inputProps={{ readOnly: true }} value={invoice.number} label={'invoice number'} />
           </Grid>
           <Grid item xs={4}>
-            <CustomerSelector invoiceFooter={invoiceFooter} setInvoiceFooter={setInvoiceFooter} />
+            <CustomerSelector />
           </Grid>
           <Grid item xs={4}>
-            <ItemSelector setInvoiceFooter={setInvoiceFooter} invoiceItems={invoiceItems} setInvoiceItems={setInvoiceItems} setSnackBarMsg={setSnackBarMsg}></ItemSelector>
+            <ItemSelector invoiceItems={invoice.items} setInvoiceItems={setInvoice} setSnackBarMsg={setSnackBarMsg}></ItemSelector>
           </Grid>
           <Grid sx={{ marginTop: 2 }} item xs={12}>
             <DataGrid
-              rows={invoiceItems}
+              rows={invoice.items}
               columns={colDef}
               disableColumnMenu
               checkboxSelection
@@ -108,8 +105,8 @@ export default function SalesInvoice() {
               components={{
                 NoRowsOverlay: () => <Box alignItems='center' justifyContent='center' display={'flex'}><InfoTwoToneIcon /><h3>Add Items</h3></Box>,
                 Toolbar: () => <Box alignItems='right' justifyContent='right' display={'flex'}><DeleteForeverTwoToneIcon sx={{ cursor: 'pointer', visibility: selection.length === 0 ? 'hidden' : 'visible' }} onClick={() => {
-                  setInvoiceItems((oldVal) => {
-                    return oldVal.filter((item) => !selection.includes(item.id))
+                  setInvoice((oldVal) => {
+                    return oldVal.items.filter((item) => !selection.includes(item.id))
                   })
                 }} /></Box>
               }}
@@ -118,8 +115,8 @@ export default function SalesInvoice() {
           </Grid>
         </Grid>
       </TabPanel>
-      <TabPanel value={val} index={1}>
-        {val === 1 ? <InvoiceBrowser /> : ''}
+      <TabPanel value={visibleTab} index={1}>
+        <InvoiceBrowser />
       </TabPanel>
     </Box>
   )

@@ -2,21 +2,21 @@ import { TextField } from "@mui/material";
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
 import { useEffect, useState } from "react";
 const filter = createFilterOptions()
-export default function ItemSelector ({setInvoiceFooter, invoiceItems, setInvoiceItems, setSnackBarMsg}) {
+export default function ItemSelector ({ invoiceItems, setInvoiceItems, setSnackBarMsg}) {
 
     const [items, setItems] = useState([])
     const [lastSearch, setLastSearch] = useState('')
     const [inputValue, setInputValue]= useState('')
     
-    useEffect(()=>{
-      setInvoiceFooter((oldVal)=>{
-        let total = 0
-        invoiceItems.forEach((item)=>{
-          total+=item.price*item.amount
-        })
-        return {...oldVal, total}
-      })
-    },[invoiceItems, setInvoiceFooter])
+    // useEffect(()=>{
+    //   setInvoiceFooter((oldVal)=>{
+    //     let total = 0
+    //     invoiceItems.forEach((item)=>{
+    //       total+=item.price*item.amount
+    //     })
+    //     return {...oldVal, total}
+    //   })
+    // },[invoiceItems, setInvoiceFooter])
     return(
     <>
     <Autocomplete
