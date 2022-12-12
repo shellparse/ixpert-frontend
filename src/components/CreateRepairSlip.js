@@ -87,7 +87,7 @@ export default function CreateRepairSlip() {
                 },1500)
                 console.log(e)
                 e.target.reset()
-                setSnackBarMsg({show: true, message: 'Invoice Created', severity: 'success'})
+                setSnackBarMsg({show: true, message: 'Repair Slip Created', severity: 'success'})
             }
         })
     } else if (!repairSlip.customerId){

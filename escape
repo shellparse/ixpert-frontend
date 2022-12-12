@@ -1,0 +1,295 @@
+[33mcommit 018f58eb7b07c44ac82f26c56a8c1cca08bc21d2[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: mido <greekmido@OTLGROUP.local>
+Date:   Fri Dec 9 16:41:31 2022 +0200
+
+    revamping at its best
+
+[33mcommit 886097007db10826686224a318dbf75e82858604[m
+Author: mido <greekmido@OTLGROUP.local>
+Date:   Thu Dec 8 16:33:46 2022 +0200
+
+    working
+
+[33mcommit 7f53d100c3b9a09445f05f384d4ddbe62b7a5d40[m
+Author: shellparse <onex911@hotmail.com>
+Date:   Wed Dec 7 21:14:03 2022 +0200
+
+    working
+
+[33mcommit 50e4ba1dab6ecc1edb3b942c795715b0a6b53192[m
+Author: mido <greekmido@OTLGROUP.local>
+Date:   Wed Dec 7 16:22:10 2022 +0200
+
+    finishing up
+
+[33mcommit 5d417f6ccdbf191123ac18345f1602fcad9c60bf[m
+Author: shellparse <onex911@hotmail.com>
+Date:   Fri Nov 18 07:01:25 2022 +0200
+
+    on the way for greatness
+
+[33mcommit 71d7e11606b2e122874821d9ce327656d3cdbda5[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Thu Nov 17 16:11:42 2022 +0200
+
+    revamp continue and slip browser implementation
+
+[33mcommit 02590c4f5ac35d1e6a6b95cd0e98fcca7c713b41[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Wed Nov 16 21:01:25 2022 +0200
+
+    working on the biggest revamp
+
+[33mcommit 700c61b1ea97e226b58f7f017b3b1bc06c3deca7[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Wed Nov 16 16:27:52 2022 +0200
+
+    the biggest refactoring of this app
+
+[33mcommit 7ba1159e4dcc40827842d7523b12283542704e57[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Tue Nov 15 16:15:09 2022 +0200
+
+    integrating the new repairslip footer
+
+[33mcommit 2c14225ba642e45b56bbb37829d98796833c5b08[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Fri Nov 11 22:59:39 2022 +0200
+
+    create repair slip
+
+[33mcommit c1cbaf20985297318acce337293ab056bdc8dfed[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Fri Nov 11 16:24:32 2022 +0200
+
+    repair slip;
+
+[33mcommit e1bd46a89cf5b9a77fd6cd2cbcca8e207cd7a114[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Thu Nov 10 16:24:40 2022 +0200
+
+    repairs
+
+[33mcommit 0790f81d324de3f2025d384785bf5a59a0a8b24a[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Wed Nov 9 21:52:20 2022 +0200
+
+    repair
+
+[33mcommit b668565c3cf50d61ac67a79b5fb691e94972927c[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Wed Nov 9 21:51:52 2022 +0200
+
+    repair
+
+[33mcommit 426fdbf45a7a6cf52d64b803ba9d3686d1c783ca[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Wed Nov 9 15:56:15 2022 +0200
+
+    revamping repair slip
+
+[33mcommit 3015275f6041f5bdb84e332761a0910ac6a8da33[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Tue Nov 8 21:00:52 2022 +0200
+
+    customers section revamp
+
+[33mcommit b9fa0ec5ae1c2081e7920e83c09fdb23f1d4cfcd[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Tue Nov 8 16:29:45 2022 +0200
+
+    working on layout
+
+[33mcommit 9206c1ac2b558d4cb4b8fc1993734b5c942de15c[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Mon Nov 7 20:52:36 2022 +0200
+
+    working on customer browser
+
+[33mcommit 0a8f43a02277bb17d92e283ad228123f81846070[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Mon Nov 7 19:15:24 2022 +0200
+
+    rewriting customers section
+
+[33mcommit 0842085d5087fd6d025fb7c2587785a8ad08d4f4[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Fri Nov 4 16:26:35 2022 +0200
+
+    bug fixes and more
+
+[33mcommit 45cd918a2e4fc08bf220097472ea3dc6b9301783[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Thu Nov 3 21:41:13 2022 +0200
+
+    updating inventory according to invoice
+
+[33mcommit 2c87425879a6a783ee1c26c31b9c64a8f619611b[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Thu Nov 3 16:20:35 2022 +0200
+
+    table ready
+
+[33mcommit a280c6af7138acb3f95ce1ea627d6ded24355b1d[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Wed Nov 2 21:06:50 2022 +0200
+
+    still working on invoice browser
+
+[33mcommit ea490f409e322e560fd835c223dd1ecaa987c593[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Wed Nov 2 16:27:17 2022 +0200
+
+    working on invoice browser
+
+[33mcommit 1668a190e2b4b91c152eeffbed7065dcb27c7512[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Tue Nov 1 21:19:35 2022 +0200
+
+    adjusting the table
+    ;
+
+[33mcommit 27728a92c3bf340a666f19780576a36b13d29457[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Tue Nov 1 16:35:23 2022 +0200
+
+    invoice browser
+
+[33mcommit 4999ecc6c3a97684940b80d59d5366e58ebe97b3[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Mon Oct 31 16:27:39 2022 +0200
+
+    layout
+
+[33mcommit d1c9eb9ef00c8c3ed2a9401d7a2124c1b6ff880b[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Mon Oct 31 16:24:42 2022 +0200
+
+    layout
+
+[33mcommit f10feea08c82e1add6e4c8f20618f70d93e125ba[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Fri Oct 28 16:08:54 2022 +0200
+
+    layout
+
+[33mcommit 97086bd80104bf184995028f615345f6e33228ad[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Wed Oct 26 20:04:06 2022 +0200
+
+    something
+
+[33mcommit 911911304ce03c32a5eb70f70d1bc88050b62f6d[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Wed Oct 26 16:23:35 2022 +0200
+
+    revamping main nav
+
+[33mcommit 1b63bc029c41f9b9d735bfb7dc9a76dc4184d7ed[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Tue Oct 25 21:14:56 2022 +0200
+
+    not much
+
+[33mcommit cd534a648bea8d82119dd29ba0771dddaecdcaa3[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Tue Oct 25 16:18:42 2022 +0200
+
+    revamping bars
+
+[33mcommit cf8951f3d0e907a5a0c38cbb3840962aff337614[m
+Author: shellparse <onex911@hotmail.com>
+Date:   Mon Oct 24 21:06:25 2022 +0200
+
+    handle pdf blob
+
+[33mcommit c42c462a15eb1e1e9c52e4f6454244db08da0c77[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Mon Oct 24 16:37:48 2022 +0200
+
+    delete items from invoice
+
+[33mcommit f0252d695f719dbe4912a5128fe14c0fb6c422b5[m
+Author: shellparse <onex911@hotmail.com>
+Date:   Sun Oct 23 20:50:50 2022 +0200
+
+    robust invoice done
+
+[33mcommit f49516466bdd82126285b89166c9bad8475592a5[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Sun Oct 23 18:34:54 2022 +0200
+
+    new invoice ready
+
+[33mcommit f96181279be82240cb8ee0d3165f0a25e96d3cc7[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Thu Oct 20 16:31:53 2022 +0200
+
+    still  working on invoice submission
+
+[33mcommit 108501f2ee5aff329b27da843137f65c66bb5d54[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Wed Oct 19 16:47:05 2022 +0200
+
+    invoice complete
+
+[33mcommit e8f5bbbb03d74ee8de381692a89c28979157ecc4[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Tue Oct 18 21:49:43 2022 +0200
+
+    sorting invoice number
+
+[33mcommit d6481c115cf0a81e41bd00db5fc80d79923abe5b[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Tue Oct 18 16:41:06 2022 +0200
+
+    invoice took shape
+
+[33mcommit 04889f5186edb38094ec2adf9a649481c8c9a638[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Mon Oct 17 16:34:32 2022 +0200
+
+    working on grand total
+
+[33mcommit c2fdc10b222393cfdc814d227222b2b6251cb9f9[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Thu Oct 13 16:19:13 2022 +0200
+
+    last part of invoice creation
+
+[33mcommit ba54c3d144927f60db2fed3542226c05922cb6a5[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Wed Oct 12 21:48:25 2022 +0200
+
+    final touches on invoice creation
+
+[33mcommit bd6c913c12d8c438b07b8528aba41975f4292e2a[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Wed Oct 12 16:16:05 2022 +0200
+
+    almost done with invoice section
+
+[33mcommit 1ce2647f7d4ad4b6ffe500e43ba3531cf753385d[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Tue Oct 11 16:46:21 2022 +0200
+
+    any
+
+[33mcommit ba1a30f74198c030fa4d815b07b68ae466b34495[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Mon Oct 10 16:00:03 2022 +0200
+
+    not much
+
+[33mcommit 797d37817d0f54a4772da4b6a0127cdcf43993f0[m
+Author: mohammad alameri <onex911@hotmail.com>
+Date:   Tue Oct 4 16:17:06 2022 +0200
+
+    working on select item
+
+[33mcommit 8ddd42fde742156eb318d3c02b21d2051120c664[m
+Author: greekmido <onex911@hotmail.com>
+Date:   Mon Oct 3 19:17:02 2022 +0200
+
+    comment
+

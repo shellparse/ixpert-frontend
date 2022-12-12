@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Box } from "@mui/material"
 export default function Header(){
     return(
         <AppBar position={'static'}>
-            <Toolbar sx={{ justifyContent: 'space-between'}}>
+            <Toolbar sx={{ zIndex:99999, justifyContent: 'space-between'}}>
             <Box sx={{width:100}}>
                 <a href="/dashboard">
                 <img src="/siteLogo.svg" alt="site logo"/>
