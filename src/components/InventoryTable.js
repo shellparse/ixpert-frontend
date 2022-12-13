@@ -80,7 +80,7 @@ export default function InventoryTable (props) {
     const [isEdit, setIsEdit] = useState('')
     const [rowToUpdate, setRowToUpdate] = useState({})
     const [discardedRow, setDiscardedRow] = useState('')
-    const table=useReactTable({ data:inventory, defaultColumn:defaultColumn, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{ snackBarMsg: props.snackBarMsg, setSnackBarMsg: props.setSnackBarMsg, isEdit, setIsEdit, rowToUpdate, setRowToUpdate,discardedRow , setDiscardedRow, setInventoryNav: props.setData } })
+    const table=useReactTable({ data:inventory, defaultColumn:defaultColumn, columns:columns, state: {sorting}, getCoreRowModel: getCoreRowModel(),getSortedRowModel: getSortedRowModel(), onSortingChange: setSorting, meta:{ snackBarMsg: props.snackBarMsg, setSnackBarMsg: props.setSnackBarMsg, isEdit, setIsEdit, rowToUpdate, setRowToUpdate,discardedRow , setDiscardedRow, setInventory: setInventory } })
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response) => response.json())
             .then((data) => {

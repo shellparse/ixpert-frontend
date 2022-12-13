@@ -27,7 +27,7 @@ export default function RowActions ({isEdit, setIsEdit, rowId, rowToUpdate, setR
                 fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
         .then((data)=>{
             if(data.length>0){
-                table.options.meta.setInventoryNav(()=>([...data]))
+                table.options.meta.setInventory(()=>([...data]))
             }
         })
             }else if('code' in data && data.code === 121){

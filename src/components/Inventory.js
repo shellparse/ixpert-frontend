@@ -92,7 +92,7 @@ export default function Inventory() {
                 <Box sx={{ backgroundColor:'green', height: 'calc(100% - 75px)', display: 'flex', flexDirection: 'column'}}>
                 <Typography variant={'h4'} >Browse Stock</Typography>
                     <Divider />
-                <InventoryTable data={visibleTab} snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
+                <InventoryTable snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
                 </Box>
             </TabPanel>
         </Box>
