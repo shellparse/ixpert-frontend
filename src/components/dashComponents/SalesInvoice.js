@@ -14,10 +14,10 @@ export default function SalesInvoice() {
   }
 
   return (
-    <Box sx={{ height: '100%', backgroundColor: 'lightcoral', boxSizing: 'border-box' }}>
+    <Box sx={{ height: '100%', boxSizing: 'border-box' }}>
       <Tabs value={visibleTab} onChange={handleTabChange} >
-        <Tab label={'Create Invoice'} id={'tab-0'} aria-controls={`tabpanel-0`} />
-        <Tab label={'Browse Invoices'} id={'tab-1'} aria-controls={`tabpanel-1`} />
+        <Tab label={'Create'} id={'tab-0'} aria-controls={`tabpanel-0`} />
+        <Tab label={'Browse'} id={'tab-1'} aria-controls={`tabpanel-1`} />
       </Tabs>
       <TabPanel value={visibleTab} index={0} >
         <CreateInvoice />

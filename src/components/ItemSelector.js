@@ -59,12 +59,12 @@ export default function ItemSelector({ invoiceItems, setInvoice, setSnackBarMsg 
               })
 
             }
-            setInvoice((oldVal)=>{
-              let total =0
+            setInvoice((oldVal) => {
+              let total = 0
               oldVal.items.forEach(item => {
-                total+=item.price*item.amount
+                total += item.price * item.amount
               })
-              return {...oldVal, total: total}
+              return { ...oldVal, total: total }
             })
           }
           setInputValue('')

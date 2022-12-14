@@ -1,4 +1,7 @@
+import Box from "@mui/material/Box/Box";
+import { Typography } from "@mui/material";
 import Userfront from "@userfront/react";
+import { Container } from "@mui/system";
 
 Userfront.init("vbqjgzjn");
 const LoginForm = Userfront.build({
@@ -6,7 +9,17 @@ const LoginForm = Userfront.build({
 })
 function LogIn() {
   return (
-    <LoginForm />
+    <Box>
+      <LoginForm />
+    <Container sx={{color: 'red'}}>
+        <Typography>
+          <div>this is a test deployment</div>
+          <div>username: shellparse</div>
+          <div>password: testmodepassword</div>
+        </Typography>
+      </Container>
+
+    </Box>
   )
 }
 export default LogIn

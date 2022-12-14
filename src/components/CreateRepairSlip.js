@@ -38,7 +38,7 @@ export default function CreateRepairSlip() {
         returned: false,
         notes: '',
         customerDetails: { name: '', phoneNumber: '', email: '' },
-        total:0
+        total: 0
     })
     useEffect(() => {
         fetch(`${API}/slipnumber`).then(response => response.json())
@@ -64,37 +64,37 @@ export default function CreateRepairSlip() {
     ]
     function handleSubmit(e) {
         e.preventDefault()
-        if(repairSlip.slipNumber&&repairSlip.customerId){
-        fetch(`${process.env.REACT_APP_API_URI}/slip`,{
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(repairSlip)
-        }).then((response)=>{
-            if(response.headers.has('Content-Type')){
-                return null
-            }else{
-                return response.blob()
-            }
-        })
-        .then((blob)=>{
-            if(blob){
-                blob = blob.slice(0, blob.size, "application/pdf")
-                let blobURL = URL.createObjectURL(blob)
-                setTimeout(()=>{
-                    window.open(blobURL)
-                },1500)
-                console.log(e)
-                e.target.reset()
-                setSnackBarMsg({show: true, message: 'Repair Slip Created', severity: 'success'})
-            }
-        })
-    } else if (!repairSlip.customerId){
-        setSnackBarMsg({show: true, severity: 'error', message: 'customer not selected'})
-    } else {
-        setSnackBarMsg({show: true, severity:'error', message: 'database error'})
-    }
+        if (repairSlip.slipNumber && repairSlip.customerId) {
+            fetch(`${process.env.REACT_APP_API_URI}/slip`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(repairSlip)
+            }).then((response) => {
+                if (response.headers.has('Content-Type')) {
+                    return null
+                } else {
+                    return response.blob()
+                }
+            })
+                .then((blob) => {
+                    if (blob) {
+                        blob = blob.slice(0, blob.size, "application/pdf")
+                        let blobURL = URL.createObjectURL(blob)
+                        setTimeout(() => {
+                            window.open(blobURL)
+                        }, 1500)
+                        console.log(e)
+                        e.target.reset()
+                        setSnackBarMsg({ show: true, message: 'Repair Slip Created', severity: 'success' })
+                    }
+                })
+        } else if (!repairSlip.customerId) {
+            setSnackBarMsg({ show: true, severity: 'error', message: 'customer not selected' })
+        } else {
+            setSnackBarMsg({ show: true, severity: 'error', message: 'database error' })
+        }
     }
     function handleChange(e) {
         let target = e.target
@@ -113,61 +113,61 @@ export default function CreateRepairSlip() {
     }
 
     return (
-        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', backgroundColor: 'yellowgreen' }}>
-            <Box sx={{ height: '100%', backgroundColor: 'pink', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignSelf: 'flex-start' }} component={'form'} onSubmit={handleSubmit} >
-                    <Typography variant={'h4'} >Create repair slip
+        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignSelf: 'flex-start' }} component={'form'} onSubmit={handleSubmit} >
+                <Typography variant={'h4'} >Create repair slip
                     <Divider sx={{ marginBottom: 2 }} />
-                    </Typography>
-                    <Grid container spacing={2}  >
-                        <Grid xs={2} item>
-                            <TextField sx={{ marginBottom: 2 }} name='slipNumber' fullWidth size='small' type={'text'} inputProps={{ readOnly: true }} value={repairSlip.slipNumber} label={'Slip No'} />
-                            <FormLabel component="legend" >Phone details:</FormLabel>
-                            <TextField required sx={{ marginTop: 1 }} name='imei' fullWidth size='small' type={'text'} value={repairSlip.imei} label={'IMEI number'} onChange={handleChange} />
-                            <TextField required sx={{ marginTop: 1 }} name='brand' fullWidth size='small' type={'text'} value={repairSlip.brand} label={'Brand'} onChange={handleChange} />
-                            <TextField required sx={{ marginTop: 1 }} name='model' fullWidth size='small' type={'text'} value={repairSlip.model} label={'Model'} onChange={handleChange} />
-                            <TextField required sx={{ marginTop: 1, backgroundColor: `${repairSlip.color}` }} name='color' fullWidth size='small' type={'text'} onChange={handleChange} value={repairSlip.color} label={'Color'} />
-                            <TextField required sx={{ marginTop: 1 }} name='passCode' fullWidth size='small' type={'text'} value={repairSlip.passcode} label={'Pass code'} onChange={handleChange} />
-                        </Grid>
-                        <Grid xs={5} item>
-                            <CustomerSelector setInputs={setRepairSlip} />
-                            <Box sx={{ marginTop: 2 }}>
-                                <FormLabel component="legend">Phone status:</FormLabel>
-                                <Grid container spacing={0}>
-                                    {Object.keys(repairSlip.checkInStat).map((state) => {
-                                        return (
-                                            <Grid key={state} item xs={4}>
-                                                <FormControlLabel
-                                                    key={state}
-                                                    control={
-                                                        <Checkbox onChange={handleChange} checked={repairSlip.checkInStat.state} name={state} />
-                                                    }
-
-                                                    label={state.split(/(?=[A-Z])/).join(' ').toLowerCase()}
-                                                />
-                                            </Grid>
-                                        )
-                                    })}
-                                    <TextField onChange={handleChange} name='notes' label='notes' value={repairSlip.notes} fullWidth size='small' type='text' />
-                                </Grid>
-                            </Box>
-                        </Grid>
-                        <Grid sx={{ display: 'flex', flexDirection: 'column' }} item xs={5}>
-                            <RepairsToolbar setRepairSlip={setRepairSlip} repairSlip={repairSlip} setSnackBarMsg={setSnackBarMsg} repairsSelection={repairsSelection} setRepairsSelection={setRepairsSelection} />
-                            <DataGrid
-                                rows={repairSlip.neededRepairs}
-                                columns={colDef}
-                                checkboxSelection
-                                getRowId={row => row.repair}
-                                density={'compact'}
-                                hideFooter
-                                disableColumnMenu
-                                onSelectionModelChange={(newSelection) => {
-                                    setRepairsSelection(newSelection)
-                                }}
-                                selectionModel={repairsSelection}
-                            />
-                        </Grid>
+                </Typography>
+                <Grid container spacing={2}  >
+                    <Grid xs={2} item>
+                        <TextField sx={{ marginBottom: 2 }} name='slipNumber' fullWidth size='small' type={'text'} inputProps={{ readOnly: true }} value={repairSlip.slipNumber} label={'Slip No'} />
+                        <FormLabel component="legend" >Phone details:</FormLabel>
+                        <TextField required sx={{ marginTop: 1 }} name='imei' fullWidth size='small' type={'text'} value={repairSlip.imei} label={'IMEI number'} onChange={handleChange} />
+                        <TextField required sx={{ marginTop: 1 }} name='brand' fullWidth size='small' type={'text'} value={repairSlip.brand} label={'Brand'} onChange={handleChange} />
+                        <TextField required sx={{ marginTop: 1 }} name='model' fullWidth size='small' type={'text'} value={repairSlip.model} label={'Model'} onChange={handleChange} />
+                        <TextField required sx={{ marginTop: 1, backgroundColor: `${repairSlip.color}` }} name='color' fullWidth size='small' type={'text'} onChange={handleChange} value={repairSlip.color} label={'Color'} />
+                        <TextField required sx={{ marginTop: 1 }} name='passCode' fullWidth size='small' type={'text'} value={repairSlip.passcode} label={'Pass code'} onChange={handleChange} />
                     </Grid>
+                    <Grid xs={5} item>
+                        <CustomerSelector setInputs={setRepairSlip} />
+                        <Box sx={{ marginTop: 2 }}>
+                            <FormLabel component="legend">Phone status:</FormLabel>
+                            <Grid container spacing={0}>
+                                {Object.keys(repairSlip.checkInStat).map((state) => {
+                                    return (
+                                        <Grid key={state} item xs={4}>
+                                            <FormControlLabel
+                                                key={state}
+                                                control={
+                                                    <Checkbox onChange={handleChange} checked={repairSlip.checkInStat.state} name={state} />
+                                                }
+
+                                                label={state.split(/(?=[A-Z])/).join(' ').toLowerCase()}
+                                            />
+                                        </Grid>
+                                    )
+                                })}
+                                <TextField onChange={handleChange} name='notes' label='notes' value={repairSlip.notes} fullWidth size='small' type='text' />
+                            </Grid>
+                        </Box>
+                    </Grid>
+                    <Grid sx={{ display: 'flex', flexDirection: 'column' }} item xs={5}>
+                        <RepairsToolbar setRepairSlip={setRepairSlip} repairSlip={repairSlip} setSnackBarMsg={setSnackBarMsg} repairsSelection={repairsSelection} setRepairsSelection={setRepairsSelection} />
+                        <DataGrid
+                            rows={repairSlip.neededRepairs}
+                            columns={colDef}
+                            checkboxSelection
+                            getRowId={row => row.repair}
+                            density={'compact'}
+                            hideFooter
+                            disableColumnMenu
+                            onSelectionModelChange={(newSelection) => {
+                                setRepairsSelection(newSelection)
+                            }}
+                            selectionModel={repairsSelection}
+                        />
+                    </Grid>
+                </Grid>
                 <Footer customerDetails={repairSlip.customerDetails} total={repairSlip.total} items={repairSlip.neededRepairs} />
             </Box>
         </Box>

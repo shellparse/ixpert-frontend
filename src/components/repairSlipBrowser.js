@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper'
 function ExpandableRow(props) {
     const [open, setOpen] = useState(false)
     return (
-        <div style={{ backgroundColor: 'lightBlue', cursor: 'pointer', height: '100%' }} onClick={() => setOpen(oldVal => oldVal ? false : true)}>
+        <div style={{ cursor: 'pointer', height: '100%' }} onClick={() => setOpen(oldVal => oldVal ? false : true)}>
             <GridRow {...props}></GridRow>
             <Collapse in={open}>
                 <TableContainer sx={{ marginLeft: '10px', width: 'calc(100% - 50px)' }} component={Paper}>

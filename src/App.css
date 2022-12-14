@@ -9,7 +9,6 @@ body{
 height: 100%;
 }
 .dashMain {
-background-color: aquamarine;
 width: calc(100% - 200px);
 height: calc(100% - 64px);
 margin-left: 200px;
@@ -19,13 +18,11 @@ margin-left: 200px;
 }
 .tabPanel {
   height: calc(100% - 49px);
-  background-color: blanchedalmond;
   box-sizing: border-box;
 }
 .dashFooter{
   display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
-  background-color: darkgrey;
   height: var(--footerHeight);
 }
 .activeNav{
@@ -38,24 +35,6 @@ margin-left: 200px;
   text-decoration: none;
 }
 
-.notify-success{
-  background-color: green;
-  color: aliceblue;
-}
-.notify-fail{
-  background-color: rgb(128, 0, 11);
-  color: aliceblue;
-}
-#last10Customers{
-  overflow: hidden;
-  width: 20%;
-}
-.close{
-  color:red;
-  cursor: pointer;
-  padding: 0;
-  margin: 5px;
-}
 
 .checkboxLabel{
   width: 25%;
@@ -67,24 +46,7 @@ margin-left: 200px;
   margin: 0;
   padding: 0;
 }
-.tab{
-  background-color: rgb(255, 247, 236);
-  border: groove 1px;
-  list-style: none;
-  padding: 5px;
-  cursor: pointer;
-}
 
-.selectedTab{
-  background-color: rgb(250, 232, 208);
-  border-style: solid;
-  border-bottom: none;
-  outline-style: none;
-}
-.selectedTabPanel{
-  background-color: rgb(250, 232, 208);
-  padding-top: 15px;
-}
 
 table {
 white-space: nowrap;

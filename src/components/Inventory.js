@@ -59,8 +59,8 @@ export default function Inventory() {
         <Box sx={{ height: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={visibleTab} onChange={handleTabChange}>
-                    <Tab label={'Create stock item'} id={0}></Tab>
-                    <Tab label={'Browse stock items'} id={1}></Tab>
+                    <Tab label={'Create'} id={0}></Tab>
+                    <Tab label={'Browse'} id={1}></Tab>
                 </Tabs>
             </Box>
             <TabPanel value={visibleTab} index={0}>
@@ -89,10 +89,10 @@ export default function Inventory() {
                 </Box>
             </TabPanel>
             <TabPanel value={visibleTab} index={1}>
-                <Box sx={{ backgroundColor:'green', height: 'calc(100% - 75px)', display: 'flex', flexDirection: 'column'}}>
-                <Typography variant={'h4'} >Browse Stock</Typography>
+                <Box sx={{ backgroundColor: 'green', height: 'calc(100% - 75px)', display: 'flex', flexDirection: 'column' }}>
+                    <Typography variant={'h4'} >Browse Stock</Typography>
                     <Divider />
-                <InventoryTable snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
+                    <InventoryTable snackBarMsg={snackBarMsg} setSnackBarMsg={setSnackBarMsg} />
                 </Box>
             </TabPanel>
         </Box>

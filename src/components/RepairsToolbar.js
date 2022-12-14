@@ -2,12 +2,12 @@
 import { Box, TextField, Button, IconButton } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useState } from 'react'
-export default function RepairsToolbar({repairSlip, setRepairSlip, setSnackBarMsg, repairsSelection}) {
+export default function RepairsToolbar({ repairSlip, setRepairSlip, setSnackBarMsg, repairsSelection }) {
     const [repairValue, setRepairValue] = useState({ repair: '', price: 0 })
     function handleChange(e) {
         const name = e.target.name
         const value = e.target.value
-        setRepairValue(oldVal => ({ ...oldVal, [name]: name==='price'?parseFloat(Math.abs(value)):value }))
+        setRepairValue(oldVal => ({ ...oldVal, [name]: name === 'price' ? parseFloat(Math.abs(value)) : value }))
     }
 
     function handleSubmit() {
@@ -40,7 +40,7 @@ export default function RepairsToolbar({repairSlip, setRepairSlip, setSnackBarMs
                             return true
                         })
                         let total = 0
-                        newRepairs.forEach((repair)=>total+=repair.price)
+                        newRepairs.forEach((repair) => total += repair.price)
                         return {
                             ...oldVal, neededRepairs: newRepairs, total: total
                         }

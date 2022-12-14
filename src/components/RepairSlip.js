@@ -3,15 +3,15 @@ import TabPanel from './TabPanel'
 import { Tabs, Tab, Box } from '@mui/material'
 import CreateRepairSlip from './CreateRepairSlip'
 import RepairSlipBrowser from './repairSlipBrowser'
-export default function RepairSlip () {
+export default function RepairSlip() {
     const [visibleTab, setVisibleTab] = useState(0)
 
-    function handleTabChange (e, newVal) {
+    function handleTabChange(e, newVal) {
         setVisibleTab(newVal)
     }
 
     return (
-        <Box sx={{height: '100%'}}>
+        <Box sx={{ height: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={visibleTab} onChange={handleTabChange}>
                     <Tab label={'create'} id={0}></Tab>

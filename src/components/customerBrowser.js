@@ -2,7 +2,7 @@ import { Divider, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import { DataGrid } from '@mui/x-data-grid'
 import { useEffect, useState } from 'react'
-export default function CustomerBrowser (props) {
+export default function CustomerBrowser(props) {
     const [customersList, setCustomersList] = useState([])
     const colDef = [
         {
@@ -20,23 +20,23 @@ export default function CustomerBrowser (props) {
         }
     ]
     const API = process.env.REACT_APP_API_URI
-    useEffect(()=>{
-        fetch(`${API}/customer`).then((res)=>res.json())
-        .then((data)=>{
-            if(data){
-                setCustomersList(data)
-            }
-        })
-    },[API,setCustomersList])
+    useEffect(() => {
+        fetch(`${API}/customer`).then((res) => res.json())
+            .then((data) => {
+                if (data) {
+                    setCustomersList(data)
+                }
+            })
+    }, [API, setCustomersList])
 
     return (
-        <Box sx={{backgroundColor: 'hotpink', height: '100%', display: 'flex', flexDirection: 'column', boxSizing: 'border-box'}}>
+        <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
             <Typography variant='h4'>Manage customers</Typography>
             <Divider />
             <DataGrid columns={colDef}
-            rows={customersList}
-            getRowId= {(row)=>row._id}
-            disableSelectionOnClick />
+                rows={customersList}
+                getRowId={(row) => row._id}
+                disableSelectionOnClick />
         </Box>
     )
 }

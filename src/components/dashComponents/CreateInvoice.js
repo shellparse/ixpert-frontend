@@ -97,8 +97,8 @@ export default function CreateInvoice() {
         }
     }
     return (
-        <Box sx={{ height: '100%', backgroundColor: 'yellowgreen' }}>
-            <Box sx={{ height: '100%', backgroundColor: 'pink', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignSelf: 'flex-start' }} component={'form'} onSubmit={handleSubmit}>
+        <Box sx={{ height: '100%' }}>
+            <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignSelf: 'flex-start' }} component={'form'} onSubmit={handleSubmit}>
                 <Box>
 
                     <Typography variant={'h4'} >Create Invoice</Typography>

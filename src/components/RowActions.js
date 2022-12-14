@@ -3,59 +3,59 @@ import EditIcon from '@mui/icons-material/Edit'
 import CheckIcon from '@mui/icons-material/Check'
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert, Snackbar } from '@mui/material';
-export default function RowActions ({isEdit, setIsEdit, rowId, rowToUpdate, setRowToUpdate, discardedRow, setDiscardedRow, original, table, snackBarMsg, setSnackBarMsg}) {
-    function editHandler(e){
+export default function RowActions({ isEdit, setIsEdit, rowId, rowToUpdate, setRowToUpdate, discardedRow, setDiscardedRow, original, table, snackBarMsg, setSnackBarMsg }) {
+    function editHandler(e) {
         setIsEdit(rowId)
     }
-    function applyHandler(e){
-        fetch(`${process.env.REACT_APP_API_URI}/inventory/${original._id}`,{
-            method:'PUT',
-            headers:{
-                'Content-Type':'application/json'
+    function applyHandler(e) {
+        fetch(`${process.env.REACT_APP_API_URI}/inventory/${original._id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(rowToUpdate)
-        }).then((response)=>response.json()).then((data)=>{
-            if('lastErrorObject' in data && data.lastErrorObject.updatedExisting){
+        }).then((response) => response.json()).then((data) => {
+            if ('lastErrorObject' in data && data.lastErrorObject.updatedExisting) {
                 setIsEdit('')
                 setRowToUpdate({})
                 setSnackBarMsg({
-                    show:true,
-                    message:'Inventory Item Updated',
-                    severity:'success'
+                    show: true,
+                    message: 'Inventory Item Updated',
+                    severity: 'success'
                 })
-                
-                fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response)=>response.json())
-        .then((data)=>{
-            if(data.length>0){
-                table.options.meta.setInventory(()=>([...data]))
-            }
-        })
-            }else if('code' in data && data.code === 121){
+
+                fetch(`${process.env.REACT_APP_API_URI}/inventory`).then((response) => response.json())
+                    .then((data) => {
+                        if (data.length > 0) {
+                            table.options.meta.setInventory(() => ([...data]))
+                        }
+                    })
+            } else if ('code' in data && data.code === 121) {
                 setSnackBarMsg({
-                    show:true,
-                    message:'Error: validation failed',
-                    severity:'error'
+                    show: true,
+                    message: 'Error: validation failed',
+                    severity: 'error'
                 })
             }
         })
     }
-    function discardHandler(e){
+    function discardHandler(e) {
         setIsEdit('')
         setRowToUpdate({})
     }
-    if(isEdit===rowId){
+    if (isEdit === rowId) {
         return (
             <>
-                <IconButton onClick={discardHandler}><CloseIcon/></IconButton>
-                <IconButton  onClick={applyHandler}><CheckIcon/></IconButton>
-                <Snackbar onClose={()=>setSnackBarMsg((state)=>{return{...state,show:false}})} autoHideDuration={3500} children={<Alert variant='filled' sx={{ width: '100%' }} severity={snackBarMsg.severity}>{snackBarMsg.message}</Alert>} open={snackBarMsg.show}/>
+                <IconButton onClick={discardHandler}><CloseIcon /></IconButton>
+                <IconButton onClick={applyHandler}><CheckIcon /></IconButton>
+                <Snackbar onClose={() => setSnackBarMsg((state) => { return { ...state, show: false } })} autoHideDuration={3500} children={<Alert variant='filled' sx={{ width: '100%' }} severity={snackBarMsg.severity}>{snackBarMsg.message}</Alert>} open={snackBarMsg.show} />
             </>
         )
-    }else {
+    } else {
         return (
             <>
-                <IconButton onClick={editHandler}><EditIcon/></IconButton>
-                <Snackbar onClose={()=>setSnackBarMsg((state)=>{return{...state,show:false}})} autoHideDuration={3500} children={<Alert variant='filled' sx={{ width: '100%' }} severity={snackBarMsg.severity}>{snackBarMsg.message}</Alert>} open={snackBarMsg.show}/>
+                <IconButton onClick={editHandler}><EditIcon /></IconButton>
+                <Snackbar onClose={() => setSnackBarMsg((state) => { return { ...state, show: false } })} autoHideDuration={3500} children={<Alert variant='filled' sx={{ width: '100%' }} severity={snackBarMsg.severity}>{snackBarMsg.message}</Alert>} open={snackBarMsg.show} />
             </>
         )
     }
