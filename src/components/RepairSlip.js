@@ -17,7 +17,7 @@ export default function RepairSlip() {
                     <Tab label={'create'} id={0}></Tab>
                     <Tab label={'browse'} id={1}></Tab>
                 </Tabs>
-            </Box>
+            </Box> 
             <TabPanel value={visibleTab} index={0}>
                 <CreateRepairSlip />
             </TabPanel>
