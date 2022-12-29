@@ -2,7 +2,7 @@
   "name": "ixpert-frontend",
   "version": "0.1.1",
   "private": true,
-  "homepage": "https://ixpert-front.herokuapp.com/",
+  "homepage": "https://ixpertfrontend.azurewebsites.net/",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
