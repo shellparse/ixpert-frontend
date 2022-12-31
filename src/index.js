@@ -14,6 +14,7 @@ import Inventory from './components/Inventory'
 import { ThemeProvider,createTheme } from '@mui/material/styles'
 import SalesInvoice from './components/dashComponents/SalesInvoice'
 const root = ReactDOM.createRoot(document.getElementById('root'))
+fetch('https://ixpertserver.azurewebsites.net/')
 const theme = createTheme({
   palette: {
     type: 'light',
